@@ -1,1 +1,1 @@
-# StarPower!
+# StarPower
