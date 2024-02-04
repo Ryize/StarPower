@@ -7,5 +7,3 @@ from flask_toastr import Toastr
 
 app = Flask(__name__)
 
-if __name__ == "__main__":
-    app.run()
