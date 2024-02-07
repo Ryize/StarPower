@@ -17,6 +17,10 @@
     background-color: var(--color1);
 }
 
+.body-bg-turquoise {
+    background-color: var(--color2);
+}
+
 .text-field {
     display: flex;
     align-items: center;
@@ -61,4 +65,63 @@
 .img-sphere img {
     height: 200px;
     width: auto;
+}
+
+@media (min-width: 720px) {
+    .section-3-p {
+        padding: 0px 60px;
+        color: var(--color1);
+        font-size: 35px;
+    }
+}
+
+/* Первая строка-абзац третья секция */
+.first_row-p-3s {
+    padding: 0px 15px;
+    color: var(--color1);
+    font-size: 20px;
+}
+
+/* текстовое поле третий секции */
+.text-field-3s {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    padding: 24px 24px 0px 24px;
+}
+
+@media (min-width: 720px) {
+    .text-field-3s {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px;
+    }
+}
+
+/* Абзацы третий секции во второй строке*/
+.second_row-p-1-3s {
+    color: #E4717A;
+    font-size: 20px;
+}
+
+.second_row-p-2_3-3s {
+    color: var(--color1);
+    font-size: 25px;
+}
+
+@media (min-width: 720px) {
+    .second_row-p-1-3s {
+        color: #E4717A;
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 720px) {
+    .second_row-p-2_3-3s {
+        color: var(--color1);
+        font-size: 30px;
+    }
 }
