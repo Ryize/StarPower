@@ -17,14 +17,48 @@
     background-color: var(--color1);
 }
 
-.text-field1 {
-    font-size: 25px;
-    padding: 30px;
+.text-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    padding: 24px 24px 0px 24px;
 }
 
 @media (min-width: 720px) {
-    .text-field1 {
+    .text-field {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 37px;
-        padding: 50px;
+        padding: 48px;
     }
+}
+
+.img-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+@media (min-width: 720px) {
+    .img-field {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px;
+    }
+}
+
+.img-sphere {
+    padding: 24px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-sphere img {
+    height: 200px;
+    width: auto;
 }
