@@ -5,6 +5,26 @@
     --color2: #B8EFCF;
 }
 
+.color1 {
+    color: var(--color1);
+}
+
+.color2 {
+    color: var(--color2);
+}
+
 .body-bg-blue {
     background-color: var(--color1);
+}
+
+.text-field1 {
+    font-size: 25px;
+    padding: 30px;
+}
+
+@media (min-width: 720px) {
+    .text-field1 {
+        font-size: 37px;
+        padding: 50px;
+    }
 }
