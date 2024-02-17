@@ -6,11 +6,6 @@
     --color2: #B8EFCF;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
 .color1 {
     color: var(--color1);
 }
