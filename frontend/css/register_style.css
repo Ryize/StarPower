@@ -1,5 +1,7 @@
+
 main{
-  min-height: calc(100vh - 100px);
+  position: relative;
+  min-height: 100vh;
   background-image: url('../img/back_register.png');
   background-size: cover;
   background-position: center;
@@ -7,10 +9,17 @@ main{
 }
 @media (max-width: 768px) {
   main {
-    min-height: calc(100vh - 100px);
+    min-height:100vh;
   }
 }
 .frame {
+   position: absolute; /* Абсолютное позиционирование относительно main */
+  top: 40px; /* Расстояние от верхней границы main */
+  width: 90%; /* или другая ширина в зависимости от вашего дизайна */
+  max-width: 430px; /* Максимальная ширина для крупных экранов */
+  left: 50%; /* Центрирование .frame по горизонтали */
+  transform: translateX(-50%);
+  margin-top: 20px;
   height: 575px;
   width: 90%; /* Уменьшить ширину на маленьких экранах */
   max-width: 430px; /* Максимальная ширина для крупных экранов */
