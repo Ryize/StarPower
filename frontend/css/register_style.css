@@ -1,15 +1,16 @@
 .frame {
   height: 575px;
-  width: 430px;
+  width: 90%; /* Уменьшить ширину на маленьких экранах */
+  max-width: 430px; /* Максимальная ширина для крупных экранов */
   background:
-    -webkit-linear-gradient(
-    rgba(35,43,85,0.75),
-    rgba(35,43,85,0.95)),
+    linear-gradient(
+    rgba(0, 9, 60, 0.75),
+    rgba(0, 9, 60, 0.95)),
     url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg) no-repeat center center;
   background:
     linear-gradient(
-    rgba(35,43,85,0.75),
-    rgba(35,43,85,0.95)),
+    rgba(0, 9, 60, 0.75),
+    rgba(0, 9, 60, 0.95)),
     url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg) no-repeat center center;
   background-size: cover;
   margin-left: auto;
@@ -536,3 +537,4 @@ a.btn-goback:hover {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
+
