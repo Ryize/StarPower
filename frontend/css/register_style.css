@@ -1,3 +1,15 @@
+main{
+  min-height: calc(100vh - 100px);
+  background-image: url('../img/back_register.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@media (max-width: 768px) {
+  main {
+    min-height: calc(100vh - 100px);
+  }
+}
 .frame {
   height: 575px;
   width: 90%; /* Уменьшить ширину на маленьких экранах */
