@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/register_style.css">
+    <title>Шаблон</title>
+</head>
+
+<body >
+    <header>
+        <nav class="navbar navbar-expand-lg body-bg-blue navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="img/Эмблема сайта.svg" alt="Сила звезд" width="65" height="49">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item px-3 dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="bi bi-calendar2-event"></i>
+                                Прогноз
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-date pe-1"></i>на
+                                        сегодня</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-week pe-1"></i>на
+                                        неделю</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-month pe-1"></i>на
+                                        месяц</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-fill pe-1"></i>на
+                                        год</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-day pe-1"></i>на день
+                                        недели</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link" aria-current="page" href="#"><i
+                                    class="bi bi-chat-right-text pe-1"></i>Нужен совет</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link" href="#"><i class="bi bi-file-earmark-person pe-1"></i>Натальная
+                                карта</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item px-3">
+                            <a class="nav-link active" aria-current="page" href="#"><i
+                                    class="bi-person-circle pe-1"></i>Вход</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+<main >
+<div class="container mt-5">
+    <div class="frame">
+    <div class="nav-register">
+      <ul class="links">
+        <li class="signin-active li-reg"><a class="btn">Вход</a></li>
+        <li class="signup-inactive li-reg"><a class="btn">Регистрация </a></li>
+      </ul>
+    </div>
+    <div ng-app ng-init="checked = false">
+				        <form class="form-signin" action="" method="post" name="form">
+          <label for="username">Логин</label>
+          <input class="form-styling" type="text" name="username" placeholder=""/>
+          <label for="password">Пароль</label>
+          <input class="form-styling" type="text" name="password" placeholder=""/>
+          <input type="checkbox" id="checkbox"/>
+          <label for="checkbox" ><span class="ui"></span>Запомнить меня</label>
+          <div class="btn-animate">
+            <a class="btn-signin">Войти</a>
+          </div>
+				        </form>
+
+				        <form class="form-signup" action="" method="post" name="form">
+          <label for="fullname">Имя</label>
+          <input class="form-styling" type="text" name="fullname" placeholder=""/>
+          <label for="email">Email</label>
+          <input class="form-styling" type="text" name="email" placeholder=""/>
+          <label for="password">Пароль</label>
+          <input class="form-styling" type="text" name="password" placeholder=""/>
+          <label for="confirmpassword">Повторите пароль</label>
+          <input class="form-styling" type="text" name="confirmpassword" placeholder=""/>
+          <a ng-click="checked = !checked" class="btn-signup">Зарегистрироваться</a>
+				        </form>
+
+      </div>
+
+      <div class="forgot">
+        <a href="#">Забыли пароль?</a>
+      </div>
+
+  </div>
+</div>
+</main>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/register.js"></script>
+
+</body>
+
+</html>
