@@ -1,0 +1,32 @@
+.speech {
+    position: relative;
+    max-width: 60%; /* Максимальная ширина, чтобы бабл не занимал всю ширину контейнера */
+    padding: 20px; /* Внутренние отступы для текста */
+    text-align: center;
+    background-color: #fff;
+    border: 8px solid #666;
+    border-radius: 30px;
+    box-shadow: 2px 2px 4px #888;
+    margin: 0 auto; /* Для центрирования бабла */
+}
+
+.speech:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 30px;
+    bottom: -55px; /* Перемещаем "хвостик" ниже основного блока */
+    border: 25px solid;
+    border-color: #666 transparent transparent #666;
+}
+
+.speech:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 38px;
+    border: 15px solid;
+    border-color: #fff transparent transparent #fff;
+}
