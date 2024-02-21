@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/frontend-profile_style.css">
     <title>Шаблон</title>
 </head>
 
@@ -68,22 +69,22 @@
         </nav>
     </header>
 
-        <div class="container">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Личные данные</a>
+        <div class="mt-2 mb-4 container">
+          <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
+            <li class="nav-item ">
+                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Личные данные</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Твои прогнозы</a>
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Твои прогнозы</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Твоя натальная карта</a>
+                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Натальная карта</a>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                   <form>
                     <div class="form-group">
                       <label for="firstName">Имя</label>
@@ -126,23 +127,30 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="photoPreview"></label>
-                    <div id="photoPreview" class="p-1 mb-2">
+                    <div id="photoPreview" class="p-1 mb-2" style="text-align: center;" >
                       <img id="oldPhoto" src="img/Таинственный%20космос.png" alt="Старое фото" class="img-fluid rounded">
                     </div>
                     <form>
-                      <div class="form-group">
-                        <label for="photo">Загрузить новое фото</label>
-                        <input type="file" class="form-control-file" id="photo">
-                      </div>
+                        <div class="form-group" style="text-align: center;">
+                            <label for="photo" style="display: block;">Загрузить изображение</label>
+                            <label class="btn btn-primary" style="display: inline-block; width: auto; padding: 5px 50px;">
+                                Выбрать файл<input type="file" id="photo" hidden>
+                            </label>
+                        </div>
                     </form>
                   </div>
                 </div>
               </div>
+              <div class="mt-4">
+                  <button id="saveButton" onclick="saveData()" class="btn btn-primary">Сохранить данные</button>
+              </div>
             </div>
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+
+
+            <div class="tab-pane fade text-center mt-4" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
               <p>В ожидании прогнозов</p>
             </div>
-            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+            <div class="tab-pane fade text-center mt-4" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
               <p>У Вас пока нет натальной карты</p>
             </div>
           </div>

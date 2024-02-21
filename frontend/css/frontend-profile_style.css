@@ -1,0 +1,33 @@
+/* Скрытие текста "Файл еще не выбран" */
+    input[type="file"]::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    .form-control-file::before {
+        content: 'Выбрать файл'; /* Текст для кнопки загрузки файла */
+        display: inline-block;
+        background: #007bff; /* Цвет фона кнопки */
+        color: #fff; /* Цвет текста кнопки */
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .form-control-file:hover::before {
+        background: #0056b3; /* Цвет фона кнопки при наведении */
+    }
+
+
+/* Стили для кнопки сохранения данных */
+#saveButton {
+    display: inline-block;
+    background: #007bff; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+}
+
+#saveButton:hover {
+    background: #0056b3; /* Цвет фона кнопки при наведении */
+}
