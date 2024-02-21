@@ -10,42 +10,70 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-  <header>
-    <nav class="navbar navbar-expand-lg body-bg-blue navbar-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="img/Эмблема сайта.svg" alt="Сила звезд" width="65" height="49">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-            <li class="nav-item px-3 dropdown">
-              <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"><i class="bi bi-calendar2-event"></i>
-                Прогноз
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-date pe-1"></i>На
-                    сегодня</a>
-                </li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-week pe-1"></i>На
-                    неделю</a>
-                </li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-month pe-1"></i>На
-                    месяц</a>
-                </li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-fill pe-1"></i>На
-                    год</a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-day pe-1"></i>На день
-                    недели</a></li>
-              </ul>
+
+    <header>
+        <nav class="navbar navbar-expand-lg body-bg-blue navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="img/Эмблема сайта.svg" alt="Сила звезд" width="65" height="49">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item px-3 dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="bi bi-calendar2-event"></i>
+                                Прогноз
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-date pe-1"></i>На
+                                        сегодня</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-week pe-1"></i>На
+                                        неделю</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-month pe-1"></i>На
+                                        месяц</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-fill pe-1"></i>На
+                                        год</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-day pe-1"></i>На день
+                                        недели</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link" aria-current="page" href="#"><i
+                                    class="bi bi-chat-right-text pe-1"></i>Нужен совет</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link" href="#"><i class="bi bi-file-earmark-person pe-1"></i>Натальная
+                                карта</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><i
+                                    class="bi-person-circle pe-1"></i>Вход</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+        <div class="container">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Личные данные</a>
+
             </li>
             <li class="nav-item px-3">
               <a class="nav-link" aria-current="page" href="#"><i class="bi bi-chat-right-text pe-1"></i>Нужен совет</a>
@@ -60,34 +88,65 @@
               <a class="nav-link active" aria-current="page" href="#"><i class="bi-person-circle pe-1"></i>Вход</a>
             </li>
           </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
 
-  <div class="container">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
-          aria-selected="true">Личные данные</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-          aria-selected="false">Твои прогнозы</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-          aria-selected="false">Твоя натальная карта</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-        <div class="row">
-          <div class="col-md-6">
-            <form>
-              <div class="form-group">
-                <label for="firstName">Имя</label>
-                <input type="text" class="form-control" id="firstName" placeholder="Введите ваше имя">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+              <div class="row">
+                <div class="col-md-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="firstName">Имя</label>
+                      <input type="text" class="form-control" id="firstName" placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form-group">
+                      <label for="lastName">Фамилия</label>
+                      <input type="text" class="form-control" id="lastName" placeholder="Введите вашу фамилию">
+                    </div>
+                    <div class="form-group">
+                      <label for="middleName">Отчество</label>
+                      <input type="text" class="form-control" id="middleName" placeholder="Введите ваше отчество">
+                    </div>
+                    <div class="form-group">
+                      <label for="birthdate">Дата рождения</label>
+                      <input type="date" class="form-control" id="birthdate">
+                    </div>
+                    <div class="form-group">
+                      <label for="birthtime">Время рождения</label>
+                      <input type="time" class="form-control" id="birthtime">
+                    </div>
+                    <div class="form-group">
+                      <label for="country">Страна</label>
+                      <input type="text" class="form-control" id="country" placeholder="Введите вашу страну">
+                    </div>
+                    <div class="form-group">
+                      <label for="city">Город</label>
+                      <input type="text" class="form-control" id="city" placeholder="Введите ваш город">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Электронная почта</label>
+                      <input type="email" class="form-control" id="email" placeholder="Введите вашу электронную почту">
+                    </div>
+                    <div class="form-group">
+                      <label for="phone">Телефон</label>
+                      <input type="tel" class="form-control" id="phone" placeholder="Введите ваш телефон">
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="photoPreview"></label>
+                    <div id="photoPreview" class="p-1 mb-2">
+                      <img id="oldPhoto" src="img/Таинственный%20космос.png" alt="Старое фото" class="img-fluid rounded">
+                    </div>
+                    <form>
+                      <div class="form-group">
+                        <label for="photo">Загрузить новое фото</label>
+                        <input type="file" class="form-control-file" id="photo">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
               </div>
               <div class="form-group" class="d-flex flex-column justify-content-between">
                 <label for="lastName">Фамилия</label>
@@ -150,13 +209,20 @@
 
 
 
-  <footer class="mt-auto body-bg-blue text-white text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col col-12 p-2"><small>Все прогнозы и советы представлены исключительно в качестве
-            рекомендаций. Вы
-            несете полную ответственность за свои решения и действия на основе предложенной
-            информации.</small>
+
+    <footer class="mt-auto body-bg-blue text-white text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col col-12 p-2"><small>Все прогнозы и советы представлены исключительно в качестве
+                        рекомендаций. Вы
+                        несете полную ответственность за свои решения и действия на основе предложенной
+                        информации.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-12 p-2"><small>Все права защищены. © 2024</small></div>
+            </div>
+
         </div>
       </div>
       <div class="row">
