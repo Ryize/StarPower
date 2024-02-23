@@ -2,18 +2,14 @@
 main{
   position: relative;
   min-height: 100vh;
-  background-image: url('../img/back_register.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-@media (max-width: 768px) {
+@media (max-width: 375px) {
   main {
     min-height:100vh;
   }
 }
 .frame {
-   position: absolute; /* Абсолютное позиционирование относительно main */
+  position: absolute; /* Абсолютное позиционирование относительно main */
   top: 40px; /* Расстояние от верхней границы main */
   width: 90%; /* или другая ширина в зависимости от вашего дизайна */
   max-width: 430px; /* Максимальная ширина для крупных экранов */
@@ -114,12 +110,14 @@ main{
 }
 
 .form-signin {
-  width: 430px;
+  width: 90%;
   height: 375px;
 	font-size: 16px;
 	font-weight: 300;
-  padding-left: 37px;
-  padding-right: 37px;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-left: auto; /* Центрирование элемента по горизонтали */
+  margin-right: auto; /* Центрирование элемента по горизонтали */
   padding-top: 55px;
   -webkit-transition: opacity .5s ease, -webkit-transform .5s ease;
   transition: opacity .5s ease, -webkit-transform .5s ease;
@@ -134,12 +132,14 @@ main{
 }
 
 .form-signup {
-  width: 430px;
+  width: 90%;
   height: 375px;
 	font-size: 16px;
 	font-weight: 300;
-  padding-left: 37px;
-  padding-right: 37px;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-left: auto; /* Центрирование элемента по горизонтали */
+  margin-right: auto; /* Центрирование элемента по горизонтали */
   padding-top: 55px;
   position: relative;
   top: -375px;
