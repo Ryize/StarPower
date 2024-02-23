@@ -7,7 +7,7 @@ input[type="file"]::-webkit-file-upload-button {
     content: 'Выбрать файл';
     /* Текст для кнопки загрузки файла */
     display: inline-block;
-    background: #007bff;
+    background: #00093C;
     /* Цвет фона кнопки */
     color: #fff;
     /* Цвет текста кнопки */
@@ -17,7 +17,8 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .form-control-file:hover::before {
-    background: #0056b3;
+    background: #B8EFCF;
+    color: #00093C;
     /* Цвет фона кнопки при наведении */
 }
 
@@ -25,7 +26,7 @@ input[type="file"]::-webkit-file-upload-button {
 /* Стили для кнопки сохранения данных */
 #saveButton {
     display: inline-block;
-    background: #007bff;
+    background: #00093C;
     /* Цвет фона кнопки */
     color: #fff;
     /* Цвет текста кнопки */
@@ -37,6 +38,24 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 #saveButton:hover {
-    background: #0056b3;
+    background: #B8EFCF;
+    color: #00093C;
     /* Цвет фона кнопки при наведении */
+}
+
+.font-nav-tabs {
+    font-family: "Source Serif 4", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+
+}
+
+.font-items {
+    font-family: "IBM Plex Mono", monospace;
+    word-spacing: -px;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
 }
