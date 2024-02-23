@@ -1,6 +1,21 @@
+.container-center {
+    position: relative; /* Фиксируем контейнер в нижнем левом углу */
+    left: 0px;
+    bottom: 0%;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start; /* Выравнивание содержимого по левому краю */
+}
+
+.character-image {
+    width: 300px; /* Установите нужную ширину */
+    height: auto; /* Сохраняем пропорции */
+    position: relative; /* Для позиционирования хвостика относительно изображения */
+}
+
 .speech {
     position: relative;
-    max-width: 60%; /* Максимальная ширина, чтобы бабл не занимал всю ширину контейнера */
+    max-width: 80%; /* Максимальная ширина, чтобы бабл не занимал всю ширину контейнера */
     padding: 20px; /* Внутренние отступы для текста */
     text-align: center;
     background-color: #fff;
