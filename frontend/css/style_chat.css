@@ -21,12 +21,3 @@
     border-color: #666 transparent transparent #666;
 }
 
-.speech:after {
-    content: ' ';
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: 38px;
-    border: 15px solid;
-    border-color: #fff transparent transparent #fff;
-}
