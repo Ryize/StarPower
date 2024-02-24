@@ -1,7 +1,8 @@
 from flask import render_template, Response, redirect, url_for
-from flask_login import login_required, logout_user
+from flask_login import login_required, logout_user, login_manager
+from sqlalchemy.testing.pickleable import User
 
-from app import app
+from app import app, manager
 
 
 @app.route('/')
@@ -10,7 +11,7 @@ def index() -> Response | str:
     """
         Views для главной страницы.
     """
-    return render_template('frontend/index.html')
+    return render_template('index.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -45,3 +46,8 @@ def logout() -> Response | str:
     """
     logout_user()
     return redirect(url_for('index'))
+
+
+@manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
