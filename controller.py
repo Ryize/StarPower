@@ -10,7 +10,7 @@ def index() -> Response | str:
     """
         Views для главной страницы.
     """
-    return render_template('index.html')
+    return render_template('frontend/index.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])

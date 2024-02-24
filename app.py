@@ -14,3 +14,5 @@ db = SQLAlchemy(app)
 manager = LoginManager(app)
 
 
+
+
