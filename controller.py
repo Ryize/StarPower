@@ -30,11 +30,8 @@ def register() -> Response | str:
     """
     if request.method == 'GET':
         return render_template('register_authorization.html')
-    login = request.form.get('login')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    confirm_password = request.form.get('confirm_password')
-    if password != confirm_password:
+    forms = dict(request.form)
+    if forms['password'] != forms['confirm_password']:
         flash(
             {
                 'title': 'Ошибка!',
@@ -43,10 +40,9 @@ def register() -> Response | str:
             category='error',
         )
         return render_template('register_authorization.html')
-    if check_new_user(login=login, email=email, password=password):
-        forms = dict(request.form)
-        forms = forms.pop('confirm_password', None)
-        forms['password'] = generate_password_hash(password)
+    forms.pop('confirm_password', None)
+    if check_new_user(**forms):
+        forms['password'] = generate_password_hash(forms['password'])
         User.create(**forms)
         return redirect(url_for('register_authorization'))
     return render_template('register_authorization.html')
@@ -80,6 +76,7 @@ def authorization() -> Response | str:
 
 
 @app.route('/profile')
+@login_required
 def profile() -> Response | str:
     """
     Views для отображения и изменения профиля
@@ -147,4 +144,4 @@ def logout() -> Response | str:
 
 @manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.filter_by(id=user_id).first()
