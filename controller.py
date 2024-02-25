@@ -95,24 +95,40 @@ def daily() -> Response | str:
     return render_template('chat.html')
 
 
-@app.route('/weekly_horoscope')
-def weekly_horoscope() -> Response | str:
+@app.route('/weekly')
+def weekly() -> Response | str:
     """
         Views для отображения гороскопа на неделю
     """
     return render_template('chat.html')
 
 
-@app.route('/monthly_horoscope')
-def monthly_horoscope() -> Response | str:
+@app.route('/monthly')
+def monthly() -> Response | str:
     """
         Views для отображения гороскопа на месяц
     """
     return render_template('chat.html')
 
 
-@app.route('/special_horoscope')
-def special_horoscope() -> Response | str:
+@app.route('/year')
+def year() -> Response | str:
+    """
+        Views для отображения гороскопа на месяц
+    """
+    return render_template('chat.html')
+
+
+@app.route('/special')
+def special() -> Response | str:
+    """
+        Views для отображения гороскопа на определенный день
+    """
+    return render_template('chat.html')
+
+
+@app.route('/natal_chart')
+def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
