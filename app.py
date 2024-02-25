@@ -18,6 +18,7 @@ toastr = Toastr(app)
 app.config['TOASTR_SHOW_METHOD'] = 'show'
 app.config['TOASTR_TIMEOUT'] = 5000
 
+
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
