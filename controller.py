@@ -87,8 +87,8 @@ def profile() -> Response | str:
     return render_template('profile.html')
 
 
-@app.route('/daily_horoscope')
-def daily_horoscope() -> Response | str:
+@app.route('/daily')
+def daily() -> Response | str:
     """
         Views для отображения гороскопа на день
     """
