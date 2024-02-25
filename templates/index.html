@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Главная</title>
 </head>
 
@@ -13,8 +13,8 @@
     <header>
         <nav class="navbar navbar-expand-lg body-bg-blue navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="img/Эмблема%20сайта.svg" alt="Сила звезд" width="65" height="49">
+                <a class="navbar-brand" href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='img/emblem_site.svg')}} " alt="Сила звезд" width="65" height="49">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -57,12 +57,24 @@
                                 карта</a>
                         </li>
                     </ul>
+                    {% if current_user.is_authenticated %}
+                        <ul class="navbar-nav">
+                    <li class="nav-item px-3">
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('profile') }}"><i class="bi bi-person-gear"></i>Профиль</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link active" aria-current="page" href="{{url_for("logout")}}"><i
+                                    class="bi-person-circle pe-1"></i>Выход</a>
+                        </li>
+                    </ul>
+                    {% else %}
                     <ul class="navbar-nav">
                         <li class="nav-item px-3">
-                            <a class="nav-link active" aria-current="page" href="#"><i
+                            <a class="nav-link active" aria-current="page" href="{{url_for('register_authorization')}}"><i
                                     class="bi-person-circle pe-1"></i>Вход</a>
                         </li>
                     </ul>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -79,7 +91,7 @@
                         становится
                         меньше!
                     </div>
-                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid" src="img/Таинственный%20космос.png"
+                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid" src="{{ url_for('static', filename='img/mysterious_space.png') }}"
                             height="400" width="400">
                     </div>
                 </div>
@@ -88,7 +100,7 @@
         <section class="body-bg-blue text-white pb-3">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid" src="img/Изучение%20звезд.png"
+                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid" src="{{ url_for('static', filename='img/exploring_the_stars.png') }}"
                             height="400" width="400">
                     </div>
                     <div class="col-xl-6 col-md-12 text-field">
@@ -98,20 +110,20 @@
                 </div>
                 <div class="row pt-xl-5 pt-4">
                     <div class="col-xl-4 col-md-6 col-sm-12">
-                        <div class="img-sphere"><img src="img/Эмблема%20солнца.svg" alt=""></div>
+                        <div class="img-sphere"><img src="{{ url_for('static', filename='img/sun_emblem.svg') }}" alt=""></div>
                         <h3 class="text-center">Солнце</h3>
                         <p class="px-5">Солнце занимает сильное положение в гороскопе людей, имеющих от рождения
                             лидерские
                             способности.</p>
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12">
-                        <div class="img-sphere"><img src="img/Эмблема%20луны.svg" alt=""></div>
+                        <div class="img-sphere"><img src="{{ url_for('static', filename='img/moon_emblem.svg') }}" alt=""></div>
                         <h3 class="text-center">Луна</h3>
                         <p class="px-5">Луна символизирует самое близкое и важное для любого человека — его дом и семью.
                         </p>
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12">
-                        <div class="img-sphere"><img src="img/Эмблема%20планеты.png" alt=""></div>
+                        <div class="img-sphere"><img src="{{ url_for('static', filename='img/planet_emblem.png') }}" alt=""></div>
                         <h3 class="text-center">Планеты</h3>
                         <p class="px-5">Планеты – символические сущности, которые в сочетании со знаками Зодиака могут
                             влиять на характер и судьбу человека.</p>
@@ -136,7 +148,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid"
-                                                                   src="img/Искусственный%20интелект.png" height="400" width="400">
+                                                                   src="{{ url_for('static', filename='img/AIimage.png') }}" height="400" width="400">
                     </div>
                     <div class="col-xl-6 col-md-12 text-field-3s">
                         <p class="second_row-p-1-3s">Сейчас искусственный интеллект позволяет связывать воедино наши
@@ -159,40 +171,39 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
                         <div class="position-relative text-center">
-                            <img src="img/speak_bubble.png" class="img-fluid" height="100px">
+                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
                             <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Что день грядущий мне
-                                    готовит?</p>
+                                <p class="text-black text-buble">Кто виноват и что делать?</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
                         <div class="position-relative text-center">
-                            <img src="img/speak_bubble.png" class="img-fluid">
+                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
                             <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Что случится на этой недели?</p>
+                                <p class="text-black text-buble">Кто виноват и что делать?</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
                         <div class="position-relative text-center">
-                            <img src="img/speak_bubble.png" class="img-fluid">
+                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
                             <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Что произойдет в этом месяце?</p>
+                                <p class="text-black text-buble">Кто виноват и что делать?</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
                         <div class="position-relative text-center">
-                            <img src="img/speak_bubble.png" class="img-fluid">
+                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
                             <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Как пройдет год?</p>
+                                <p class="text-black text-buble">Кто виноват и что делать?</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
                         <div class="position-relative text-center">
-                            <img src="img/speak_bubble.png" class="img-fluid">
+                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
                             <div class="position-absolute top-50 start-50 translate-middle pb-2">
                                 <p class="text-black text-buble">Кто виноват и что делать?</p>
                             </div>
@@ -202,7 +213,7 @@
             </div>
             <div class="row ">
                 <div class="col-12 text-center">
-                    <img src="img/девушка2%201.png" alt="" height="400" width="auto">
+                    <img src="{{ url_for('static', filename='img/girl21.png') }}img/девушка2%201.png" alt="" height="400" width="auto">
                 </div>
             </div>
         </section>
@@ -221,7 +232,7 @@
             </div>
         </div>
     </footer>
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>
