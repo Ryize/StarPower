@@ -1,7 +1,10 @@
-from flask import render_template, Response, redirect, url_for
-from flask_login import login_required, logout_user
-
-from app import app
+from flask import render_template, Response, redirect, url_for, request, flash
+from flask_login import login_required, logout_user, login_user
+from models import User
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from app import app, manager
+from business_logic import check_new_user
 
 
 @app.route('/')
@@ -12,13 +15,37 @@ def index() -> Response | str:
     """
     return render_template('index.html')
 
+@app.route('/register_authorization', methods=['GET', 'POST'])
+def register_authorization() -> Response | str:
+    """
+        Views для страницы регистрации и авторизации
+    """
+    return render_template('register_authorization.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register() -> Response | str:
     """
         Views для страницы регистрации пользователя.
     """
-    return render_template('register.html')
+    if request.method == 'GET':
+        return render_template('register_authorization.html')
+    forms = dict(request.form)
+    if forms['password'] != forms['confirm_password']:
+        flash(
+            {
+                'title': 'Ошибка!',
+                'message': 'Пароль не совпадает',
+            },
+            category='error',
+        )
+        return render_template('register_authorization.html')
+    forms.pop('confirm_password', None)
+    if check_new_user(**forms):
+        forms['password'] = generate_password_hash(forms['password'])
+        User.create(**forms)
+        return redirect(url_for('register_authorization'))
+    return render_template('register_authorization.html')
 
 
 @app.route('/authorization', methods=['GET', 'POST'])
@@ -26,15 +53,83 @@ def authorization() -> Response | str:
     """
         Views для страницы авторизации пользователя.
     """
-    return render_template('authorization.html')
+    if request.method == 'GET':
+        return render_template('register_authorization.html')
+    login = request.form.get('login')
+    password = request.form.get('password')
+    user = User.query.filter_by(login=login).first()
+    if user and check_password_hash(user.password, password):
+        login_user(user)
+        flash(
+            {'title': 'Успешно!', 'message': 'Добро пожаловать'},
+            category='success',
+        )
+        return redirect(url_for('index'))
+    flash(
+        {
+            'title': 'Ошибка!',
+            'message': 'Мы не нашли такого пользователя',
+        },
+        category='error',
+    )
+    return render_template('register_authorization.html')
 
 
 @app.route('/profile')
+@login_required
 def profile() -> Response | str:
     """
     Views для отображения и изменения профиля
     """
     return render_template('profile.html')
+
+
+@app.route('/daily')
+def daily() -> Response | str:
+    """
+        Views для отображения гороскопа на день
+    """
+    return render_template('chat.html')
+
+
+@app.route('/weekly')
+def weekly() -> Response | str:
+    """
+        Views для отображения гороскопа на неделю
+    """
+    return render_template('chat.html')
+
+
+@app.route('/monthly')
+def monthly() -> Response | str:
+    """
+        Views для отображения гороскопа на месяц
+    """
+    return render_template('chat.html')
+
+
+@app.route('/year')
+def year() -> Response | str:
+    """
+        Views для отображения гороскопа на месяц
+    """
+    return render_template('chat.html')
+
+
+@app.route('/special')
+def special() -> Response | str:
+    """
+        Views для отображения гороскопа на определенный день
+    """
+    return render_template('chat.html')
+
+
+@app.route('/natal_chart')
+def natal_chart() -> Response | str:
+    """
+        Views для отображения гороскопа на определенный день
+    """
+    return render_template('chat.html')
 
 
 @app.route('/logout/')
@@ -45,3 +140,8 @@ def logout() -> Response | str:
     """
     logout_user()
     return redirect(url_for('index'))
+
+
+@manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).first()

@@ -1,0 +1,41 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+
+:root {
+    --color1: #00093C;
+    --color2: #B8EFCF;
+}
+
+.color1 {
+    color: var(--color1);
+}
+
+.color2 {
+    color: var(--color2);
+}
+
+.body-bg-blue {
+    background-color: var(--color1);
+}
+
+.btn-castom {
+    color: white;
+    font-size: 30px;
+    background: var(--color1);
+    border-color: var(--color2);
+    border-radius: 15px;
+}
+
+.ibm-plex-600 {
+    font-family: "IBM Plex Mono", monospace;
+    word-spacing: -5px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.source-serif {
+    font-family: "Source Serif 4", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
