@@ -31,22 +31,22 @@
                                 Прогноз
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-date pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('daily') }}"><i class="bi bi-calendar2-date pe-1"></i>на
                                         сегодня</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-week pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('weekly') }}"><i class="bi bi-calendar2-week pe-1"></i>на
                                         неделю</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-month pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('monthly') }}"><i class="bi bi-calendar2-month pe-1"></i>на
                                         месяц</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-fill pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('year') }}"><i class="bi bi-calendar2-fill pe-1"></i>на
                                         год</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-calendar2-day pe-1"></i>на день
+                                <li><a class="dropdown-item" href="{{ url_for('special') }}"><i class="bi bi-calendar2-day pe-1"></i>на день
                                         недели</a></li>
                             </ul>
                         </li>
@@ -55,7 +55,7 @@
                                     class="bi bi-chat-right-text pe-1"></i>Нужен совет</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link" href="#"><i class="bi bi-file-earmark-person pe-1"></i>Натальная
+                            <a class="nav-link" href="{{ url_for('natal_chart') }}"><i class="bi bi-file-earmark-person pe-1"></i>Натальная
                                 карта</a>
                         </li>
                     </ul>
@@ -65,15 +65,15 @@
                             <a class="nav-link active" aria-current="page" href="{{ url_for('profile') }}"><i class="bi bi-person-gear"></i>Профиль</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link active" aria-current="page" href="{{url_for("logout")}}"><i
-                                    class="bi-person-circle pe-1"></i>Выход</a>
+                            <a class="nav-link active" aria-current="page" href="{{url_for("logout")}}">
+                                <i class="bi bi-person-circle pe-1"></i>Выход</a>
                         </li>
                     </ul>
                     {% else %}
                     <ul class="navbar-nav">
                         <li class="nav-item px-3">
                             <a class="nav-link active" aria-current="page" href="{{url_for('register_authorization')}}"><i
-                                    class="bi-person-circle pe-1"></i>Вход</a>
+                                    class="bi bi-person-circle pe-1"></i>Вход</a>
                         </li>
                     </ul>
                     {% endif %}
@@ -81,11 +81,8 @@
             </div>
         </nav>
     </header>
-
-    <main class="flex-fill">
         {% block content %}
         {% endblock %}
-    </main>
 {% block footer %}
     <footer class="mt-auto body-bg-blue text-white text-center">
         <div class="container">

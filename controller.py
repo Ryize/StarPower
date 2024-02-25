@@ -17,6 +17,9 @@ def index() -> Response | str:
 
 @app.route('/register_authorization', methods=['GET', 'POST'])
 def register_authorization() -> Response | str:
+    """
+        Views для страницы регистрации и авторизации
+    """
     return render_template('register_authorization.html')
 
 
@@ -35,7 +38,7 @@ def register() -> Response | str:
         flash(
             {
                 'title': 'Ошибка!',
-                'message': 'Парольне совпадает',
+                'message': 'Пароль не совпадает',
             },
             category='error',
         )
@@ -82,6 +85,54 @@ def profile() -> Response | str:
     Views для отображения и изменения профиля
     """
     return render_template('profile.html')
+
+
+@app.route('/daily')
+def daily() -> Response | str:
+    """
+        Views для отображения гороскопа на день
+    """
+    return render_template('chat.html')
+
+
+@app.route('/weekly')
+def weekly() -> Response | str:
+    """
+        Views для отображения гороскопа на неделю
+    """
+    return render_template('chat.html')
+
+
+@app.route('/monthly')
+def monthly() -> Response | str:
+    """
+        Views для отображения гороскопа на месяц
+    """
+    return render_template('chat.html')
+
+
+@app.route('/year')
+def year() -> Response | str:
+    """
+        Views для отображения гороскопа на месяц
+    """
+    return render_template('chat.html')
+
+
+@app.route('/special')
+def special() -> Response | str:
+    """
+        Views для отображения гороскопа на определенный день
+    """
+    return render_template('chat.html')
+
+
+@app.route('/natal_chart')
+def natal_chart() -> Response | str:
+    """
+        Views для отображения гороскопа на определенный день
+    """
+    return render_template('chat.html')
 
 
 @app.route('/logout/')

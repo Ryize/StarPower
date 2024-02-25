@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat.css') }}">
+{% endblock %}
+<title>{% block title %}Чат{% endblock %}</title>
+
+{% block content %}
+    <main class="main-content">
+        <div class="container flex-column mt-5">
+            <div class="speech">
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+                Привет! Я персонаж, который говорит через этот бабл.
+            </div>
+            <div class="character-and-speech">
+                <img src="{{ url_for('static', filename='img/person-bable.png') }}" alt="Персонаж" class="character-image">
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
