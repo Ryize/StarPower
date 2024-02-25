@@ -1,6 +1,6 @@
 from flask import render_template, Response, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user
-from sqlalchemy.testing.pickleable import User
+from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from app import app, manager
@@ -27,11 +27,11 @@ def register() -> Response | str:
     """
     if request.method == 'GET':
         return render_template('register_authorization.html')
-    login = request.form.get('login', '_')
+    login = request.form.get('login')
     email = request.form.get('email')
-    password = request.form.get('password', '_')
-    password2 = request.form.get('password2', '_')
-    if password != password2:
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+    if password != confirm_password:
         flash(
             {
                 'title': 'Ошибка!',
@@ -42,11 +42,11 @@ def register() -> Response | str:
         return render_template('register_authorization.html')
     if check_new_user(login=login, email=email, password=password):
         forms = dict(request.form)
+        forms = forms.pop('confirm_password', None)
         forms['password'] = generate_password_hash(password)
         User.create(**forms)
-        return redirect(url_for('authorization'))
+        return redirect(url_for('register_authorization'))
     return render_template('register_authorization.html')
-
 
 
 @app.route('/authorization', methods=['GET', 'POST'])
@@ -56,9 +56,9 @@ def authorization() -> Response | str:
     """
     if request.method == 'GET':
         return render_template('register_authorization.html')
-    email = request.form.get('email', '_')
-    password = request.form.get('password', '_')
-    user = User.query.filter_by(email=email).first()
+    login = request.form.get('login')
+    password = request.form.get('password')
+    user = User.query.filter_by(login=login).first()
     if user and check_password_hash(user.password, password):
         login_user(user)
         flash(

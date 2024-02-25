@@ -1,7 +1,7 @@
 import re
 
 from flask import flash
-from sqlalchemy.testing.pickleable import User
+from models import User
 def check_new_user(login: str, email: str, password: str) -> bool:
     """
     Проверяет данные нового пользователя перед регистрацией.
