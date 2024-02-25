@@ -35,8 +35,9 @@ class BaseModel:
         :type kwargs: dict
         :return: None
         """
-        new_user = cls(*args, **kwargs)
-        new_user.save()
+        new_obj = cls(*args, **kwargs)
+        new_obj.save()
+
 
 class User(db.Model, BaseModel, UserMixin):
     """
@@ -67,7 +68,7 @@ def load_user(user_id: int) -> User | None:
     :return: объект пользователя, если пользователь существует, иначе None
     :rtype: User
     """
-    return User.query.get(user_id)
+    return User.query.filter_by(id=user_id).first()
 
 
 with app.app_context():
