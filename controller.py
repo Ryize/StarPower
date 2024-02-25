@@ -75,7 +75,7 @@ def authorization() -> Response | str:
     return render_template('register_authorization.html')
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile() -> Response | str:
     """
