@@ -1,6 +1,6 @@
 from flask import render_template, Response, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user
-from sqlalchemy.testing.pickleable import User
+from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from app import app, manager
