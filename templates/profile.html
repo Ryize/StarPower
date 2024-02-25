@@ -1,10 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block style %}
+{% endblock %}
+{% block title %}Profile{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<!-- Содержимое вашей страницы здесь -->
+    <div class="mt-xl-5 mt-2 mb-5 container">
+    <ul class="nav nav-tabs flex-column flex-sm-row font-nav-tabs mb-5" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link color1 active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+          aria-selected="true">Личные данные</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link color1" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+          aria-selected="false">Твои прогнозы</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link color1" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
+          aria-selected="false">Натальная карта</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+        <div class="row">
+          <div class="col-md-6 mt-2 mb-2 font-items">
+            <form>
+              <div class="form-group mt-2 mb-3">
+                <label for="firstName">Имя</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Введите ваше имя">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="lastName">Фамилия</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Введите вашу фамилию">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="middleName">Отчество</label>
+                <input type="text" class="form-control" id="middleName" placeholder="Введите ваше отчество">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="birthdate">Дата рождения</label>
+                <input type="date" class="form-control" id="birthdate">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="birthtime">Время рождения</label>
+                <input type="time" class="form-control" id="birthtime">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="country">Страна</label>
+                <input type="text" class="form-control" id="country" placeholder="Введите вашу страну">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="city">Город</label>
+                <input type="text" class="form-control" id="city" placeholder="Введите ваш город">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="email">Электронная почта</label>
+                <input type="email" class="form-control" id="email" placeholder="Введите вашу электронную почту">
+              </div>
+              <div class="form-group mt-2 mb-3">
+                <label for="phone">Телефон</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Введите ваш телефон">
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group mt-4">
+              <label for="photoPreview"></label>
+              <div id="photoPreview" class="p-1 mb-2" style="text-align: center;">
+                <img id="oldPhoto" src="{{ url_for('static', filename='img/mysterious_space.png') }}" alt="Старое фото" class="img-fluid rounded">
+              </div>
+              <form>
+                <div class="form-group mt-2 mb-3" style="text-align: center;">
+                  <label for="photo" style="display: block;">Загрузить изображение</label>
+                  <label id="saveButton" class="btn btn-primary mt-2"
+                    style="display: inline-block; width: auto; padding: 5px 50px;">
+                    Выбрать файл<input type="file" id="photo" hidden>
+                  </label>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <button id="saveButton" onclick="saveData()" class="btn btn-primary">Сохранить данные</button>
+        </div>
+      </div>
+
+
+      <div class="tab-pane fade text-center mt-5" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+        <p>В ожидании прогнозов</p>
+      </div>
+      <div class="tab-pane fade text-center mt-5" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+        <p>У Вас пока нет натальной карты</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
