@@ -12,6 +12,7 @@ class BaseModel:
     :param created_at: дата и время создания записи о пользователе
     :type created_at: datetime
     """
+    __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
@@ -37,6 +38,7 @@ class BaseModel:
         """
         new_obj = cls(*args, **kwargs)
         new_obj.save()
+        return new_obj
 
 
 class User(db.Model, BaseModel, UserMixin):
@@ -52,10 +54,31 @@ class User(db.Model, BaseModel, UserMixin):
     :param password: пароль пользователя
     :type password: str
     """
+    __tablename__ = 'user'
 
-    login = db.Column(db.String(64), unique=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
+    login = db.Column(db.String(64), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String(100), nullable=True)
+    surname = db.Column(db.String(100), nullable=True)
+    patronymic = db.Column(db.String(100), nullable=True)
+    birthday = db.Column(db.Date, nullable=True)
+    birth_time = db.Column(db.Time, nullable=True)
+    country = db.Column(db.String(100), nullable=True)
+    city = db.Column(db.String(100), nullable=True)
+    phone = db.Column(db.String(20), nullable=True)
+    avatar = db.Column(db.String(255), nullable=True)
+    sex = db.Column(db.String(10), nullable=True)
+    premium = db.Column(db.Boolean, default=False)
+    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'), nullable=True)
+    zodiac_sign = db.relationship('ZodiacSign', backref=db.backref('users', lazy=True))
+
+
+class ZodiacSign(db.Model, BaseModel):
+
+    __tablename__ = 'zodiac_sign'
+
+    name = db.Column(db.String(50), unique=True, nullable=False)
 
 
 @manager.user_loader
