@@ -71,6 +71,8 @@ class User(db.Model, BaseModel, UserMixin):
     sex = db.Column(db.String(10), nullable=True)
     premium = db.Column(db.Boolean, default=False)
     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'), nullable=True)
+    zodiac_sign = db.relationship('ZodiacSign', backref=db.backref('users', lazy=True))
+    natal_chart = db.relationship('UserNatalChart', backref='users', lazy=True)
 
 
 class ZodiacSign(db.Model, BaseModel):
@@ -80,34 +82,58 @@ class ZodiacSign(db.Model, BaseModel):
     name = db.Column(db.String(50), unique=True, nullable=False)
 
 
-class UserHoroscope(db.Model, BaseModel):
-    __tablename__ = 'user_horoscope'
+class UserNatalChart(db.Model, BaseModel):
+
+    __tablename__ = 'user_natal_chart'
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    natal_chart = db.Column(db.String(700))
+    natal_chart = db.Column(db.Text(), nullable=False)
 
-# class HoroscopeToday(db.Model, BaseModel):
-#     date = db.Column(db.String())
-#     zodiac_sign = db.Column(db.String(100))
-#     horoscope = db.Column(db.String(100))
-#
-#
-# class HoroscopeWeek(db.Model, BaseModel):
-#     date = db.Column(db.String())
-#     zodiac_sign = db.Column(db.String(100))
-#     horoscope = db.Column(db.String(100))
-#
-#
-# class HoroscopeMonth(db.Model, BaseModel):
-#     date = db.Column(db.String())
-#     zodiac_sign = db.Column(db.String(100))
-#     horoscope = db.Column(db.String(100))
-#
-#
-# class HoroscopeYear(db.Model, BaseModel):
-#     date = db.Column(db.String())
-#     zodiac_sign = db.Column(db.String(100))
-#     horoscope = db.Column(db.String(100))
+
+class HoroscopeToday(db.Model, BaseModel):
+
+    __tablename__ = 'horoscope_today'
+
+    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+    zodiac_sign = db.relationship('ZodiacSign',
+                                  backref=db.backref('horoscopes_today', lazy=True))
+    horoscope = db.Column(db.Text, nullable=False)
+    date = db.Column(db.Date, default=datetime.date.today)
+
+
+class HoroscopeWeek(db.Model, BaseModel):
+
+    __tablename__ = 'horoscope_week'
+
+    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+    zodiac_sign = db.relationship('ZodiacSign',
+                                  backref=db.backref('weekly_horoscopes', lazy=True))
+    horoscope = db.Column(db.Text, nullable=False)
+    week_start_date = db.Column(db.Date, nullable=False)
+    week_end_date = db.Column(db.Date, nullable=False)
+
+
+class HoroscopeMonth(db.Model, BaseModel):
+
+    __tablename__ = 'horoscope_month'
+
+    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+    zodiac_sign = db.relationship('ZodiacSign',
+                                  backref=db.backref('monthly_horoscopes', lazy=True))
+    horoscope = db.Column(db.Text, nullable=False)
+    month = db.Column(db.Integer, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+
+
+class HoroscopeYear(db.Model, BaseModel):
+
+    __tablename__ = 'horoscope_year'
+
+    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+    zodiac_sign = db.relationship('ZodiacSign',
+                                  backref=db.backref('yearly_horoscopes', lazy=True))
+    horoscope = db.Column(db.Text, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
 
 
 @manager.user_loader
