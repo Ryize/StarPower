@@ -25,43 +25,46 @@
       <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
         <div class="row">
           <div class="col-md-6 mt-2 mb-2 font-items">
-            <form>
+            <form method="post" >
               <div class="form-group mt-2 mb-3">
                 <label for="firstName">Имя</label>
-                <input type="text" class="form-control" id="firstName" placeholder="Введите ваше имя">
+                <input name="name" type="text" class="form-control" id="firstName" placeholder="Введите ваше имя">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="lastName">Фамилия</label>
-                <input type="text" class="form-control" id="lastName" placeholder="Введите вашу фамилию">
+                <input name="surname" type="text" class="form-control" id="lastName" placeholder="Введите вашу фамилию">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="middleName">Отчество</label>
-                <input type="text" class="form-control" id="middleName" placeholder="Введите ваше отчество">
+                <input name="patronymic" type="text" class="form-control" id="middleName" placeholder="Введите ваше отчество">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="birthdate">Дата рождения</label>
-                <input type="date" class="form-control" id="birthdate">
+                <input name="birthday" type="date" class="form-control" id="birthdate">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="birthtime">Время рождения</label>
-                <input type="time" class="form-control" id="birthtime">
+                <input name="birth_time" type="time" class="form-control" id="birthtime">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="country">Страна</label>
-                <input type="text" class="form-control" id="country" placeholder="Введите вашу страну">
+                <input name="country" type="text" class="form-control" id="country" placeholder="Введите вашу страну">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="city">Город</label>
-                <input type="text" class="form-control" id="city" placeholder="Введите ваш город">
+                <input name="city" type="text" class="form-control" id="city" placeholder="Введите ваш город">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="email">Электронная почта</label>
-                <input type="email" class="form-control" id="email" placeholder="Введите вашу электронную почту">
+                <input name="email" type="email" class="form-control" id="email" placeholder="Введите вашу электронную почту">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="phone">Телефон</label>
-                <input type="tel" class="form-control" id="phone" placeholder="Введите ваш телефон">
+                <input name="phone" type="tel" class="form-control" id="phone" placeholder="Введите ваш телефон">
               </div>
+                <div class="mt-4">
+          <button id="saveButton" type="submit" class="btn btn-primary">Сохранить данные</button>
+        </div>
             </form>
           </div>
           <div class="col-md-6">
@@ -81,9 +84,6 @@
               </form>
             </div>
           </div>
-        </div>
-        <div class="mt-4">
-          <button id="saveButton" onclick="saveData()" class="btn btn-primary">Сохранить данные</button>
         </div>
       </div>
 
