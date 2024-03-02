@@ -1,5 +1,5 @@
 from openai import OpenAI
-client = OpenAI(api_key='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')
+client = OpenAI()
 
 day = ''
 
