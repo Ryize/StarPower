@@ -29,13 +29,13 @@ user_request = f"Я {user_data['zodiac_sign']}, что меня ждет {period
 
 print(user_request)
 
-# completion = client.chat.completions.create(
-#   model="gpt-3.5-turbo",
-#   messages=[
-#     {"role": "system", "content": description},
-#     {"role": "user", "content": f"Я {user_data['zodiac_sign']}, что меня ждет {period['year'][0]}? Предсказание должно содержать 2000 символов. В начале опиши начало года, потом что будет в середине и далее чем год закончится"}
-#   ]
-# )
+completion = client.chat.completions.create(
+  model="gpt-3.5-turbo",
+  messages=[
+    {"role": "system", "content": description},
+    {"role": "user", "content": f"Я {user_data['zodiac_sign']}, что меня ждет {period['year'][0]}? Предсказание должно содержать 2000 символов. В начале опиши начало года, потом что будет в середине и далее чем год закончится"}
+  ]
+)
 
-# print(f'{completion.usage.prompt_tokens} prompt tokens used.')
-# print(completion.choices[0].message.content)
+print(f'{completion.usage.prompt_tokens} prompt tokens used.')
+print(completion.choices[0].message.content)
