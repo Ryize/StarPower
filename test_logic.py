@@ -39,3 +39,25 @@ completion = client.chat.completions.create(
 
 print(f'{completion.usage.prompt_tokens} prompt tokens used.')
 print(completion.choices[0].message.content)
+
+
+class GetHoroscope:
+
+    add_inf_year = ('В начале опиши начало года, потом что будет в середине'
+                    'и далее чем год закончится.')
+
+    add_inf_month = ''
+    add_inf_week = ''
+
+    description_period = {
+        'year': ['в этом году', '2000 - 2500', add_inf_year],
+        'month': ['в этом месяце', '1000 - 1500', add_inf_month],
+        'week': ['на этой неделе', '1000 - 1500', add_inf_week],
+        'today': ['сегодня', '500 - 700'],
+        'day_of_the_week': [f'{day}', '500-700']
+    }
+
+    def __init__(self, zodiac_sign, period, day=None) -> None:
+        self.zodiac_sign = zodiac_sign
+        self.period = period
+        self.day = day
