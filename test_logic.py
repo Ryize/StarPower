@@ -104,16 +104,18 @@ class GetAstralData:
                         utc_birth_time.hour + utc_birth_time.minute / 60.0)
         return jd
 
-    def calc_planet_and_houses_positions(self):
+    def calc_planet_positions(self):
         # Расчет положений планет
         planet_positions = {
             planet: swe.calc_ut(
                 self.jd, planet)[0][0] for planet in self.planets}
+        return planet_positions
 
+    def calc_houses_positions(self):
         # Расчет домов
-        houses = swe.houses(self.jd, self.birth_place['latitude'],
-                            self.birth_place['longitude'], b'P')[0]
-        return planet_positions, houses
+        houses_positions = swe.houses(self.jd, self.birth_place['latitude'],
+                                      self.birth_place['longitude'], b'P')[0]
+        return houses_positions
 
 
 astralData = GetAstralData(datetime(2024, 2, 11, 19, 20),
