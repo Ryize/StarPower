@@ -1,6 +1,9 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import swisseph as swe
+from datetime import datetime
+import pytz
 
 
 class GetHoroscope:
@@ -8,19 +11,16 @@ class GetHoroscope:
 
     day = None
 
-    add_inf_year = ('Данные возьми с сайта по астрологии.'
-                    'Пожалуйста, включи описание общих тенденций, '
+    add_inf_year = ('Пожалуйста, включи описание общих тенденций, '
                     'возможностей и предостережений.'
                     'Не упоминай какой сейчас год.'
                     )
 
-    add_inf_month = ('Данные возьми с сайта по астрологии.'
-                     'Опиши начало месяца, потом что будет в середине'
+    add_inf_month = ('Опиши начало месяца, потом что будет в середине'
                      'и далее чем месяц закончится.')
-    add_inf_week = ('Данные возьми с сайта по астрологии.'
-                    'Опиши начало недели, потом что будет в середине'
+    add_inf_week = ('Опиши начало недели, потом что будет в середине'
                     'и далее чем неделя закончится.')
-    add_inf_day = 'Данные возьми с сайта по астрологии.'
+    add_inf_day = ''
     add_inf_day_of_the_week = ('Это предсказание на число указанное ранее.'
                                'Расскажи что интересного случится в этот день')
 
@@ -54,7 +54,7 @@ class GetHoroscope:
 
     def get_response(self):
         completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-1106",
             messages=[
                 {"role": "system", "content": self.description},
                 {"role": "user", "content": self.user_request()}
@@ -63,7 +63,8 @@ class GetHoroscope:
         return completion.choices[0].message.content
 
     def user_request(self):
-        res = (f"Я {self.zodiac_sign}, что меня ждет "
+        res = ("Данные возьми с сайта по астрологии."
+               f"Я {self.zodiac_sign}, что меня ждет "
                f"{self.des_period[self.period][0]}? Предсказание должно "
                f"содержать {self.des_period[self.period][1]} символов. "
                f"{self.des_period[self.period][2]}")
@@ -71,5 +72,52 @@ class GetHoroscope:
         return res
 
 
-horoscope = GetHoroscope('Скорпион', 'today')
-print(horoscope.get_response())
+# horoscope = GetHoroscope('Скорпион', 'today')
+# print(horoscope.get_response())
+
+class GetAstralData:
+    # # Данные о месте и времени рождения
+    # birth_date = datetime(2024, 2, 11, 19, 20)
+    # # Пример: 29 января 1988 года, 17:45
+    # birth_place = {"latitude": 54.78, "longitude": 32.04}
+    # # Пример: Смоленск, Россия
+
+    planets = [swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
+               swe.JUPITER, swe.SATURN, swe.URANUS, swe.NEPTUNE, swe.PLUTO]
+
+    def __init__(self, birth_date, birth_place) -> None:
+        self.birth_date = birth_date
+        self.birth_place = birth_place
+        self.jd = self.calculation_Julian_date()
+
+    def convertion_utc(self):
+        # Конвертация в UTC
+        tz = pytz.timezone('Europe/Moscow')  # Часовой пояс
+        utc_birth_time = tz.localize(self.birth_date).astimezone(pytz.utc)
+        return utc_birth_time
+
+    def calculation_Julian_date(self):
+        # Расчет юлианской даты
+        utc_birth_time = self.convertion_utc()
+        jd = swe.julday(utc_birth_time.year, utc_birth_time.month,
+                        utc_birth_time.day,
+                        utc_birth_time.hour + utc_birth_time.minute / 60.0)
+        return jd
+
+    def calc_planet_and_houses_positions(self):
+        # Расчет положений планет
+        planet_positions = {
+            planet: swe.calc_ut(
+                self.jd, planet)[0][0] for planet in self.planets}
+
+        # Расчет домов
+        houses = swe.houses(self.jd, self.birth_place['latitude'],
+                            self.birth_place['longitude'], b'P')[0]
+        return planet_positions, houses
+
+
+astralData = GetAstralData(datetime(2024, 2, 11, 19, 20),
+                           {"latitude": 54.78, "longitude": 32.04})
+print("Planet Positions:", astralData.calc_planet_and_houses_positions()[0])
+print("Houses:", astralData.calc_planet_and_houses_positions()[0])
+# print(swe.calc_ut(jd, swe.MOON)[0][0])
