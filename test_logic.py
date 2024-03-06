@@ -4,6 +4,10 @@ from dotenv import load_dotenv
 import swisseph as swe
 from datetime import datetime
 import pytz
+from geopy.geocoders import Nominatim
+import geopy
+import random
+import string
 
 
 class GetHoroscope:
@@ -85,9 +89,25 @@ class GetAstralData:
     planets = [swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
                swe.JUPITER, swe.SATURN, swe.URANUS, swe.NEPTUNE, swe.PLUTO]
 
+    @staticmethod
+    def create_random_str():
+        return ''.join(random.choices(
+            string.ascii_letters + string.digits, k=3))
+
+    @staticmethod
+    def get_coordinates(city, user_agent='dec'):
+        try:
+            geolocator = Nominatim(user_agent=user_agent)
+            location = geolocator.geocode(city)
+            return {"latitude": location.latitude,
+                    "longitude": location.longitude}
+        except geopy.exc.GeopyError:
+            GetAstralData.get_coordinates(
+                city, user_agent=GetAstralData.create_random_str())
+
     def __init__(self, birth_date, birth_place) -> None:
         self.birth_date = birth_date
-        self.birth_place = birth_place
+        self.birth_place = GetAstralData.get_coordinates(birth_place)
         self.jd = self.calculation_Julian_date()
 
     def convertion_utc(self):
@@ -119,7 +139,7 @@ class GetAstralData:
 
 
 astralData = GetAstralData(datetime(2024, 2, 11, 19, 20),
-                           {"latitude": 54.78, "longitude": 32.04})
-print("Planet Positions:", astralData.calc_planet_and_houses_positions()[0])
-print("Houses:", astralData.calc_planet_and_houses_positions()[0])
-# print(swe.calc_ut(jd, swe.MOON)[0][0])
+                           'Смоленск')
+print("Planet Positions:", astralData.calc_planet_positions())
+print("Houses:", astralData.calc_houses_positions())
+# print(swe.calc_ut(jd, swe.MOON)[0][0])s
