@@ -86,8 +86,18 @@ class GetAstralData:
     # birth_place = {"latitude": 54.78, "longitude": 32.04}
     # # Пример: Смоленск, Россия
 
-    planets = [swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
-               swe.JUPITER, swe.SATURN, swe.URANUS, swe.NEPTUNE, swe.PLUTO]
+    planets = [
+        ['SUN', swe.SUN],
+        ['MOON', swe.MOON],
+        ['MERCURY', swe.MERCURY],
+        ['VENUS', swe.VENUS],
+        ['MARS', swe.MARS],
+        ['JUPITER', swe.JUPITER],
+        ['SATURN', swe.SATURN],
+        ['URANUS', swe.URANUS],
+        ['NEPTUNE', swe.NEPTUNE],
+        ['PLUTO', swe.PLUTO]
+    ]
 
     @staticmethod
     def create_random_str():
@@ -127,8 +137,8 @@ class GetAstralData:
     def calc_planet_positions(self):
         # Расчет положений планет
         planet_positions = {
-            planet: swe.calc_ut(
-                self.jd, planet)[0][0] for planet in self.planets}
+            planet[0]: swe.calc_ut(
+                self.jd, planet[1])[0][0] for planet in self.planets}
         return planet_positions
 
     def calc_houses_positions(self):
@@ -138,8 +148,55 @@ class GetAstralData:
         return houses_positions
 
 
-astralData = GetAstralData(datetime(2024, 2, 11, 19, 20),
-                           'Смоленск')
-print("Planet Positions:", astralData.calc_planet_positions())
-print("Houses:", astralData.calc_houses_positions())
+# astralData = GetAstralData(datetime(2024, 2, 11, 19, 20),
+#                            'Смоленск')
+# print("Planet Positions:", astralData.calc_planet_positions())
+# print("Houses:", astralData.calc_houses_positions())
 # print(swe.calc_ut(jd, swe.MOON)[0][0])s
+
+
+class GetNatalChart:
+
+    client = None
+
+    description = (
+        'Ты профессиональный астролог. Твоя цель мотивировать,'
+        'успокаивать, поддерживать людей, выделять их сильные'
+        'стороны, таланты и возможности для успеха. Понимание'
+        'их слабостей и предложения по их преодолению. Людям'
+        'надо рассказывать только важную для них информацию,'
+        'только то что касается их непосредственно, не вдаваясь'
+        'в работу астролога, но указывать дома и планеты,'
+        'которые связаны с астрологическим прогнозом.')
+
+    def __init__(self, birth_date, birth_place) -> None:
+        load_dotenv()
+        token = os.getenv('CHAT_GPT_TOKEN')
+        self.client = OpenAI(api_key=token)
+        self.birth_date = birth_date
+        self.birth_place = birth_place
+        self.astralData = GetAstralData(self.birth_date, self.birth_place)
+
+    def get_response(self):
+        completion = self.client.chat.completions.create(
+            model="gpt-3.5-turbo-1106",
+            messages=[
+                {"role": "system", "content": self.description},
+                {"role": "user", "content": self.user_request()}
+            ]
+            )
+        return completion.choices[0].message.content
+
+    def user_request(self):
+        res = ("интерпретирeй эти данные и предоставить информацию"
+               " о влиянии этих планет и домов на  натальную карту. "
+               f"дата рождения {self.birth_date}"
+               f"Место рождения {self.birth_place}"
+               f"планеты: {self.astralData.calc_planet_positions()}, "
+               f"позиции домов {self.astralData.calc_houses_positions()}.")
+        print(res)
+        return res
+
+
+natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+print(natalChart.get_response())
