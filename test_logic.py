@@ -72,19 +72,14 @@ class GetHoroscope:
                f"{self.des_period[self.period][0]}? Предсказание должно "
                f"содержать {self.des_period[self.period][1]} символов. "
                f"{self.des_period[self.period][2]}")
-        print(res)
         return res
 
 
 # horoscope = GetHoroscope('Скорпион', 'today')
 # print(horoscope.get_response())
 
+
 class GetAstralData:
-    # # Данные о месте и времени рождения
-    # birth_date = datetime(2024, 2, 11, 19, 20)
-    # # Пример: 29 января 1988 года, 17:45
-    # birth_place = {"latitude": 54.78, "longitude": 32.04}
-    # # Пример: Смоленск, Россия
 
     planets = [
         ['SUN', swe.SUN],
@@ -148,18 +143,14 @@ class GetAstralData:
         return houses_positions
 
 
-# astralData = GetAstralData(datetime(2024, 2, 11, 19, 20),
-#                            'Смоленск')
-# print("Planet Positions:", astralData.calc_planet_positions())
-# print("Houses:", astralData.calc_houses_positions())
-# print(swe.calc_ut(jd, swe.MOON)[0][0])s
-
-
 class GetNatalChart:
 
     client = None
 
     description = (
+        'Натальная карта должна содержать не менее 4000 символов. '
+        'Повествование начинай без вступления, сразу с солнца. '
+        'Не спрашивай дополнительные вопросы т консультации. '
         'Ты профессиональный астролог. Твоя цель мотивировать,'
         'успокаивать, поддерживать людей, выделять их сильные'
         'стороны, таланты и возможности для успеха. Понимание'
@@ -190,11 +181,10 @@ class GetNatalChart:
     def user_request(self):
         res = ("интерпретирeй эти данные и предоставить информацию"
                " о влиянии этих планет и домов на  натальную карту. "
-               f"дата рождения {self.birth_date}"
-               f"Место рождения {self.birth_place}"
-               f"планеты: {self.astralData.calc_planet_positions()}, "
+               f"дата рождения {self.birth_date}. "
+               f"Место рождения {self.birth_place}. "
+               f"Планеты: {self.astralData.calc_planet_positions()}, "
                f"позиции домов {self.astralData.calc_houses_positions()}.")
-        print(res)
         return res
 
 
