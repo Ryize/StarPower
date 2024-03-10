@@ -92,42 +92,10 @@ def profile() -> Response | str:
     return redirect(url_for('profile'))
 
 
-@app.route('/daily')
-def daily() -> Response | str:
+@app.route('/horoscope/<period>')
+def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
-    """
-    return render_template('chat.html')
-
-
-@app.route('/weekly')
-def weekly() -> Response | str:
-    """
-        Views для отображения гороскопа на неделю
-    """
-    return render_template('chat.html')
-
-
-@app.route('/monthly')
-def monthly() -> Response | str:
-    """
-        Views для отображения гороскопа на месяц
-    """
-    return render_template('chat.html')
-
-
-@app.route('/year')
-def year() -> Response | str:
-    """
-        Views для отображения гороскопа на месяц
-    """
-    return render_template('chat.html')
-
-
-@app.route('/special')
-def special() -> Response | str:
-    """
-        Views для отображения гороскопа на определенный день
     """
     return render_template('chat.html')
 
