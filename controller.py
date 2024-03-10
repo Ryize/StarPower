@@ -97,6 +97,7 @@ def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
     """
+
     return render_template('chat.html')
 
 
