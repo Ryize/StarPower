@@ -27,33 +27,13 @@ class BaseModel:
 
     @classmethod
     def create(cls, *args, **kwargs) -> 'BaseModel':
-        """
-        Позволяет создать новый объект в базе данных.
 
-        :param args: Позиционные аргументы для передачи конструктору модели
-        :type args: tuple
-        :param kwargs: Аргументы ключевого слова для передачи конструктору модели.
-        :type kwargs: dict
-        :return: None
-        """
         new_obj = cls(*args, **kwargs)
         new_obj.save()
         return new_obj
 
 
 class User(db.Model, BaseModel, UserMixin):
-    """
-    Модель пользователя.
-
-    :param id: уникальный идентификатор пользователя
-    :type id: int
-    :param login: логин пользователя
-    :type login: str
-    :param email: адрес электронной почты пользователя
-    :type email: str
-    :param password: пароль пользователя
-    :type password: str
-    """
     __tablename__ = 'user'
 
     login = db.Column(db.String(64), unique=True, nullable=False)
@@ -62,8 +42,8 @@ class User(db.Model, BaseModel, UserMixin):
     name = db.Column(db.String(100), nullable=True)
     surname = db.Column(db.String(100), nullable=True)
     patronymic = db.Column(db.String(100), nullable=True)
-    birthday = db.Column(db.String(20), nullable=True)
-    birth_time = db.Column(db.String(20), nullable=True)
+    birthday = db.Column(db.Date, nullable=True)
+    birth_time = db.Column(db.Time, nullable=True)
     country = db.Column(db.String(100), nullable=True)
     city = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
@@ -76,14 +56,12 @@ class User(db.Model, BaseModel, UserMixin):
 
 
 class ZodiacSign(db.Model, BaseModel):
-
     __tablename__ = 'zodiac_sign'
 
     name = db.Column(db.String(50), unique=True, nullable=False)
 
 
 class UserNatalChart(db.Model, BaseModel):
-
     __tablename__ = 'user_natal_chart'
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -91,7 +69,6 @@ class UserNatalChart(db.Model, BaseModel):
 
 
 class HoroscopeToday(db.Model, BaseModel):
-
     __tablename__ = 'horoscope_today'
 
     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
@@ -102,7 +79,6 @@ class HoroscopeToday(db.Model, BaseModel):
 
 
 class HoroscopeWeek(db.Model, BaseModel):
-
     __tablename__ = 'horoscope_week'
 
     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
@@ -114,7 +90,6 @@ class HoroscopeWeek(db.Model, BaseModel):
 
 
 class HoroscopeMonth(db.Model, BaseModel):
-
     __tablename__ = 'horoscope_month'
 
     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
@@ -126,7 +101,6 @@ class HoroscopeMonth(db.Model, BaseModel):
 
 
 class HoroscopeYear(db.Model, BaseModel):
-
     __tablename__ = 'horoscope_year'
 
     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
