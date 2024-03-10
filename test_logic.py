@@ -45,7 +45,7 @@ class GetHoroscope:
         'month': ['в этом месяце', '1000 - 1500', add_inf_month],
         'week': ['на этой неделе', '1000 - 1500', add_inf_week],
         'today': ['сегодня', '500 - 700', add_inf_day],
-        'day_of_the_week': [f'{day}', '500-700', add_inf_day_of_the_week]
+        'special': [f'{day}', '500-700', add_inf_day_of_the_week]
     }
 
     def __init__(self, zodiac_sign, period, day=None) -> None:

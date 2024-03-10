@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from app import app, manager, db
 from business_logic import check_new_user
+from test_logic import GetHoroscope
 
 
 @app.route('/')
@@ -97,8 +98,10 @@ def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
     """
-
-    return render_template('chat.html')
+    user_horoscope = current_user.zodiac_sign
+    get_horoscope = GetHoroscope(user_horoscope, period)
+    text = get_horoscope.get_response()
+    return render_template('chat.html', text=text)
 
 
 @app.route('/natal_chart')
@@ -106,6 +109,7 @@ def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
+
     return render_template('chat.html')
 
 
