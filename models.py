@@ -18,12 +18,6 @@ class BaseModel:
 
 
 class ModelHoroscope(BaseModel):
-    """
-    :param id: уникальный идентификатор рецепта
-    :type id: int
-    :param created_at: дата и время создания записи о пользователе
-    :type created_at: datetime
-    """
     __abstract__ = True
     zodiac_sign = db.Column(db.String(15), nullable=True)
     horoscope = db.Column(db.Text, nullable=False)
