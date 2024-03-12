@@ -142,6 +142,7 @@ def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
+
     return render_template('chat.html')
 
 
