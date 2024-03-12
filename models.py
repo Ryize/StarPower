@@ -50,15 +50,8 @@ class User(db.Model, BaseModel, UserMixin):
     avatar = db.Column(db.String(255), nullable=True)
     sex = db.Column(db.String(10), nullable=True)
     premium = db.Column(db.Boolean, default=False)
-    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'), nullable=True)
-    zodiac_sign = db.relationship('ZodiacSign', backref=db.backref('users', lazy=True))
+    zodiac_sign_id = db.Column(db.Integer, nullable=True)
     natal_chart = db.relationship('UserNatalChart', backref='users', lazy=True)
-
-
-class ZodiacSign(db.Model, BaseModel):
-    __tablename__ = 'zodiac_sign'
-
-    name = db.Column(db.String(50), unique=True, nullable=False)
 
 
 class UserNatalChart(db.Model, BaseModel):
