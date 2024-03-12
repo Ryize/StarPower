@@ -49,7 +49,7 @@ class User(db.Model, BaseModel, UserMixin):
     city = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
     avatar = db.Column(db.String(255), nullable=True)
-    sex = db.Column(db.Boolean, default=False, nullable=True)
+    sex = db.Column(db.String(10), nullable=True)
     premium = db.Column(db.Boolean, default=False)
     zodiac_sign = db.Column(db.String(15), nullable=True)
     natal_chart = db.relationship('UserNatalChart', backref='users', lazy=True)
