@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+import datetime
 
 from flask_login import UserMixin
 
