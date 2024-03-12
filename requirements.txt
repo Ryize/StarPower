@@ -32,3 +32,4 @@ swisseph==0.0.0.dev1
 tqdm==4.66.2
 typing_extensions==4.9.0
 Werkzeug==3.0.1
+zodiac-sign==0.2.5
