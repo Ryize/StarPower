@@ -48,9 +48,9 @@ class User(db.Model, BaseModel, UserMixin):
     city = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
     avatar = db.Column(db.String(255), nullable=True)
-    sex = db.Column(db.String(10), nullable=True)
+    sex = db.Column(db.Boolean, nullable=True)
     premium = db.Column(db.Boolean, default=False)
-    zodiac_sign_id = db.Column(db.Integer, nullable=True)
+    zodiac_sign = db.Column(db.String(255), nullable=True)
     natal_chart = db.relationship('UserNatalChart', backref='users', lazy=True)
 
 
@@ -61,46 +61,46 @@ class UserNatalChart(db.Model, BaseModel):
     natal_chart = db.Column(db.Text(), nullable=False)
 
 
-class HoroscopeToday(db.Model, BaseModel):
-    __tablename__ = 'horoscope_today'
-
-    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
-    zodiac_sign = db.relationship('ZodiacSign',
-                                  backref=db.backref('horoscopes_today', lazy=True))
-    horoscope = db.Column(db.Text, nullable=False)
-    date = db.Column(db.Date, default=datetime.date.today)
-
-
-class HoroscopeWeek(db.Model, BaseModel):
-    __tablename__ = 'horoscope_week'
-
-    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
-    zodiac_sign = db.relationship('ZodiacSign',
-                                  backref=db.backref('weekly_horoscopes', lazy=True))
-    horoscope = db.Column(db.Text, nullable=False)
-    week_start_date = db.Column(db.Date, nullable=False)
-    week_end_date = db.Column(db.Date, nullable=False)
-
-
-class HoroscopeMonth(db.Model, BaseModel):
-    __tablename__ = 'horoscope_month'
-
-    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
-    zodiac_sign = db.relationship('ZodiacSign',
-                                  backref=db.backref('monthly_horoscopes', lazy=True))
-    horoscope = db.Column(db.Text, nullable=False)
-    month = db.Column(db.Integer, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
-
-
-class HoroscopeYear(db.Model, BaseModel):
-    __tablename__ = 'horoscope_year'
-
-    zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
-    zodiac_sign = db.relationship('ZodiacSign',
-                                  backref=db.backref('yearly_horoscopes', lazy=True))
-    horoscope = db.Column(db.Text, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
+# class HoroscopeToday(db.Model, BaseModel):
+#     __tablename__ = 'horoscope_today'
+#
+#     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+#     zodiac_sign = db.relationship('ZodiacSign',
+#                                   backref=db.backref('horoscopes_today', lazy=True))
+#     horoscope = db.Column(db.Text, nullable=False)
+#     date = db.Column(db.Date, default=datetime.date.today)
+#
+#
+# class HoroscopeWeek(db.Model, BaseModel):
+#     __tablename__ = 'horoscope_week'
+#
+#     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+#     zodiac_sign = db.relationship('ZodiacSign',
+#                                   backref=db.backref('weekly_horoscopes', lazy=True))
+#     horoscope = db.Column(db.Text, nullable=False)
+#     week_start_date = db.Column(db.Date, nullable=False)
+#     week_end_date = db.Column(db.Date, nullable=False)
+#
+#
+# class HoroscopeMonth(db.Model, BaseModel):
+#     __tablename__ = 'horoscope_month'
+#
+#     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+#     zodiac_sign = db.relationship('ZodiacSign',
+#                                   backref=db.backref('monthly_horoscopes', lazy=True))
+#     horoscope = db.Column(db.Text, nullable=False)
+#     month = db.Column(db.Integer, nullable=False)
+#     year = db.Column(db.Integer, nullable=False)
+#
+#
+# class HoroscopeYear(db.Model, BaseModel):
+#     __tablename__ = 'horoscope_year'
+#
+#     zodiac_sign_id = db.Column(db.Integer, db.ForeignKey('zodiac_sign.id'))
+#     zodiac_sign = db.relationship('ZodiacSign',
+#                                   backref=db.backref('yearly_horoscopes', lazy=True))
+#     horoscope = db.Column(db.Text, nullable=False)
+#     year = db.Column(db.Integer, nullable=False)
 
 
 @manager.user_loader
