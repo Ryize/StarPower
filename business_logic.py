@@ -1,6 +1,8 @@
 import re
 
 from flask import flash
+
+from app import ALLOWED_EXTENSIONS
 from models import User
 def check_new_user(login: str, email: str, password: str) -> bool:
     """
@@ -95,3 +97,17 @@ def check_new_user(login: str, email: str, password: str) -> bool:
         category='success',
     )
     return True
+
+
+def allowed_file(filename: str) -> bool:
+    """
+    Проверяет расширение загружаемого файла и сравнивает его со списком
+    допустимых расширений, которые хранятся в константе ALLOWED_EXTENSIONS.
+
+    :param filename: имя файла
+    :type filename: str
+    :return: результат проверки
+    :rtype: bool
+    """
+    filename_split = filename.rsplit('.', 1)[1].lower()
+    return '.' in filename and filename_split in ALLOWED_EXTENSIONS
