@@ -71,14 +71,14 @@
             <div class="form-group mt-4">
               <label for="photoPreview"></label>
               <div id="photoPreview" class="p-1 mb-2" style="text-align: center;">
-                <img id="oldPhoto" src="{{ url_for('static', filename='img/mysterious_space.png') }}" alt="Старое фото" class="img-fluid rounded">
+                <img id="oldPhoto" src="{{ url_for('static', filename=current_user.avatar) }}" alt="Старое фото" class="img-fluid rounded">
               </div>
-              <form>
+              <form id="uploadForm" method="post" action="{{ url_for('upload') }}" enctype="multipart/form-data">
                 <div class="form-group mt-2 mb-3" style="text-align: center;">
                   <label for="photo" style="display: block;">Загрузить изображение</label>
                   <label id="saveButton" class="btn btn-primary mt-2"
                     style="display: inline-block; width: auto; padding: 5px 50px;">
-                    Выбрать файл<input type="file" id="photo" hidden>
+                    Выбрать файл<input type="file" id="photo" name='photo' onchange="document.getElementById('uploadForm').submit();" hidden>
                   </label>
                 </div>
               </form>
