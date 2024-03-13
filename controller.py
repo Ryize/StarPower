@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 
 from flask import render_template, Response, redirect, url_for, request, flash
