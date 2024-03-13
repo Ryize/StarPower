@@ -16,13 +16,6 @@ class BaseModel:
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
-
-class ModelHoroscope(BaseModel):
-    __abstract__ = True
-    zodiac_sign = db.Column(db.String(15), nullable=True)
-    horoscope = db.Column(db.Text, nullable=False)
-    date = db.Column(db.Date, default=datetime.date.today)
-
     def save(self) -> None:
         """
         Сохраняет текущий экземпляр класса в базе данных
@@ -68,20 +61,15 @@ class UserNatalChart(db.Model, BaseModel):
     natal_chart = db.Column(db.Text(), nullable=False)
 
 
-class HoroscopeToday(db.Model, ModelHoroscope):
-    __tablename__ = 'horoscope_today'
+class Horoscope(db.Model):
+    __tablename__ = 'horoscope'
 
+    __abstract__ = True
+    period = db.Column(db.db.String(15), nullable=True)
+    zodiac_sign = db.Column(db.String(15), nullable=True)
+    horoscope = db.Column(db.Text, nullable=False)
+    date = db.Column(db.Date, default=datetime.date.today)
 
-class HoroscopeWeek(db.Model, ModelHoroscope):
-    __tablename__ = 'horoscope_week'
-
-
-class HoroscopeMonth(db.Model, ModelHoroscope):
-    __tablename__ = 'horoscope_month'
-
-
-class HoroscopeYear(db.Model, ModelHoroscope):
-    __tablename__ = 'horoscope_year'
 
 
 @manager.user_loader
