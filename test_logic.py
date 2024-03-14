@@ -179,7 +179,7 @@ class GetNatalChart:
         return completion.choices[0].message.content
 
     def user_request(self):
-        res = ("интерпретирeй эти данные и предоставить информацию"
+        res = ("интерпретируй эти данные и предоставить информацию"
                " о влиянии этих планет и домов на  натальную карту. "
                f"дата рождения {self.birth_date}. "
                f"Место рождения {self.birth_place}. "
