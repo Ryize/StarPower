@@ -58,18 +58,17 @@ class User(db.Model, BaseModel, UserMixin):
 class UserNatalChart(db.Model, BaseModel):
     __tablename__ = 'user_natal_chart_SP'
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user_SP.id'))
     natal_chart = db.Column(db.Text(), nullable=False)
 
 
-class Horoscope(db.Model):
+class Horoscope(db.Model, BaseModel):
     __tablename__ = 'horoscope_SP'
 
-    period = db.Column(db.db.String(15), nullable=True)
+    period = db.Column(db.String(15), nullable=True)
     zodiac_sign = db.Column(db.String(15), nullable=True)
     horoscope = db.Column(db.Text, nullable=False)
-    date = db.Column(db.Date, default=datetime.date.today)
-
+    date = db.Column(db.Date)
 
 
 @manager.user_loader

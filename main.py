@@ -1,4 +1,7 @@
+from dotenv import load_dotenv
+
 if __name__ == "__main__":
-    from controller import *
+    load_dotenv()
+    from controller import app
 
     app.run(debug=True)

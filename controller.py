@@ -2,7 +2,6 @@ from flask import render_template, Response, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user, current_user
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
 from app import app, manager, db
 from business_logic import check_new_user
 from test_logic import GetHoroscope
@@ -15,6 +14,7 @@ def index() -> Response | str:
         Views для главной страницы.
     """
     return render_template('index.html')
+
 
 @app.route('/register_authorization', methods=['GET', 'POST'])
 def register_authorization() -> Response | str:
