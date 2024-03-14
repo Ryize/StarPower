@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 
 from flask_login import UserMixin
 
@@ -14,7 +14,8 @@ class BaseModel:
     """
     __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    created_at = db.Column(db.DateTime,
+                           default=lambda: datetime.now(timezone.utc))
 
     def save(self) -> None:
         """
@@ -34,7 +35,7 @@ class BaseModel:
 
 
 class User(db.Model, BaseModel, UserMixin):
-    __tablename__ = 'user'
+    __tablename__ = 'user_SP'
 
     login = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -48,23 +49,22 @@ class User(db.Model, BaseModel, UserMixin):
     city = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
     avatar = db.Column(db.String(255), nullable=True)
-    sex = db.Column(db.String(10), nullable=True)
+    sex = db.Column(db.Boolean, default=False, nullable=True)
     premium = db.Column(db.Boolean, default=False)
     zodiac_sign = db.Column(db.String(15), nullable=True)
     natal_chart = db.relationship('UserNatalChart', backref='users', lazy=True)
 
 
 class UserNatalChart(db.Model, BaseModel):
-    __tablename__ = 'user_natal_chart'
+    __tablename__ = 'user_natal_chart_SP'
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     natal_chart = db.Column(db.Text(), nullable=False)
 
 
 class Horoscope(db.Model):
-    __tablename__ = 'horoscope'
+    __tablename__ = 'horoscope_SP'
 
-    __abstract__ = True
     period = db.Column(db.db.String(15), nullable=True)
     zodiac_sign = db.Column(db.String(15), nullable=True)
     horoscope = db.Column(db.Text, nullable=False)
