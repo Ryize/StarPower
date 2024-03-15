@@ -188,5 +188,5 @@ class GetNatalChart:
         return res
 
 
-natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-print(natalChart.get_response())
+# natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+# print(natalChart.get_response())

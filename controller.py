@@ -1,9 +1,15 @@
+from datetime import datetime
+
 from flask import render_template, Response, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user, current_user
+from zodiac_sign import get_zodiac_sign
+
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
-from business_logic import check_new_user
+from business_logic import check_new_user, allowed_file
+
+
 from test_logic import GetHoroscope
 
 
@@ -86,9 +92,35 @@ def profile() -> Response | str:
         return render_template('profile.html')
     user = current_user
     forms = dict(request.form)
+    if forms['birthday']:
+        forms['birthday'] = datetime.strptime(forms['birthday'], '%Y-%m-%d').date()
+        forms['zodiac_sign'] = get_zodiac_sign(forms['birthday'], language='ru-RU')
+    if forms['birth_time']:
+        forms['birth_time'] = datetime.strptime(forms['birth_time'], '%H:%M').time()
     for key, value in forms.items():
         if value:
             setattr(user, key, value)
+    db.session.commit()
+    return redirect(url_for('profile'))
+
+
+@app.route('/upload', methods=['POST'])
+@login_required
+def upload():
+    if request.method == 'GET':
+        return render_template('profile.html')
+    file = request.files['photo']
+    if file.filename == '':
+        return redirect('profile')
+    if not (file and allowed_file(file.filename)):
+        flash({'title': 'Ошибка!', 'message': 'Неверный файл'})
+        return redirect('profile')
+    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+    filename = secure_filename(f'{timestamp}_{file.filename}')
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
+    current_user.avatar = file_path
+    db.session.add(current_user)
     db.session.commit()
     return redirect(url_for('profile'))
 
@@ -109,6 +141,7 @@ def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
+
     return render_template('chat.html')
 
 
