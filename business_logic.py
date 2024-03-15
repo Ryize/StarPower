@@ -111,3 +111,4 @@ def allowed_file(filename: str) -> bool:
     """
     filename_split = filename.rsplit('.', 1)[1].lower()
     return '.' in filename and filename_split in ALLOWED_EXTENSIONS
+
