@@ -39,7 +39,7 @@ class User(db.Model, BaseModel, UserMixin):
 
     login = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     name = db.Column(db.String(100), nullable=True)
     surname = db.Column(db.String(100), nullable=True)
     patronymic = db.Column(db.String(100), nullable=True)
