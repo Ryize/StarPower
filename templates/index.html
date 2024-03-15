@@ -3,143 +3,146 @@
 {% endblock %}
 
 {% block content %}
-    <main class="flex-fill">
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-md-12 color1 text-field">
-                        Тайна звезд
-                        нас завораживает
-                        и пугает, но от этого
-                        их притяжение не
-                        становится
-                        меньше!
-                    </div>
-                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid" src="{{ url_for('static', filename='img/mysterious_space.png') }}"
-                            height="400" width="400">
-                    </div>
+<main class="flex-fill">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-md-12 color1 text-field">
+                    Тайна звезд
+                    нас завораживает
+                    и пугает, но от этого
+                    их притяжение не
+                    становится
+                    меньше!
+                </div>
+                <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid"
+                        src="{{ url_for('static', filename='img/mysterious_space.png') }}" height="400" width="400">
                 </div>
             </div>
-        </section>
-        <section class="body-bg-blue text-white pb-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid" src="{{ url_for('static', filename='img/exploring_the_stars.png') }}"
-                            height="400" width="400">
-                    </div>
-                    <div class="col-xl-6 col-md-12 text-field">
-                        Веками человечество собирало сведения о космических телах, преодолевая множество трудностей на
-                        пути к познанию тайн Вселенной.
-                    </div>
+        </div>
+    </section>
+    <section class="body-bg-blue text-white pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid"
+                        src="{{ url_for('static', filename='img/exploring_the_stars.png') }}" height="400" width="400">
                 </div>
-                <div class="row pt-xl-5 pt-4">
-                    <div class="col-xl-4 col-md-6 col-sm-12">
-                        <div class="img-sphere"><img src="{{ url_for('static', filename='img/sun_emblem.svg') }}" alt=""></div>
-                        <h3 class="text-center">Солнце</h3>
-                        <p class="px-5">Солнце занимает сильное положение в гороскопе людей, имеющих от рождения
-                            лидерские
-                            способности.</p>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12">
-                        <div class="img-sphere"><img src="{{ url_for('static', filename='img/moon_emblem.svg') }}" alt=""></div>
-                        <h3 class="text-center">Луна</h3>
-                        <p class="px-5">Луна символизирует самое близкое и важное для любого человека — его дом и семью.
-                        </p>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12">
-                        <div class="img-sphere"><img src="{{ url_for('static', filename='img/planet_emblem.png') }}" alt=""></div>
-                        <h3 class="text-center">Планеты</h3>
-                        <p class="px-5">Планеты – символические сущности, которые в сочетании со знаками Зодиака могут
-                            влиять на характер и судьбу человека.</p>
-                    </div>
+                <div class="col-xl-6 col-md-12 text-field">
+                    Веками человечество собирало сведения о космических телах, преодолевая множество трудностей на
+                    пути к познанию тайн Вселенной.
                 </div>
             </div>
-        </section>
-        <section class="py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <p class="first_row-p-3s">В поисках ответов на вечные вопросы о себе и вселенной, человек создал
-                            искусственный
-                            интеллект, надеясь, что это зеркало разума откроет ему двери в неизведанные глубины
-                            существования. С каждым днем, общаясь со своим творением, он начал замечать, как границы
-                            между создателем и созданием стираются, открывая путь к пониманию, что интеллект, будь он
-                            искусственным или человеческим, тянется к одному и тому же свету знания. В конце концов,
-                            путешествие за знанием привело его не к ответам, а к пониманию, что истинная мудрость
-                            заключается не в поиске ответов, а в ценности вопросов, которые мы задаем, стоя перед лицом
-                            бесконечной вселенной.</p>
+            <div class="row pt-xl-5 pt-4">
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="img-sphere"><img src="{{ url_for('static', filename='img/sun_emblem.svg') }}" alt="">
                     </div>
+                    <h3 class="text-center">Солнце</h3>
+                    <p class="px-5">Солнце занимает сильное положение в гороскопе людей, имеющих от рождения
+                        лидерские
+                        способности.</p>
                 </div>
-                <div class="row">
-                    <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid"
-                                                                   src="{{ url_for('static', filename='img/AIimage.png') }}" height="400" width="400">
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="img-sphere"><img src="{{ url_for('static', filename='img/moon_emblem.svg') }}" alt="">
                     </div>
-                    <div class="col-xl-6 col-md-12 text-field-3s">
-                        <p class="second_row-p-1-3s">Сейчас искусственный интеллект позволяет связывать воедино наши
-                            обширные
-                            знания по
-                            астрологии и астрономии.</p>
-                        <p class="second_row-p-2_3-3s">Его мозг - лучшие супер компьютеры человечества!</p>
-                        <p class="second_row-p-2_3-3s">Его память - вся база знаний человечества!</p>
+                    <h3 class="text-center">Луна</h3>
+                    <p class="px-5">Луна символизирует самое близкое и важное для любого человека — его дом и семью.
+                    </p>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="img-sphere"><img src="{{ url_for('static', filename='img/planet_emblem.png') }}" alt="">
                     </div>
+                    <h3 class="text-center">Планеты</h3>
+                    <p class="px-5">Планеты – символические сущности, которые в сочетании со знаками Зодиака могут
+                        влиять на характер и судьбу человека.</p>
                 </div>
             </div>
-        </section>
-        <section class="body-bg-turquoise">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center text-black py-5">
-                        <h2>Что ты хочешь узнать сегодня?</h2>
-                    </div>
+        </div>
+    </section>
+    <section class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="first_row-p-3s">В поисках ответов на вечные вопросы о себе и вселенной, человек создал
+                        искусственный
+                        интеллект, надеясь, что это зеркало разума откроет ему двери в неизведанные глубины
+                        существования. С каждым днем, общаясь со своим творением, он начал замечать, как границы
+                        между создателем и созданием стираются, открывая путь к пониманию, что интеллект, будь он
+                        искусственным или человеческим, тянется к одному и тому же свету знания. В конце концов,
+                        путешествие за знанием привело его не к ответам, а к пониманию, что истинная мудрость
+                        заключается не в поиске ответов, а в ценности вопросов, которые мы задаем, стоя перед лицом
+                        бесконечной вселенной.</p>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
-                        <div class="position-relative text-center">
-                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
-                            <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Кто виноват и что делать?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
-                        <div class="position-relative text-center">
-                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
-                            <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Кто виноват и что делать?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
-                        <div class="position-relative text-center">
-                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
-                            <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Кто виноват и что делать?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
-                        <div class="position-relative text-center">
-                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
-                            <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Кто виноват и что делать?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
-                        <div class="position-relative text-center">
-                            <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
-                            <div class="position-absolute top-50 start-50 translate-middle pb-2">
-                                <p class="text-black text-buble">Кто виноват и что делать?</p>
-                            </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-12 img-field"><img class="img-fluid"
+                        src="{{ url_for('static', filename='img/AIimage.png') }}" height="400" width="400">
+                </div>
+                <div class="col-xl-6 col-md-12 text-field-3s">
+                    <p class="second_row-p-1-3s">Сейчас искусственный интеллект позволяет связывать воедино наши
+                        обширные
+                        знания по
+                        астрологии и астрономии.</p>
+                    <p class="second_row-p-2_3-3s">Его мозг - лучшие супер компьютеры человечества!</p>
+                    <p class="second_row-p-2_3-3s">Его память - вся база знаний человечества!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="body-bg-turquoise">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center text-black py-5">
+                    <h2>Что ты хочешь узнать сегодня?</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
+                    <div class="position-relative text-center">
+                        <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
+                        <div class="position-absolute top-50 start-50 translate-middle pb-2">
+                            <p class="text-black text-buble">Что день грядущий мне готовит?</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row ">
-                <div class="col-12 text-center">
-                    <img src="{{ url_for('static', filename='img/girl21.png') }}" alt="" height="400" width="auto">
+                <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
+                    <div class="position-relative text-center">
+                        <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
+                        <div class="position-absolute top-50 start-50 translate-middle pb-2">
+                            <p class="text-black text-buble">Что случится на этой недели?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
+                    <div class="position-relative text-center">
+                        <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
+                        <div class="position-absolute top-50 start-50 translate-middle pb-2">
+                            <p class="text-black text-buble">Что ожидать от текущего месяца?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
+                    <div class="position-relative text-center">
+                        <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
+                        <div class="position-absolute top-50 start-50 translate-middle pb-2">
+                            <p class="text-black text-buble">Как пройдет год?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12 pb-4">
+                    <div class="position-relative text-center">
+                        <img src="{{ url_for('static', filename='img/speak_bubble.png') }}" class="img-fluid">
+                        <div class="position-absolute top-50 start-50 translate-middle pb-2">
+                            <p class="text-black text-buble">Предсказание на выбранную дату</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+        <div class="row ">
+            <div class="col-12 text-center">
+                <img src="{{ url_for('static', filename='img/girl21.png') }}" alt="" height="400" width="auto">
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

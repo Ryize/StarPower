@@ -1,10 +1,10 @@
 from flask import render_template, Response, redirect, url_for, request, flash
-from flask_login import login_required, logout_user, login_user
+from flask_login import login_required, logout_user, login_user, current_user
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
-from app import app, manager
+from app import app, manager, db
 from business_logic import check_new_user
+from test_logic import GetHoroscope
 
 
 @app.route('/')
@@ -14,6 +14,7 @@ def index() -> Response | str:
         Views для главной страницы.
     """
     return render_template('index.html')
+
 
 @app.route('/register_authorization', methods=['GET', 'POST'])
 def register_authorization() -> Response | str:
@@ -81,47 +82,26 @@ def profile() -> Response | str:
     """
     Views для отображения и изменения профиля
     """
-    return render_template('profile.html')
+    if request.method == 'GET':
+        return render_template('profile.html')
+    user = current_user
+    forms = dict(request.form)
+    for key, value in forms.items():
+        if value:
+            setattr(user, key, value)
+    db.session.commit()
+    return redirect(url_for('profile'))
 
 
-@app.route('/daily')
-def daily() -> Response | str:
+@app.route('/horoscope/<period>')
+def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
     """
-    return render_template('chat.html')
-
-
-@app.route('/weekly')
-def weekly() -> Response | str:
-    """
-        Views для отображения гороскопа на неделю
-    """
-    return render_template('chat.html')
-
-
-@app.route('/monthly')
-def monthly() -> Response | str:
-    """
-        Views для отображения гороскопа на месяц
-    """
-    return render_template('chat.html')
-
-
-@app.route('/year')
-def year() -> Response | str:
-    """
-        Views для отображения гороскопа на месяц
-    """
-    return render_template('chat.html')
-
-
-@app.route('/special')
-def special() -> Response | str:
-    """
-        Views для отображения гороскопа на определенный день
-    """
-    return render_template('chat.html')
+    user_horoscope = current_user.zodiac_sign
+    get_horoscope = GetHoroscope(user_horoscope, period)
+    text = get_horoscope.get_response()
+    return render_template('chat.html', text=text)
 
 
 @app.route('/natal_chart')

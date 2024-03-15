@@ -31,22 +31,22 @@
                                 Прогноз
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ url_for('daily') }}"><i class="bi bi-calendar2-date pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('horoscope', period='today') }}"><i class="bi bi-calendar2-date pe-1"></i>на
                                         сегодня</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ url_for('weekly') }}"><i class="bi bi-calendar2-week pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('horoscope', period='weekly') }}"><i class="bi bi-calendar2-week pe-1"></i>на
                                         неделю</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ url_for('monthly') }}"><i class="bi bi-calendar2-month pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('horoscope', period='monthly') }}"><i class="bi bi-calendar2-month pe-1"></i>на
                                         месяц</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ url_for('year') }}"><i class="bi bi-calendar2-fill pe-1"></i>на
+                                <li><a class="dropdown-item" href="{{ url_for('horoscope', period='year') }}"><i class="bi bi-calendar2-fill pe-1"></i>на
                                         год</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="{{ url_for('special') }}"><i class="bi bi-calendar2-day pe-1"></i>на день
+                                <li><a class="dropdown-item" href="{{ url_for('horoscope', period='special') }}"><i class="bi bi-calendar2-day pe-1"></i>на день
                                         недели</a></li>
                             </ul>
                         </li>

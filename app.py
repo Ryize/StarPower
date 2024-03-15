@@ -5,11 +5,12 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_toastr import Toastr
+import os
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = str(uuid.uuid4())
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB')
 db = SQLAlchemy(app)
 
 manager = LoginManager(app)
