@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
 from business_logic import check_new_user, allowed_file
 
-from test_logic import GetHoroscope
+from test_logic import GetHoroscope, GetNatalChart
 
 
 @app.route('/')
@@ -95,7 +95,7 @@ def profile() -> Response | str:
     forms = dict(request.form)
     if forms['birthday']:
         forms['birthday'] = datetime.strptime(forms['birthday'], '%Y-%m-%d').date()
-        forms['zodiac_sign'] = get_zodiac_sign(forms['birthday'], language='ru-RU')
+        forms['zodiac_sign'] = get_zodiac_sign(forms['birthday'])
     if forms['birth_time']:
         forms['birth_time'] = datetime.strptime(forms['birth_time'], '%H:%M').time()
     for key, value in forms.items():
@@ -142,8 +142,9 @@ def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
-
-    return render_template('chat.html')
+    date = datetime.combine(current_user.birthday, current_user.birth_time)
+    text = GetNatalChart(date, current_user.city).get_response()
+    return render_template('chat.html', text=text)
 
 
 @app.route('/logout/')
