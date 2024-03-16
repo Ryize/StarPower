@@ -248,11 +248,11 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         return res
 
 
-horoscope = GetHoroscope('Рак', 'today')
-print(horoscope.get_response())
+# horoscope = GetHoroscope('Рак', 'today')
+# print(horoscope.get_response())
 
-natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-print(natalChart.get_response())
+# natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+# print(natalChart.get_response())
 
-getspec = GetSpecialHoroscope(datetime(2024, 3, 21, 10, 13), 'Скорпион')
-print(getspec.get_response())
+# getspec = GetSpecialHoroscope(datetime(2024, 3, 21, 10, 13), 'Скорпион')
+# print(getspec.get_response())
