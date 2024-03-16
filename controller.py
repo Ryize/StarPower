@@ -121,7 +121,6 @@ def upload():
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
     current_user.avatar = file_path
-    db.session.add(current_user)
     db.session.commit()
     return redirect(url_for('profile'))
 
