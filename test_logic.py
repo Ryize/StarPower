@@ -1,19 +1,37 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
-import swisseph as swe
 from datetime import datetime
+import swisseph as swe
 import pytz
 from geopy.geocoders import Nominatim
 import geopy
 import random
 import string
+import ephem
 
 
-class GetHoroscope:
+class BaseHoroscope:
+
     client = None
 
-    day = None
+    def __init__(self) -> None:
+        load_dotenv()
+        token = os.getenv('CHAT_GPT_TOKEN')
+        self.client = OpenAI(api_key=token)
+
+    def get_response(self):
+        completion = self.client.chat.completions.create(
+            model="gpt-3.5-turbo-1106",
+            messages=[
+                {"role": "system", "content": self.description},
+                {"role": "user", "content": self.user_request()}
+            ]
+            )
+        return completion.choices[0].message.content
+
+
+class GetHoroscope(BaseHoroscope):
 
     add_inf_year = ('Пожалуйста, включи описание общих тенденций, '
                     'возможностей и предостережений.'
@@ -45,26 +63,12 @@ class GetHoroscope:
         'month': ['в этом месяце', '1000 - 1500', add_inf_month],
         'week': ['на этой неделе', '1000 - 1500', add_inf_week],
         'today': ['сегодня', '500 - 700', add_inf_day],
-        'special': [f'{day}', '500-700', add_inf_day_of_the_week]
     }
 
-    def __init__(self, zodiac_sign, period, day=None) -> None:
-        load_dotenv()
-        token = os.getenv('CHAT_GPT_TOKEN')
-        self.client = OpenAI(api_key=token)
+    def __init__(self, zodiac_sign, period) -> None:
+        super().__init__()
         self.zodiac_sign = zodiac_sign
         self.period = period
-        self.day = day
-
-    def get_response(self):
-        completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo-1106",
-            messages=[
-                {"role": "system", "content": self.description},
-                {"role": "user", "content": self.user_request()}
-            ]
-            )
-        return completion.choices[0].message.content
 
     def user_request(self):
         res = ("Данные возьми с сайта по астрологии."
@@ -75,11 +79,28 @@ class GetHoroscope:
         return res
 
 
-# horoscope = GetHoroscope('Скорпион', 'today')
-# print(horoscope.get_response())
+class GetJulianDate:
+
+    def __init__(self, date):
+        self.date = date
+        self.jd = self.calculation_Julian_date()
+
+    def convertion_utc(self):
+        # Конвертация в UTC
+        tz = pytz.timezone('Europe/Moscow')  # Часовой пояс
+        utc_time = tz.localize(self.date).astimezone(pytz.utc)
+        return utc_time
+
+    def calculation_Julian_date(self):
+        # Расчет юлианской даты
+        utc_time = self.convertion_utc()
+        jd = swe.julday(utc_time.year, utc_time.month,
+                        utc_time.day,
+                        utc_time.hour + utc_time.minute / 60.0)
+        return jd
 
 
-class GetAstralData:
+class GetAstralData(GetJulianDate):
 
     planets = [
         ['SUN', swe.SUN],
@@ -110,24 +131,9 @@ class GetAstralData:
             GetAstralData.get_coordinates(
                 city, user_agent=GetAstralData.create_random_str())
 
-    def __init__(self, birth_date, birth_place) -> None:
-        self.birth_date = birth_date
+    def __init__(self, date, birth_place) -> None:
+        super().__init__(date)
         self.birth_place = GetAstralData.get_coordinates(birth_place)
-        self.jd = self.calculation_Julian_date()
-
-    def convertion_utc(self):
-        # Конвертация в UTC
-        tz = pytz.timezone('Europe/Moscow')  # Часовой пояс
-        utc_birth_time = tz.localize(self.birth_date).astimezone(pytz.utc)
-        return utc_birth_time
-
-    def calculation_Julian_date(self):
-        # Расчет юлианской даты
-        utc_birth_time = self.convertion_utc()
-        jd = swe.julday(utc_birth_time.year, utc_birth_time.month,
-                        utc_birth_time.day,
-                        utc_birth_time.hour + utc_birth_time.minute / 60.0)
-        return jd
 
     def calc_planet_positions(self):
         # Расчет положений планет
@@ -143,14 +149,12 @@ class GetAstralData:
         return houses_positions
 
 
-class GetNatalChart:
-
-    client = None
+class GetNatalChart(BaseHoroscope):
 
     description = (
         'Натальная карта должна содержать не менее 4000 символов. '
         'Повествование начинай без вступления, сразу с солнца. '
-        'Не спрашивай дополнительные вопросы т консультации. '
+        'Не спрашивай дополнительные вопросы по консультации. '
         'Ты профессиональный астролог. Твоя цель мотивировать,'
         'успокаивать, поддерживать людей, выделять их сильные'
         'стороны, таланты и возможности для успеха. Понимание'
@@ -161,22 +165,10 @@ class GetNatalChart:
         'которые связаны с астрологическим прогнозом.')
 
     def __init__(self, birth_date, birth_place) -> None:
-        load_dotenv()
-        token = os.getenv('CHAT_GPT_TOKEN')
-        self.client = OpenAI(api_key=token)
+        super().__init__()
         self.birth_date = birth_date
         self.birth_place = birth_place
         self.astralData = GetAstralData(self.birth_date, self.birth_place)
-
-    def get_response(self):
-        completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo-1106",
-            messages=[
-                {"role": "system", "content": self.description},
-                {"role": "user", "content": self.user_request()}
-            ]
-            )
-        return completion.choices[0].message.content
 
     def user_request(self):
         res = ("интерпретируй эти данные и предоставить информацию"
@@ -188,5 +180,79 @@ class GetNatalChart:
         return res
 
 
+class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
+
+    zodiac_signs = [
+            "Овен", "Телец", "Близнецы", "Рак",
+            "Лев", "Дева", "Весы", "Скорпион",
+            "Стрелец", "Козерог", "Водолей", "Рыбы"
+        ]
+
+    def __init__(self, date, zodiac_sign) -> None:
+        BaseHoroscope.__init__(self)
+        GetJulianDate.__init__(self, date)
+        self.zodiac_sign = zodiac_sign
+        self.position_moon = self.calc_position_moon()
+        self.description = self.description()
+
+    def calc_position_moon(self):
+        # расчет положения луны
+        position_moon = swe.calc_ut(self.jd, swe.MOON)[0][0]
+        return position_moon
+
+    def moon_in_sign(self):
+        houses = list(range(1, 13))
+        index = int(self.position_moon // 30)
+        return (self.zodiac_signs[index], houses[index])
+
+    def opposite_zodiac_sign(self):
+        houses = list(range(1, 13))
+        if self.position_moon >= 180:
+            index = int((self.position_moon - 180) // 30)
+        else:
+            index = int((self.position_moon + 180) // 30)
+        return (self.zodiac_signs[index], houses[index])
+
+    def get_lunar_day(self):
+        # Получаем следующее и предыдущее новолуние относительно указанной даты
+        prev_moon = ephem.previous_new_moon(self.date)
+
+        # Рассчитываем лунный день
+        lunar_day = self.date.day - prev_moon.datetime().day + 1
+
+        return lunar_day
+
+    def description(self):
+        des = (f"В начале укажи что гороскоп расчитан на {self.date}"
+               " в формате: число.месяц.год Продолжи текст с новой строки."
+               "Первое предложение после даты начни со слов: в этот день."
+               "Вместо астрологический дом пиши дом. "
+               "Знак зодиака, в котором находится луна, указывает на "
+               "положительные аспекты, а знак зодиака противоположный лунному."
+               " указывает на отрицательные аспекты."
+               "Предсказание должно быть не менее 800 символов."
+               "В конце добавь влияние лунного дня.")
+        return des
+
+    def user_request(self):
+        res = ("Составь гороскоп с особенностями характерными знаку"
+               f" зодиака {self.zodiac_sign} с учетом того что сейчас"
+               f" луна находится в знаке зодиака {self.moon_in_sign()[0]}"
+               f" астрологический дом: {self.moon_in_sign()[1]} Дополни "
+               "информацию с учетом того что знак зодиака противоположный "
+               f"лунному: {self.opposite_zodiac_sign()[0]}, астрологический "
+               f"дом: {self.opposite_zodiac_sign()[1]}. Лунный день "
+               f"сейчас {self.get_lunar_day()}. "
+               "Начти без вступления и не разбивай на пункты."
+               )
+        return res
+
+
+horoscope = GetHoroscope('Рак', 'today')
+print(horoscope.get_response())
+
 natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
 print(natalChart.get_response())
+
+getspec = GetSpecialHoroscope(datetime(2024, 3, 21, 10, 13), 'Скорпион')
+print(getspec.get_response())
