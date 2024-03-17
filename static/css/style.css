@@ -5,6 +5,11 @@
     --color2: #B8EFCF;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
 .color1 {
     color: var(--color1);
 }
