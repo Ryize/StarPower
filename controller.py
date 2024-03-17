@@ -74,6 +74,9 @@ def authorization() -> Response | str:
     user = User.query.filter_by(login=login).first()
     if user and check_password_hash(user.password, password):
         login_user(user)
+        # Перенаправление в админ-панель, если пользователь - админ
+        if user.login == 'Admin':
+            return redirect(url_for('admin.index'))
         flash(
             {'title': 'Успешно!', 'message': 'Добро пожаловать'},
             category='success',
@@ -86,10 +89,6 @@ def authorization() -> Response | str:
         },
         category='error',
     )
-    # Перенаправление в админ-панель, если пользователь - админ
-    if user.username == 'Admin':
-        return redirect(url_for('admin.index'))
-
     return render_template('register_authorization.html')
 
 
