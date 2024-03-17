@@ -13,6 +13,8 @@ from business_logic import check_new_user, allowed_file
 
 from test_logic import GetHoroscope, GetNatalChart
 
+from admin_panel import admin  # Добавленный импорт для админ-панели
+
 
 @app.route('/')
 @app.route('/index/')
@@ -80,6 +82,10 @@ def authorization() -> Response | str:
         },
         category='error',
     )
+    # Перенаправление в админ-панель, если пользователь - админ
+    if user.username == 'Admin':
+        return redirect(url_for('admin.index'))
+
     return render_template('register_authorization.html')
 
 
