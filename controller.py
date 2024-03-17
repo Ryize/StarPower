@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 from zodiac_sign import get_zodiac_sign
 
-from models import User
+from models import User, Horoscope, UserNatalChart
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
 from business_logic import check_new_user, allowed_file
@@ -74,6 +74,9 @@ def authorization() -> Response | str:
     user = User.query.filter_by(login=login).first()
     if user and check_password_hash(user.password, password):
         login_user(user)
+        # Перенаправление в админ-панель, если пользователь - админ
+        if user.login == 'Admin':
+            return redirect(url_for('admin.index'))
         flash(
             {'title': 'Успешно!', 'message': 'Добро пожаловать'},
             category='success',
@@ -86,10 +89,6 @@ def authorization() -> Response | str:
         },
         category='error',
     )
-    # Перенаправление в админ-панель, если пользователь - админ
-    if user.username == 'Admin':
-        return redirect(url_for('admin.index'))
-
     return render_template('register_authorization.html')
 
 
@@ -140,19 +139,43 @@ def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
     """
-    user_horoscope = current_user.zodiac_sign
-    get_horoscope = GetHoroscope(user_horoscope, period)
-    text = get_horoscope.get_response()
-    return render_template('chat.html', text=text)
-
+    #сделать проверку данных и перекинуть для заполнения на profile
+    if period == 'today':
+        date = datetime.now().strftime('%Y%m%d')
+    zodiac_sign = current_user.zodiac_sign
+    horoscope = Horoscope.query.filter_by(date=date, zodiac_sign=zodiac_sign).first()
+    if not horoscope:
+        user_horoscope = current_user.zodiac_sign
+        get_horoscope = GetHoroscope(user_horoscope, period)
+        text = get_horoscope.get_response()
+        new_horoscope = Horoscope(
+            period=period,
+            zodiac_sign=zodiac_sign,
+            horoscope=text,
+            date=date,
+        )
+        db.session.add(new_horoscope)
+        db.session.commit()
+        return render_template('chat.html', text=text)
+    return render_template('chat.html', text=horoscope.horoscope)
 
 @app.route('/natal_chart')
 def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
+    # сделать проверку данных и перекинуть для заполнения на profile
+    natal_cart = UserNatalChart.query.filter_by(user_id=current_user.id).first()
+    if natal_cart:
+        return render_template('chat.html', text=natal_cart.natal_chart)
     date = datetime.combine(current_user.birthday, current_user.birth_time)
     text = GetNatalChart(date, current_user.city).get_response()
+    new_natal_cart = UserNatalChart(
+        user_id=current_user.id,
+        natal_chart=text
+        )
+    db.session.add(new_natal_cart)
+    db.session.commit()
     return render_template('chat.html', text=text)
 
 

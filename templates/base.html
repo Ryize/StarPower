@@ -2,12 +2,16 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block style %}
     {% endblock %}
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
     <title>{% block title %}Главная{% endblock %}</title>
 </head>
 
@@ -100,6 +104,7 @@
     </footer>
 {% endblock %}
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    {{ toastr.include_toastr_js() }}
     {% block scripts %}
     <!-- Дополнительные скрипты -->
     {% endblock %}
