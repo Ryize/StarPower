@@ -99,19 +99,31 @@ def profile() -> Response | str:
     Views для отображения и изменения профиля
     """
     if request.method == 'GET':
-        birth_time = current_user.birth_time.strftime('%H:%M')
-        return render_template('profile.html', birth_time=birth_time)
+        if current_user.birth_time:
+            birth_time = current_user.birth_time.strftime('%H:%M')
+            return render_template('profile.html', birth_time=birth_time)
+        return render_template('profile.html')
     user = current_user
-    forms = dict(request.form)
-    if forms['birthday']:
-        forms['birthday'] = datetime.strptime(forms['birthday'], '%Y-%m-%d').date()
-        forms['zodiac_sign'] = get_zodiac_sign(forms['birthday'])
-    if forms['birth_time']:
-        forms['birth_time'] = datetime.strptime(forms['birth_time'], '%H:%M').time()
+    forms = request.form
+
+    birthday = forms.get('birthday')
+    birth_time = forms.get('birth_time')
+    if birthday:
+        user.birthday = datetime.strptime(birthday, '%Y-%m-%d').date()
+        user.zodiac_sign = get_zodiac_sign(user.birthday)
+
+    if birth_time:
+        user.birth_time = datetime.strptime(birth_time, '%H:%M').time()
     for key, value in forms.items():
         if value:
             setattr(user, key, value)
     db.session.commit()
+    flash(
+        {'title': 'Успех!',
+         'message': 'Ваши данные успешно сохранены'
+         },
+        category='success',
+    )
     return redirect(url_for('profile'))
 
 
@@ -132,6 +144,12 @@ def upload():
     file.save(file_path)
     current_user.avatar = file_path
     db.session.commit()
+    flash(
+        {'title': 'Успех!',
+         'message': 'Ваша картинка обновлена'
+         },
+        category='success',
+    )
     return redirect(url_for('profile'))
 
 
@@ -141,6 +159,15 @@ def horoscope(period) -> Response | str:
         Views для отображения гороскопа на день
     """
     #сделать проверку данных и перекинуть для заполнения на profile
+    if not current_user.birthday or not current_user.birth_time:
+        flash(
+            {
+                'title': 'Заполните данные',
+                'message': 'Для создания гороскопа заполните данные',
+            },
+            category='error',
+        )
+        return redirect(url_for('profile'))
     if period == 'today':
         date = datetime.now().strftime('%Y%m%d')
     zodiac_sign = current_user.zodiac_sign
