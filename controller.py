@@ -99,7 +99,8 @@ def profile() -> Response | str:
     Views для отображения и изменения профиля
     """
     if request.method == 'GET':
-        return render_template('profile.html')
+        birth_time = current_user.birth_time.strftime('%H:%M')
+        return render_template('profile.html', birth_time=birth_time)
     user = current_user
     forms = dict(request.form)
     if forms['birthday']:
