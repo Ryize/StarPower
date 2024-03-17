@@ -39,7 +39,7 @@ class User(db.Model, BaseModel, UserMixin):
 
     login = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     name = db.Column(db.String(100), nullable=True)
     surname = db.Column(db.String(100), nullable=True)
     patronymic = db.Column(db.String(100), nullable=True)
@@ -49,7 +49,7 @@ class User(db.Model, BaseModel, UserMixin):
     city = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
     avatar = db.Column(db.String(255), nullable=True)
-    sex = db.Column(db.Boolean, default=False, nullable=True)
+    sex = db.Column(db.String(10), nullable=True)
     premium = db.Column(db.Boolean, default=False)
     zodiac_sign = db.Column(db.String(15), nullable=True)
     natal_chart = db.relationship('UserNatalChart', backref='users', lazy=True)

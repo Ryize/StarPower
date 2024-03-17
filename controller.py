@@ -1,9 +1,12 @@
 import os
+
 from datetime import datetime
 
 from flask import render_template, Response, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user, current_user
+
 from werkzeug.utils import secure_filename
+
 from zodiac_sign import get_zodiac_sign
 
 from models import User
@@ -14,6 +17,7 @@ from business_logic import check_new_user, allowed_file
 from test_logic import GetHoroscope, GetNatalChart
 
 from admin_panel import admin  # Добавленный импорт для админ-панели
+
 
 
 @app.route('/')
@@ -150,6 +154,7 @@ def natal_chart() -> Response | str:
     date = datetime.combine(current_user.birthday, current_user.birth_time)
     text = GetNatalChart(date, current_user.city).get_response()
     return render_template('chat.html', text=text)
+
 
 
 @app.route('/logout/')

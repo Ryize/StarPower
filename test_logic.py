@@ -256,3 +256,4 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 
 # getspec = GetSpecialHoroscope(datetime(2024, 3, 21, 10, 13), 'Скорпион')
 # print(getspec.get_response())
+
