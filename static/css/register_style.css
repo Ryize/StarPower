@@ -10,28 +10,18 @@ main{
 }
 .frame {
   position: absolute; /* Абсолютное позиционирование относительно main */
-  top: 40px; /* Расстояние от верхней границы main */
+  top: 50%; /* Расстояние от верхней границы main */
   width: 90%; /* или другая ширина в зависимости от вашего дизайна */
   max-width: 430px; /* Максимальная ширина для крупных экранов */
   left: 50%; /* Центрирование .frame по горизонтали */
-  transform: translateX(-50%);
-  margin-top: 20px;
+  transform: translate(-50%, -50%);
   height: 575px;
-  width: 90%; /* Уменьшить ширину на маленьких экранах */
-  max-width: 430px; /* Максимальная ширина для крупных экранов */
-  background:
-    linear-gradient(
-    rgba(0, 9, 60, 0.75),
-    rgba(0, 9, 60, 0.95)),
-    url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg) no-repeat center center;
   background:
     linear-gradient(
     rgba(0, 9, 60, 0.75),
     rgba(0, 9, 60, 0.95)),
     url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg) no-repeat center center;
   background-size: cover;
-  margin-left: auto;
-  margin-right: auto;
   border-top: solid 1px rgba(255,255,255,.5);
   border-radius: 5px;
   box-shadow: 0px 2px 7px rgba(0,0,0,0.2);

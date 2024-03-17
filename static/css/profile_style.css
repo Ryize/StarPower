@@ -44,18 +44,16 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .font-nav-tabs {
-    font-family: "Source Serif 4", serif;
+    font-family: "Lora", serif;
     font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 24px;
-
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
 }
 
-.font-items {
-    font-family: "IBM Plex Mono", monospace;
-    word-spacing: -px;
+.font-items, .download-button, .mt-4 {
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
     font-weight: 500;
-    font-style: normal;
-    font-size: 18px;
+    font-style: italic;
 }

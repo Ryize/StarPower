@@ -1,7 +1,12 @@
+import os
+
 from datetime import datetime
 
 from flask import render_template, Response, redirect, url_for, request, flash
 from flask_login import login_required, logout_user, login_user, current_user
+
+from werkzeug.utils import secure_filename
+
 from zodiac_sign import get_zodiac_sign
 
 from models import User
@@ -9,8 +14,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
 from business_logic import check_new_user, allowed_file
 
+from test_logic import GetHoroscope, GetNatalChart
 
-from test_logic import GetHoroscope
+from admin_panel import admin  # Добавленный импорт для админ-панели
+
 
 
 @app.route('/')
@@ -79,6 +86,10 @@ def authorization() -> Response | str:
         },
         category='error',
     )
+    # Перенаправление в админ-панель, если пользователь - админ
+    if user.username == 'Admin':
+        return redirect(url_for('admin.index'))
+
     return render_template('register_authorization.html')
 
 
@@ -94,7 +105,7 @@ def profile() -> Response | str:
     forms = dict(request.form)
     if forms['birthday']:
         forms['birthday'] = datetime.strptime(forms['birthday'], '%Y-%m-%d').date()
-        forms['zodiac_sign'] = get_zodiac_sign(forms['birthday'], language='ru-RU')
+        forms['zodiac_sign'] = get_zodiac_sign(forms['birthday'])
     if forms['birth_time']:
         forms['birth_time'] = datetime.strptime(forms['birth_time'], '%H:%M').time()
     for key, value in forms.items():
@@ -120,7 +131,6 @@ def upload():
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
     current_user.avatar = file_path
-    db.session.add(current_user)
     db.session.commit()
     return redirect(url_for('profile'))
 
@@ -141,8 +151,10 @@ def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
+    date = datetime.combine(current_user.birthday, current_user.birth_time)
+    text = GetNatalChart(date, current_user.city).get_response()
+    return render_template('chat.html', text=text)
 
-    return render_template('chat.html')
 
 
 @app.route('/logout/')
