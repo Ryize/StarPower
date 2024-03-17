@@ -14,16 +14,15 @@
             <form method="post" >
               <div class="form-group mt-2 mb-3">
                 <label for="firstName">Имя</label>
-{#                  вписать поля если заполнены#}
-                <input name="name" type="text" class="form-control" id="firstName" placeholder="Введите ваше имя">
+                <input name="name" type="text" class="form-control" id="firstName" placeholder="{{ current_user.name or 'Введите ваше имя' }}" value="">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="lastName">Фамилия</label>
-                <input name="surname" type="text" class="form-control" id="lastName" placeholder="Введите вашу фамилию">
+                <input name="surname" type="text" class="form-control" id="lastName" placeholder="{{ current_user.name or 'Введите вашу фамилию'}}">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="middleName">Отчество</label>
-                <input name="patronymic" type="text" class="form-control" id="middleName" placeholder="Введите ваше отчество">
+                <input name="patronymic" type="text" class="form-control" id="middleName" placeholder="{{ current_user.name or 'Введите ваше отчество'}}">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="birthdate">Дата рождения</label>
@@ -35,11 +34,11 @@
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="country">Страна</label>
-                <input name="country" type="text" class="form-control" id="country" placeholder="Введите вашу страну">
+                <input name="country" type="text" class="form-control" id="country" placeholder="{{ current_user.name or 'Введите вашу страну'}}">
               </div>
               <div class="form-group mt-2 mb-3">
                 <label for="city">Город</label>
-                <input name="city" type="text" class="form-control" id="city" placeholder="Введите ваш город">
+                <input name="city" type="text" class="form-control" id="city" placeholder="{{ current_user.name or 'Введите ваш город'}}">
               </div>
                 <div class="mt-4">
           <button id="saveButton" type="submit" class="btn btn-primary">Сохранить данные</button>
