@@ -12,7 +12,7 @@ from zodiac_sign import get_zodiac_sign
 from models import User, Horoscope, UserNatalChart
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
-from business_logic import check_new_user, allowed_file
+from business_logic import check_new_user, allowed_file, date_horoscope
 
 from test_logic import GetHoroscope, GetNatalChart
 
@@ -158,7 +158,7 @@ def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
     """
-    #сделать проверку данных и перекинуть для заполнения на profile
+    # сделать проверку данных и перекинуть для заполнения на profile
     if not current_user.birthday or not current_user.birth_time:
         flash(
             {
@@ -168,10 +168,11 @@ def horoscope(period) -> Response | str:
             category='error',
         )
         return redirect(url_for('profile'))
-    if period == 'today':
-        date = datetime.now().strftime('%Y%m%d')
+
+    date = date_horoscope(period)
+
     zodiac_sign = current_user.zodiac_sign
-    horoscope = Horoscope.query.filter_by(date=date, zodiac_sign=zodiac_sign).first()
+    horoscope = Horoscope.query.filter_by(period=period, date=date, zodiac_sign=zodiac_sign).first()
     if not horoscope:
         user_horoscope = current_user.zodiac_sign
         get_horoscope = GetHoroscope(user_horoscope, period)

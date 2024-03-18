@@ -2,8 +2,12 @@ import re
 
 from flask import flash
 
+from datetime import datetime, timedelta
+
 from app import ALLOWED_EXTENSIONS
 from models import User
+
+
 def check_new_user(login: str, email: str, password: str) -> bool:
     """
     Проверяет данные нового пользователя перед регистрацией.
@@ -111,3 +115,18 @@ def allowed_file(filename: str) -> bool:
     """
     filename_split = filename.rsplit('.', 1)[1].lower()
     return '.' in filename and filename_split in ALLOWED_EXTENSIONS
+
+def date_horoscope(period):
+
+    today = datetime.now()
+
+    if period == 'today':
+        date = today.strftime('%Y-%m-%d')
+    elif period == 'week':
+        date = (today - timedelta(days=today.weekday())).strftime('%Y-%m-%d')
+    elif period == 'month':
+        date = today.strftime('%Y-%m-01')
+    elif period == 'year':
+        date = today.strftime('%Y-01-01')
+
+    return date
