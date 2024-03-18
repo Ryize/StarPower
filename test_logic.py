@@ -257,6 +257,6 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # getspec = GetSpecialHoroscope(datetime(2024, 3, 21), 'Скорпион')
 # print(getspec.get_response())
 
-astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-print(astralData.calc_planet_positions())
-print(astralData.calc_houses_positions())
+# astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+# print(astralData.calc_planet_positions())
+# print(astralData.calc_houses_positions())

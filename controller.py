@@ -14,7 +14,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
 from business_logic import check_new_user, allowed_file, date_horoscope
 
-from test_logic import GetHoroscope, GetNatalChart
+from test_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
 from admin_panel import admin  # Добавленный импорт для админ-панели
 
@@ -172,10 +172,51 @@ def horoscope(period) -> Response | str:
     date = date_horoscope(period)
 
     zodiac_sign = current_user.zodiac_sign
-    horoscope = Horoscope.query.filter_by(period=period, date=date, zodiac_sign=zodiac_sign).first()
+    horoscope = Horoscope.query.filter_by(period=period,
+                                          date=date,
+                                          zodiac_sign=zodiac_sign
+                                          ).first()
     if not horoscope:
         user_horoscope = current_user.zodiac_sign
         get_horoscope = GetHoroscope(user_horoscope, period)
+        text = get_horoscope.get_response()
+        new_horoscope = Horoscope(
+            period=period,
+            zodiac_sign=zodiac_sign,
+            horoscope=text,
+            date=date,
+        )
+        db.session.add(new_horoscope)
+        db.session.commit()
+        return render_template('chat.html', text=text)
+    return render_template('chat.html', text=horoscope.horoscope)
+
+
+@app.route('/specialhoroscope/')
+def specialhoroscope() -> Response | str:
+    """
+        Views для отображения специального гороскопа
+    """
+    # сделать проверку данных и перекинуть для заполнения на profile
+    if not current_user.birthday or not current_user.birth_time:
+        flash(
+            {
+                'title': 'Заполните данные',
+                'message': 'Для создания гороскопа заполните данные',
+            },
+            category='error',
+        )
+        return redirect(url_for('profile'))
+
+    date = request.form['date']
+    period = 'special'
+    zodiac_sign = current_user.zodiac_sign
+    horoscope = Horoscope.query.filter_by(period=period,
+                                          date=date,
+                                          zodiac_sign=zodiac_sign
+                                          ).first()
+    if not horoscope:
+        get_horoscope = GetSpecialHoroscope(date, zodiac_sign)
         text = get_horoscope.get_response()
         new_horoscope = Horoscope(
             period=period,
