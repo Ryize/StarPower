@@ -55,9 +55,21 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="{{ url_for('specialhoroscope') }}"><i
-                                            class="bi bi-calendar2-day pe-1"></i>на день
-                                        недели</a>
+                                <li>
+                                    <div class="row dropdown-item">
+                                        <div class="col">
+                                            <form action="{{ url_for('specialhoroscope') }}" method="post">
+                                                <div class="form-group pb-2">
+                                                    <label for="sp_date"><i class="bi bi-calendar2-day pe-1"></i>на
+                                                        выбранную
+                                                        дату</label>
+                                                    <input name="sp_date" type="date" class="form-control" id="sp_date"
+                                                        value="">
+                                                </div>
+                                                <button id="dateButton" type="submit" class="btn ">Выбор</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </li>

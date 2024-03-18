@@ -192,7 +192,7 @@ def horoscope(period) -> Response | str:
     return render_template('chat.html', text=horoscope.horoscope)
 
 
-@app.route('/specialhoroscope/')
+@app.route('/specialhoroscope/', methods=['POST'])
 def specialhoroscope() -> Response | str:
     """
         Views для отображения специального гороскопа
@@ -208,26 +208,30 @@ def specialhoroscope() -> Response | str:
         )
         return redirect(url_for('profile'))
 
-    date = request.form['date']
+    form = request.form
+
+    sp_date = form.get('sp_date')
+    sp_date = datetime.strptime(sp_date, "%Y-%m-%d")
     period = 'special'
     zodiac_sign = current_user.zodiac_sign
     horoscope = Horoscope.query.filter_by(period=period,
-                                          date=date,
+                                          date=sp_date,
                                           zodiac_sign=zodiac_sign
                                           ).first()
     if not horoscope:
-        get_horoscope = GetSpecialHoroscope(date, zodiac_sign)
+        get_horoscope = GetSpecialHoroscope(sp_date, zodiac_sign)
         text = get_horoscope.get_response()
         new_horoscope = Horoscope(
             period=period,
             zodiac_sign=zodiac_sign,
             horoscope=text,
-            date=date,
+            date=sp_date,
         )
         db.session.add(new_horoscope)
         db.session.commit()
         return render_template('chat.html', text=text)
     return render_template('chat.html', text=horoscope.horoscope)
+
 
 @app.route('/natal_chart')
 def natal_chart() -> Response | str:
