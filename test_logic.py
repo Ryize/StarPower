@@ -35,16 +35,17 @@ class GetHoroscope(BaseHoroscope):
 
     add_inf_year = ('Пожалуйста, включи описание общих тенденций, '
                     'возможностей и предостережений.'
-                    'Не упоминай какой сейчас год.'
+                    'Добавь неожиданных поворотов и интригующих подробностей. '
+                    'Сейчас', datetime.now().strftime('%Y'), 'год.'
                     )
 
     add_inf_month = ('Опиши начало месяца, потом что будет в середине'
-                     'и далее чем месяц закончится.')
+                     'и далее чем месяц закончится.'
+                     'Сейчас', datetime.now().strftime('%B'), 'месяц.'
+                     )
     add_inf_week = ('Опиши начало недели, потом что будет в середине'
                     'и далее чем неделя закончится.')
-    add_inf_day = ''
-    add_inf_day_of_the_week = ('Это предсказание на число указанное ранее.'
-                               'Расскажи что интересного случится в этот день')
+    add_inf_day = 'Сейчас', datetime.now().strftime('%Y-%m-%d')
 
     description = (
         'Ты профессиональный астролог.'
@@ -251,10 +252,11 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # horoscope = GetHoroscope('Рак', 'today')
 # print(horoscope.get_response())
 
+
 # natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
 # print(natalChart.get_response())
 
-# getspec = GetSpecialHoroscope(datetime(2024, 3, 21), 'Скорпион')
+# getspec = GetSpecialHoroscope(datetime(2024, 3, 19), 'Рак')
 # print(getspec.get_response())
 
 # astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
