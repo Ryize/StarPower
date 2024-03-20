@@ -2,7 +2,7 @@ import os
 
 from datetime import datetime
 
-from flask import render_template, Response, redirect, url_for, request, flash
+from flask import render_template, Response, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, logout_user, login_user, current_user
 
 from werkzeug.utils import secure_filename
@@ -17,7 +17,6 @@ from business_logic import check_new_user, allowed_file, date_horoscope, delete_
 from test_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
 from admin_panel import admin  # Добавленный импорт для админ-панели
-
 
 
 @app.route('/')
@@ -235,15 +234,21 @@ def specialhoroscope() -> Response | str:
     return render_template('chat.html', text=horoscope.horoscope)
 
 
-@app.route('/natal_chart')
+@app.route('/natal_chart', methods=['GET', 'POST'])
 def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
     # сделать проверку данных и перекинуть для заполнения на profile
+    if request.method == 'GET':
+        return render_template('chat.html')
+
     natal_cart = UserNatalChart.query.filter_by(user_id=current_user.id).first()
     if natal_cart:
-        return render_template('chat.html', text=natal_cart.natal_chart)
+        return jsonify({
+            'success': True,
+            'natal_chart': natal_cart.natal_chart,
+        })
     date = datetime.combine(current_user.birthday, current_user.birth_time)
     text = GetNatalChart(date, current_user.city).get_response()
     new_natal_cart = UserNatalChart(
@@ -252,8 +257,10 @@ def natal_chart() -> Response | str:
         )
     db.session.add(new_natal_cart)
     db.session.commit()
-    return render_template('chat.html', text=text)
-
+    return jsonify({
+        'success': True,
+        'natal_chart': text,
+    })
 
 
 @app.route('/logout/')
