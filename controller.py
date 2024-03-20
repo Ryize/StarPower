@@ -12,7 +12,7 @@ from zodiac_sign import get_zodiac_sign
 from models import User, Horoscope, UserNatalChart
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, manager, db
-from business_logic import check_new_user, allowed_file, date_horoscope
+from business_logic import check_new_user, allowed_file, date_horoscope, delete_file
 
 from test_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
@@ -138,6 +138,8 @@ def upload():
     if not (file and allowed_file(file.filename)):
         flash({'title': 'Ошибка!', 'message': 'Неверный файл'})
         return redirect('profile')
+    if current_user.avatar:
+        delete_file(current_user.avatar)
     timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
     filename = secure_filename(f'{timestamp}_{file.filename}')
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -267,3 +269,10 @@ def logout() -> Response | str:
 @manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
+
+
+@app.after_request
+def redirect_to_sign(response):
+    if response.status_code == 401:
+        return redirect(url_for('register_authorization'))
+    return response

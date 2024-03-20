@@ -1,3 +1,4 @@
+import os
 import re
 
 from flask import flash
@@ -131,3 +132,8 @@ def date_horoscope(period):
         date = today.strftime('%Y-01-01')
 
     return date
+
+
+def delete_file(file_path):
+    if file_path and os.path.exists(file_path):
+        os.remove(file_path)
