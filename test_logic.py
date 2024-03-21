@@ -104,17 +104,32 @@ class GetJulianDate:
 class GetAstralData(GetJulianDate):
 
     planets = [
-        ['SUN', swe.SUN],
-        ['MOON', swe.MOON],
-        ['MERCURY', swe.MERCURY],
-        ['VENUS', swe.VENUS],
-        ['MARS', swe.MARS],
-        ['JUPITER', swe.JUPITER],
-        ['SATURN', swe.SATURN],
-        ['URANUS', swe.URANUS],
-        ['NEPTUNE', swe.NEPTUNE],
-        ['PLUTO', swe.PLUTO]
+        ['Солнце', swe.SUN],
+        ['Луна', swe.MOON],
+        ['Меркурий', swe.MERCURY],
+        ['Венера', swe.VENUS],
+        ['Марс', swe.MARS],
+        ['Юпитер', swe.JUPITER],
+        ['Сатурн', swe.SATURN],
+        ['Уран', swe.URANUS],
+        ['Нептун', swe.NEPTUNE],
+        ['Плутон', swe.PLUTO]
     ]
+
+    zodiac_range = {
+        (0, 29.999): 'Овен',
+        (30, 59.999): 'Телец',
+        (60, 89.999): 'Близнецы',
+        (90, 119.999): 'Рак',
+        (120, 149.999): 'Лев',
+        (150, 179.999): 'Дева',
+        (180, 209.999): 'Весы',
+        (210, 239.999): 'Скорпион',
+        (240, 269.999): 'Стрелец',
+        (270, 299.999): 'Козерог',
+        (300, 329.999): 'Водолей',
+        (330, 359.999): 'Рыбы'
+    }
 
     @staticmethod
     def create_random_str():
@@ -149,6 +164,17 @@ class GetAstralData(GetJulianDate):
                                       self.birth_place['longitude'], b'P')[0]
         return houses_positions
 
+    def find_zodiac_sign(self):
+        pos_planets = self.calc_planet_positions()
+        result = ''
+        for planet, position in pos_planets.items():
+            if position == 360:
+                return 'Овен'
+            for range, sign in self.zodiac_range.items():
+                if range[0] <= position <= range[1]:
+                    result = result + f"{planet} в знаке зодиака {sign}, "
+        return result
+
 
 class GetNatalChart(BaseHoroscope):
 
@@ -176,7 +202,7 @@ class GetNatalChart(BaseHoroscope):
                " о влиянии этих планет и домов на  натальную карту. "
                f"дата рождения {self.birth_date}. "
                f"Место рождения {self.birth_place}. "
-               f"Планеты: {self.astralData.calc_planet_positions()}, "
+               f"Планеты: {self.astralData.find_zodiac_sign()}, "
                f"позиции домов {self.astralData.calc_houses_positions()}.")
         return res
 
@@ -260,5 +286,5 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # print(getspec.get_response())
 
 # astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-# print(astralData.calc_planet_positions())
+# print(astralData.find_zodiac_sign())
 # print(astralData.calc_houses_positions())
