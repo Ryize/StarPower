@@ -135,3 +135,23 @@
     font-size: 20px;
     font-weight: 500;
 }
+
+/* Стили для кнопки выбора даты */
+#dateButton {
+    display: inline-block;
+    background: #00093C;
+    /* Цвет фона кнопки */
+    color: #fff;
+    /* Цвет текста кнопки */
+    padding: 3px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+}
+
+#dateButton:hover {
+    background: #B8EFCF;
+    color: #00093C;
+    /* Цвет фона кнопки при наведении */
+}

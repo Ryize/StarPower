@@ -1,19 +1,52 @@
 {% extends "base.html" %}
 {% block style %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat.css') }}">
 {% endblock %}
 <title>{% block title %}Чат{% endblock %}</title>
 
 {% block content %}
-    <main class="main-content">
-        <div class="container flex-column mt-5">
-            <div class="speech">
-                {{text}}
-            </div>
-            <div class="character-and-speech">
-                <img src="{{ url_for('static', filename='img/person-bable3.png') }}" alt="Персонаж" class="character-image">
-            </div>
-        </div>
-    </main>
-{% endblock %}
+<main class="main-content">
+    <div class="container flex-column mt-5">
+        <div class="speech" id="natal_chart">
 
+        </div>
+        <div class="character-and-speech">
+            <img src="{{ url_for('static', filename='img/person-bable3.png') }}" alt="Персонаж" class="character-image">
+        </div>
+    </div>
+
+    <div class="loading-container">
+        <div class="loading"></div>
+    </div>
+
+</main>
+{% endblock %}
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    function natal_chart() {
+        $.ajax({
+            method: "POST",
+            url: "{{ url_for('natal_chart') }}",
+            dataType: 'json',
+            success: function (msgBackFromServer) {
+                data = JSON.stringify(msgBackFromServer)
+                data = JSON.parse(data)
+                if (data['success'] === true) {
+                    document.getElementById('natal_chart').innerHTML = data['natal_chart'];
+                    document.querySelector(".loading-container").classList.add("loaded");
+                }
+            },
+            error: function (msgBackFromServer) {
+                data = JSON.stringify(msgBackFromServer)
+                data = JSON.parse(data)
+                if (data['success'] === true) {
+                    document.getElementById('natal_chart').innerHTML = data['natal_chart'];
+                    document.querySelector(".loading-container").classList.add("loaded");
+                }
+            }
+        })
+    }
+    natal_chart()
+</script>
+{% endblock %}

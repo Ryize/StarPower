@@ -35,16 +35,17 @@ class GetHoroscope(BaseHoroscope):
 
     add_inf_year = ('Пожалуйста, включи описание общих тенденций, '
                     'возможностей и предостережений.'
-                    'Не упоминай какой сейчас год.'
+                    'Добавь неожиданных поворотов и интригующих подробностей. '
+                    'Сейчас', datetime.now().strftime('%Y'), 'год.'
                     )
 
     add_inf_month = ('Опиши начало месяца, потом что будет в середине'
-                     'и далее чем месяц закончится.')
+                     'и далее чем месяц закончится.'
+                     'Сейчас', datetime.now().strftime('%B'), 'месяц.'
+                     )
     add_inf_week = ('Опиши начало недели, потом что будет в середине'
                     'и далее чем неделя закончится.')
-    add_inf_day = ''
-    add_inf_day_of_the_week = ('Это предсказание на число указанное ранее.'
-                               'Расскажи что интересного случится в этот день')
+    add_inf_day = 'Сейчас', datetime.now().strftime('%Y-%m-%d')
 
     description = (
         'Ты профессиональный астролог.'
@@ -103,17 +104,32 @@ class GetJulianDate:
 class GetAstralData(GetJulianDate):
 
     planets = [
-        ['SUN', swe.SUN],
-        ['MOON', swe.MOON],
-        ['MERCURY', swe.MERCURY],
-        ['VENUS', swe.VENUS],
-        ['MARS', swe.MARS],
-        ['JUPITER', swe.JUPITER],
-        ['SATURN', swe.SATURN],
-        ['URANUS', swe.URANUS],
-        ['NEPTUNE', swe.NEPTUNE],
-        ['PLUTO', swe.PLUTO]
+        ['Солнце', swe.SUN],
+        ['Луна', swe.MOON],
+        ['Меркурий', swe.MERCURY],
+        ['Венера', swe.VENUS],
+        ['Марс', swe.MARS],
+        ['Юпитер', swe.JUPITER],
+        ['Сатурн', swe.SATURN],
+        ['Уран', swe.URANUS],
+        ['Нептун', swe.NEPTUNE],
+        ['Плутон', swe.PLUTO]
     ]
+
+    zodiac_range = {
+        (0, 29.999): 'Овен',
+        (30, 59.999): 'Телец',
+        (60, 89.999): 'Близнецы',
+        (90, 119.999): 'Рак',
+        (120, 149.999): 'Лев',
+        (150, 179.999): 'Дева',
+        (180, 209.999): 'Весы',
+        (210, 239.999): 'Скорпион',
+        (240, 269.999): 'Стрелец',
+        (270, 299.999): 'Козерог',
+        (300, 329.999): 'Водолей',
+        (330, 359.999): 'Рыбы'
+    }
 
     @staticmethod
     def create_random_str():
@@ -148,6 +164,17 @@ class GetAstralData(GetJulianDate):
                                       self.birth_place['longitude'], b'P')[0]
         return houses_positions
 
+    def find_zodiac_sign(self):
+        pos_planets = self.calc_planet_positions()
+        result = ''
+        for planet, position in pos_planets.items():
+            if position == 360:
+                return 'Овен'
+            for range, sign in self.zodiac_range.items():
+                if range[0] <= position <= range[1]:
+                    result = result + f"{planet} в знаке зодиака {sign}, "
+        return result
+
 
 class GetNatalChart(BaseHoroscope):
 
@@ -158,11 +185,11 @@ class GetNatalChart(BaseHoroscope):
         'Ты профессиональный астролог. Твоя цель мотивировать,'
         'успокаивать, поддерживать людей, выделять их сильные'
         'стороны, таланты и возможности для успеха. Понимание'
-        'их слабостей и предложения по их преодолению. Людям'
-        'надо рассказывать только важную для них информацию,'
-        'только то что касается их непосредственно, не вдаваясь'
-        'в работу астролога, но указывать дома и планеты,'
-        'которые связаны с астрологическим прогнозом.')
+        'их слабостей и предложения по их преодолению. '
+        'Проверь текст в нем должны быть только слова на русском языке'
+        'Влияние планеты должно быть описано в 2-3 предложениях. '
+        'Влияние каждого дома должно быть описано в 2-3 предложениях. '
+        )
 
     def __init__(self, birth_date, birth_place) -> None:
         super().__init__()
@@ -175,7 +202,7 @@ class GetNatalChart(BaseHoroscope):
                " о влиянии этих планет и домов на  натальную карту. "
                f"дата рождения {self.birth_date}. "
                f"Место рождения {self.birth_place}. "
-               f"Планеты: {self.astralData.calc_planet_positions()}, "
+               f"Планеты: {self.astralData.find_zodiac_sign()}, "
                f"позиции домов {self.astralData.calc_houses_positions()}.")
         return res
 
@@ -251,9 +278,13 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # horoscope = GetHoroscope('Рак', 'today')
 # print(horoscope.get_response())
 
+
 # natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
 # print(natalChart.get_response())
 
-# getspec = GetSpecialHoroscope(datetime(2024, 3, 21), 'Скорпион')
+# getspec = GetSpecialHoroscope(datetime(2024, 3, 19), 'Рак')
 # print(getspec.get_response())
 
+# astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+# print(astralData.find_zodiac_sign())
+# print(astralData.calc_houses_positions())
