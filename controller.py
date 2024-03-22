@@ -3,20 +3,21 @@ import os
 from datetime import datetime
 
 from flask import render_template, Response, redirect, url_for, request, flash, jsonify
-from flask_login import login_required, logout_user, login_user, current_user
+from flask_login import login_required, logout_user, current_user
 
 from werkzeug.utils import secure_filename
 
-from zodiac_sign import get_zodiac_sign
-
-from models import User, Horoscope, UserNatalChart
-from werkzeug.security import generate_password_hash, check_password_hash
-from app import app, manager, db
-from business_logic import check_new_user, allowed_file, date_horoscope, delete_file
+from models import DataAccess
+from app import app
+from business_logic import allowed_file, date_horoscope, delete_file
 
 from test_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
-from admin_panel import admin  # Добавленный импорт для админ-панели
+from admin_panel import admin
+
+
+# экземпляр класса для работы с БД
+dataAccess = DataAccess()
 
 
 @app.route('/')
@@ -54,9 +55,8 @@ def register() -> Response | str:
         )
         return render_template('register_authorization.html')
     forms.pop('confirm_password', None)
-    if check_new_user(**forms):
-        forms['password'] = generate_password_hash(forms['password'])
-        User.create(**forms)
+    if dataAccess.check_new_user(**forms):
+        dataAccess.add_user(forms)
         return redirect(url_for('register_authorization'))
     return render_template('register_authorization.html')
 
@@ -70,11 +70,10 @@ def authorization() -> Response | str:
         return render_template('register_authorization.html')
     login = request.form.get('login')
     password = request.form.get('password')
-    user = User.query.filter_by(login=login).first()
-    if user and check_password_hash(user.password, password):
-        login_user(user)
+    print(login, password)
+    if dataAccess.get_user(login, password):
         # Перенаправление в админ-панель, если пользователь - админ
-        if user.login == 'Admin':
+        if login == 'Admin':
             return redirect(url_for('admin.index'))
         flash(
             {'title': 'Успешно!', 'message': 'Добро пожаловать'},
@@ -105,18 +104,7 @@ def profile() -> Response | str:
     user = current_user
     forms = request.form
 
-    birthday = forms.get('birthday')
-    birth_time = forms.get('birth_time')
-    if birthday:
-        user.birthday = datetime.strptime(birthday, '%Y-%m-%d').date()
-        user.zodiac_sign = get_zodiac_sign(user.birthday)
-
-    if birth_time:
-        user.birth_time = datetime.strptime(birth_time, '%H:%M').time()
-    for key, value in forms.items():
-        if value:
-            setattr(user, key, value)
-    db.session.commit()
+    dataAccess.add_profile(user, forms)
     flash(
         {'title': 'Успех!',
          'message': 'Ваши данные успешно сохранены'
@@ -143,8 +131,7 @@ def upload():
     filename = secure_filename(f'{timestamp}_{file.filename}')
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
-    current_user.avatar = file_path
-    db.session.commit()
+    dataAccess.add_avatar(current_user, file_path)
     flash(
         {'title': 'Успех!',
          'message': 'Ваша картинка обновлена'
@@ -173,22 +160,11 @@ def horoscope(period) -> Response | str:
     date = date_horoscope(period)
 
     zodiac_sign = current_user.zodiac_sign
-    horoscope = Horoscope.query.filter_by(period=period,
-                                          date=date,
-                                          zodiac_sign=zodiac_sign
-                                          ).first()
+    horoscope = dataAccess.get_horoscope(period, date, zodiac_sign)
     if not horoscope:
-        user_horoscope = current_user.zodiac_sign
-        get_horoscope = GetHoroscope(user_horoscope, period)
+        get_horoscope = GetHoroscope(zodiac_sign, period)
         text = get_horoscope.get_response()
-        new_horoscope = Horoscope(
-            period=period,
-            zodiac_sign=zodiac_sign,
-            horoscope=text,
-            date=date,
-        )
-        db.session.add(new_horoscope)
-        db.session.commit()
+        dataAccess.add_new_horoscope(period, zodiac_sign, text, date)
         return render_template('chat.html', text=text)
     return render_template('chat.html', text=horoscope.horoscope)
 
@@ -215,21 +191,11 @@ def specialhoroscope() -> Response | str:
     sp_date = datetime.strptime(sp_date, "%Y-%m-%d")
     period = 'special'
     zodiac_sign = current_user.zodiac_sign
-    horoscope = Horoscope.query.filter_by(period=period,
-                                          date=sp_date,
-                                          zodiac_sign=zodiac_sign
-                                          ).first()
+    horoscope = dataAccess.get_horoscope(period, sp_date, zodiac_sign)
     if not horoscope:
         get_horoscope = GetSpecialHoroscope(sp_date, zodiac_sign)
         text = get_horoscope.get_response()
-        new_horoscope = Horoscope(
-            period=period,
-            zodiac_sign=zodiac_sign,
-            horoscope=text,
-            date=sp_date,
-        )
-        db.session.add(new_horoscope)
-        db.session.commit()
+        dataAccess.add_new_horoscope(period, zodiac_sign, text, sp_date)
         return render_template('chat.html', text=text)
     return render_template('chat.html', text=horoscope.horoscope)
 
@@ -243,7 +209,7 @@ def natal_chart() -> Response | str:
     if request.method == 'GET':
         return render_template('chat.html')
 
-    natal_cart = UserNatalChart.query.filter_by(user_id=current_user.id).first()
+    natal_cart = dataAccess.get_natal_chart(current_user.id)
     if natal_cart:
         return jsonify({
             'success': True,
@@ -251,12 +217,7 @@ def natal_chart() -> Response | str:
         })
     date = datetime.combine(current_user.birthday, current_user.birth_time)
     text = GetNatalChart(date, current_user.city).get_response()
-    new_natal_cart = UserNatalChart(
-        user_id=current_user.id,
-        natal_chart=text
-        )
-    db.session.add(new_natal_cart)
-    db.session.commit()
+    dataAccess.add_new_natal_cart(current_user.id, text)
     return jsonify({
         'success': True,
         'natal_chart': text,
@@ -271,11 +232,6 @@ def logout() -> Response | str:
     """
     logout_user()
     return redirect(url_for('index'))
-
-
-@manager.user_loader
-def load_user(user_id):
-    return User.query.filter_by(id=user_id).first()
 
 
 @app.after_request
