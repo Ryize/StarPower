@@ -11,7 +11,7 @@ from models import DataAccess
 from app import app
 from business_logic import allowed_file, date_horoscope, delete_file
 
-from test_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
+from horoscope_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
 from admin_panel import admin
 
@@ -55,7 +55,9 @@ def register() -> Response | str:
         )
         return render_template('register_authorization.html')
     forms.pop('confirm_password', None)
+    # Проверка данных в форме ригистрации
     if dataAccess.check_new_user(**forms):
+        # Добавление нового пользователя в БД
         dataAccess.add_user(forms)
         return redirect(url_for('register_authorization'))
     return render_template('register_authorization.html')
@@ -70,7 +72,7 @@ def authorization() -> Response | str:
         return render_template('register_authorization.html')
     login = request.form.get('login')
     password = request.form.get('password')
-    print(login, password)
+    # Получение пользователя из БД
     if dataAccess.get_user(login, password):
         # Перенаправление в админ-панель, если пользователь - админ
         if login == 'Admin':
@@ -103,7 +105,7 @@ def profile() -> Response | str:
         return render_template('profile.html')
     user = current_user
     forms = request.form
-
+    # Добавление данных в профиль текущего пользователя
     dataAccess.add_profile(user, forms)
     flash(
         {'title': 'Успех!',
@@ -131,6 +133,7 @@ def upload():
     filename = secure_filename(f'{timestamp}_{file.filename}')
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
+    # Добавить путь к аватру пользователя в БД
     dataAccess.add_avatar(current_user, file_path)
     flash(
         {'title': 'Успех!',
@@ -160,10 +163,12 @@ def horoscope(period) -> Response | str:
     date = date_horoscope(period)
 
     zodiac_sign = current_user.zodiac_sign
+    # Поиск подходящего гороскопа по заданным параметрам в БД
     horoscope = dataAccess.get_horoscope(period, date, zodiac_sign)
     if not horoscope:
         get_horoscope = GetHoroscope(zodiac_sign, period)
         text = get_horoscope.get_response()
+        # Добавление нового гороскопа в БД
         dataAccess.add_new_horoscope(period, zodiac_sign, text, date)
         return render_template('chat.html', text=text)
     return render_template('chat.html', text=horoscope.horoscope)
@@ -191,10 +196,12 @@ def specialhoroscope() -> Response | str:
     sp_date = datetime.strptime(sp_date, "%Y-%m-%d")
     period = 'special'
     zodiac_sign = current_user.zodiac_sign
+    # Поиск подходящего гороскопа по заданным параметрам в БД
     horoscope = dataAccess.get_horoscope(period, sp_date, zodiac_sign)
     if not horoscope:
         get_horoscope = GetSpecialHoroscope(sp_date, zodiac_sign)
         text = get_horoscope.get_response()
+        # Добавление нового гороскопа в БД
         dataAccess.add_new_horoscope(period, zodiac_sign, text, sp_date)
         return render_template('chat.html', text=text)
     return render_template('chat.html', text=horoscope.horoscope)
@@ -208,7 +215,7 @@ def natal_chart() -> Response | str:
     # сделать проверку данных и перекинуть для заполнения на profile
     if request.method == 'GET':
         return render_template('chat.html')
-
+    # Получение натальной карты из БД текущего пользователя
     natal_cart = dataAccess.get_natal_chart(current_user.id)
     if natal_cart:
         return jsonify({
@@ -217,6 +224,7 @@ def natal_chart() -> Response | str:
         })
     date = datetime.combine(current_user.birthday, current_user.birth_time)
     text = GetNatalChart(date, current_user.city).get_response()
+    # Добавление новой натальной карты в БД
     dataAccess.add_new_natal_cart(current_user.id, text)
     return jsonify({
         'success': True,
