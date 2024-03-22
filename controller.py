@@ -145,12 +145,13 @@ def upload():
 
 
 @app.route('/horoscope/<period>')
+@login_required
 def horoscope(period) -> Response | str:
     """
         Views для отображения гороскопа на день
     """
     # сделать проверку данных и перекинуть для заполнения на profile
-    if not current_user.birthday or not current_user.birth_time:
+    if not (current_user.birthday or current_user.birth_time):
         flash(
             {
                 'title': 'Заполните данные',
@@ -170,17 +171,18 @@ def horoscope(period) -> Response | str:
         text = get_horoscope.get_response()
         # Добавление нового гороскопа в БД
         dataAccess.add_new_horoscope(period, zodiac_sign, text, date)
-        return render_template('chat.html', text=text)
-    return render_template('chat.html', text=horoscope.horoscope)
+        return render_template('horoscope_chat.html', text=text)
+    return render_template('horoscope_chat.html', text=horoscope.horoscope)
 
 
 @app.route('/specialhoroscope/', methods=['POST'])
+@login_required
 def specialhoroscope() -> Response | str:
     """
         Views для отображения специального гороскопа
     """
     # сделать проверку данных и перекинуть для заполнения на profile
-    if not current_user.birthday or not current_user.birth_time:
+    if not (current_user.birthday or current_user.birth_time):
         flash(
             {
                 'title': 'Заполните данные',
@@ -203,17 +205,27 @@ def specialhoroscope() -> Response | str:
         text = get_horoscope.get_response()
         # Добавление нового гороскопа в БД
         dataAccess.add_new_horoscope(period, zodiac_sign, text, sp_date)
-        return render_template('chat.html', text=text)
-    return render_template('chat.html', text=horoscope.horoscope)
+        return render_template('horoscope_chat.html', text=text)
+    return render_template('horoscope_chat.html', text=horoscope.horoscope)
 
 
 @app.route('/natal_chart', methods=['GET', 'POST'])
+@login_required
 def natal_chart() -> Response | str:
     """
         Views для отображения гороскопа на определенный день
     """
     # сделать проверку данных и перекинуть для заполнения на profile
     if request.method == 'GET':
+        if not (current_user.birthday or current_user.birth_time):
+            flash(
+                {
+                    'title': 'Заполните данные',
+                    'message': 'Для создания гороскопа заполните данные',
+                },
+                category='error',
+            )
+            return redirect(url_for('profile'))
         return render_template('chat.html')
     # Получение натальной карты из БД текущего пользователя
     natal_cart = dataAccess.get_natal_chart(current_user.id)
