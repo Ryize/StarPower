@@ -1,5 +1,5 @@
 from horoscope_logic import BaseHoroscope, GetAstralData
-# from datetime import datetime
+from datetime import datetime
 from copy import copy
 
 
@@ -9,7 +9,8 @@ class GetNatalChart2(BaseHoroscope):
                         'Луна',
                         'Меркурий',
                         'Венера',
-                        'Марс']
+                        'Марс'
+                        ]
 
     description = (
         'Ты профессиональный астролог. Сейчас ты мне рассказываешь как данная '
@@ -77,9 +78,9 @@ class GetNatalChart2(BaseHoroscope):
         position_planets = self.astralData.calc_planet_positions()
         for planet in self.personal_planets:
             aspects = self.aspect(position_planets, planet)
-            result += self.get_response(planet, aspects)
+            result += f'{self.get_response(planet, aspects)}\n\n'
         return result
 
 
-# get = GetNatalChart2(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-# print(get.natal_chart())
+get = GetNatalChart2(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+print(get.natal_chart())
