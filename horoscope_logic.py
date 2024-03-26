@@ -166,13 +166,13 @@ class GetAstralData(GetJulianDate):
 
     def find_zodiac_sign(self):
         pos_planets = self.calc_planet_positions()
-        result = ''
+        result = {}
         for planet, position in pos_planets.items():
             if position == 360:
                 return 'Овен'
             for range, sign in self.zodiac_range.items():
                 if range[0] <= position <= range[1]:
-                    result = result + f"{planet} в знаке зодиака {sign}, "
+                    result[planet] = f'{planet} в знаке зодиака {sign}.\n'
         return result
 
 
@@ -286,5 +286,6 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # print(getspec.get_response())
 
 # astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+# print(astralData.calc_planet_positions())
 # print(astralData.find_zodiac_sign())
 # print(astralData.calc_houses_positions())
