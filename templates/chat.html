@@ -10,7 +10,7 @@
         <div class="speech" id="natal_chart">
 
         </div>
-        <div class="character-and-speech">
+        <div class="character-and-speech mt-5">
             <img src="{{ url_for('static', filename='img/person-bable3.png') }}" alt="Персонаж" class="character-image">
         </div>
     </div>
@@ -22,8 +22,8 @@
 </main>
 {% endblock %}
 {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
     function natal_chart() {
         $.ajax({
             method: "POST",

@@ -236,7 +236,7 @@ def natal_chart() -> Response | str:
             'natal_chart': natal_cart.natal_chart,
         })
     date = datetime.combine(current_user.birthday, current_user.birth_time)
-    text = GetNatalChart2(date, current_user.city).get_response()
+    text = GetNatalChart2(date, current_user.city).natal_chart()
     # Добавление новой натальной карты в БД
     dataAccess.add_new_natal_cart(current_user.id, text)
     return jsonify({
