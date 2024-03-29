@@ -14,6 +14,7 @@ from business_logic import allowed_file, date_horoscope, delete_file
 from horoscope_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
 from admin_panel import admin
+from natal_chart_logic import GetNatalChart2
 
 
 # экземпляр класса для работы с БД
@@ -235,7 +236,7 @@ def natal_chart() -> Response | str:
             'natal_chart': natal_cart.natal_chart,
         })
     date = datetime.combine(current_user.birthday, current_user.birth_time)
-    text = GetNatalChart(date, current_user.city).get_response()
+    text = GetNatalChart2(date, current_user.city).natal_chart()
     # Добавление новой натальной карты в БД
     dataAccess.add_new_natal_cart(current_user.id, text)
     return jsonify({
