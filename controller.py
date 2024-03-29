@@ -7,13 +7,14 @@ from flask_login import login_required, logout_user, current_user
 
 from werkzeug.utils import secure_filename
 
-from models import DataAccess
-from app import app
+from models import DataAccess, UserNatalChart
+from app import app, db
 from business_logic import allowed_file, date_horoscope, delete_file
 
 from horoscope_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
 from admin_panel import admin
+from natal_chart_logic import GetNatalChart2
 
 
 # экземпляр класса для работы с БД
@@ -105,6 +106,10 @@ def profile() -> Response | str:
         return render_template('profile.html')
     user = current_user
     forms = request.form
+    if user.birth_time != forms['birth_time'] or user.birthday != forms['birthday']:
+        natal_chart = UserNatalChart.query.filter_by(user_id=user.id).first()
+        db.session.delete(natal_chart)
+        db.session.commit()
     # Добавление данных в профиль текущего пользователя
     dataAccess.add_profile(user, forms)
     flash(
@@ -235,7 +240,7 @@ def natal_chart() -> Response | str:
             'natal_chart': natal_cart.natal_chart,
         })
     date = datetime.combine(current_user.birthday, current_user.birth_time)
-    text = GetNatalChart(date, current_user.city).get_response()
+    text = GetNatalChart2(date, current_user.city).natal_chart()
     # Добавление новой натальной карты в БД
     dataAccess.add_new_natal_cart(current_user.id, text)
     return jsonify({

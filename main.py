@@ -4,4 +4,4 @@ if __name__ == "__main__":
     load_dotenv()
     from controller import app
 
-    app.run(debug=True)
+    app.run(debug=False)
