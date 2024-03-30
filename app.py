@@ -38,22 +38,20 @@ from flask_toastr import Toastr
 app = Flask(__name__)
 
 # Конфигурация приложения
-app.config['SECRET_KEY'] = str(uuid.uuid4()) # Генерация уникального секретного ключа
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB') # Установка строки подключения к базе данных
+app.config["SECRET_KEY"] = str(uuid.uuid4())
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB")
 
 # Инициализация расширений Flask
-db = SQLAlchemy(app)  # Инициализация ORM для работы с базой данных
-manager = LoginManager(app)  # Инициализация менеджера сессий для управления входом/выходом пользователей
-toastr = Toastr(app)  # Инициализация системы всплывающих уведомлений
-app.config['TOASTR_SHOW_METHOD'] = 'show'  # Настройка метода показа уведомлений
-app.config['TOASTR_TIMEOUT'] = 4000  # Установка времени показа уведомлений
+db = SQLAlchemy(app)
+manager = LoginManager(app)
+toastr = Toastr(app)
+app.config["TOASTR_SHOW_METHOD"] = "show"
+app.config["TOASTR_TIMEOUT"] = 4000
 
-toolbar = DebugToolbarExtension(app)  # Подключение панели инструментов для отладки
+toolbar = DebugToolbarExtension(app)
 
 # Конфигурация загрузки файлов
-UPLOAD_FOLDER = 'static/uploads'  # Определение папки для загружаемых файлов
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Установка допустимых форматов файлов
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Настройка папки для загрузки в конфигурации приложения
-app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # Ограничение размера загружаемого файла
-
-
+UPLOAD_FOLDER = "static/uploads"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif",}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["MAX_CONTENT_LENGTH"] = 3 * 1024 * 1024
