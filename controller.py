@@ -22,6 +22,7 @@
 """
 
 import os
+import time
 from datetime import datetime
 from flask import render_template, Response, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, logout_user, current_user
@@ -167,8 +168,9 @@ def profile() -> Response | str:
     forms = request.form
     if user.birth_time != forms["birth_time"] or user.birthday != forms["birthday"]:
         natal_chart = UserNatalChart.query.filter_by(user_id=user.id).first()
-        db.session.delete(natal_chart)
-        db.session.commit()
+        if natal_chart:
+            db.session.delete(natal_chart)
+            db.session.commit()
     # Добавление данных в профиль текущего пользователя
     dataAccess.add_profile(user, forms)
     flash(
@@ -342,6 +344,7 @@ def natal_chart() -> Response | str:
             return redirect(url_for("profile"))
         return render_template("chat.html")
     # Получение натальной карты из БД текущего пользователя
+    start_time = time.time()
     natal_cart = dataAccess.get_natal_chart(current_user.id)
     if natal_cart:
         return jsonify(
@@ -354,6 +357,9 @@ def natal_chart() -> Response | str:
     text = GetNatalChart2(date, current_user.city).natal_chart()
     # Добавление новой натальной карты в БД
     dataAccess.add_new_natal_cart(current_user.id, text)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print('Время работы натальной карты: ', elapsed_time)
     return jsonify(
         {
             "success": True,
