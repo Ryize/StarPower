@@ -26,6 +26,7 @@
 
 import uuid
 import os
+from datetime import timedelta
 
 from flask import Flask
 from flask_debugtoolbar import DebugToolbarExtension
@@ -55,3 +56,5 @@ UPLOAD_FOLDER = "static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif",}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 3 * 1024 * 1024
+
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)

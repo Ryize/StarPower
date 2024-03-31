@@ -428,11 +428,26 @@ class DataAccess:
         db.session.add(new_horoscope)
         db.session.commit()
 
-    def get_natal_chart(self, user_id):
+    def get_natal_chart(self, user_id: int) -> UserNatalChart:
+        """
+        Извлекает натальную карту пользователя по его идентификатору.
+
+
+        """
         natal_chart = UserNatalChart.query.filter_by(user_id=user_id).first()
         return natal_chart
 
-    def add_new_natal_cart(self, user_id, text):
+    def add_new_natal_cart(self, user_id: int, text: str) -> None:
+        """
+        Создает и сохраняет новую натальную карту для пользователя в базе данных.
+        Параметры:
+            user_id (int): Идентификатор пользователя, для которого добавляется натальная карта.
+            text (str): Текст натальной карты, содержащий астрологические данные.
+
+        Возвращает:
+            None. Метод не возвращает значение, но результатом его выполнения является
+            добавление новой записи в таблицу натальных карт пользователей.
+        """
         new_natal_cart = UserNatalChart(user_id=user_id, natal_chart=text)
         db.session.add(new_natal_cart)
         db.session.commit()
