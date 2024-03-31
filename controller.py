@@ -344,7 +344,6 @@ def natal_chart() -> Response | str:
             return redirect(url_for("profile"))
         return render_template("chat.html")
     # Получение натальной карты из БД текущего пользователя
-    start_time = time.time()
     natal_cart = dataAccess.get_natal_chart(current_user.id)
     if natal_cart:
         return jsonify(
@@ -357,9 +356,6 @@ def natal_chart() -> Response | str:
     text = GetNatalChart2(date, current_user.city).natal_chart()
     # Добавление новой натальной карты в БД
     dataAccess.add_new_natal_cart(current_user.id, text)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    print('Время работы натальной карты: ', elapsed_time)
     return jsonify(
         {
             "success": True,
