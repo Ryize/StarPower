@@ -158,6 +158,11 @@ class GetAstralData(GetJulianDate):
                 self.jd, planet[1])[0][0] for planet in self.planets}
         return planet_positions
 
+    def calc_planet_position(self, planet):
+        # Расчет положения планеты
+        planet_position = swe.calc_ut(self.jd, planet)[0][0]
+        return planet_position
+
     def calc_houses_positions(self):
         # Расчет домов
         houses_positions = swe.houses(self.jd, self.birth_place['latitude'],
@@ -281,10 +286,11 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
 # print(natalChart.get_response())
 
-getspec = GetSpecialHoroscope(datetime(2024, 4, 1), 'Водолей')
-print(getspec.get_response())
+# getspec = GetSpecialHoroscope(datetime(2024, 4, 1), 'Водолей')
+# print(getspec.get_response())
 
-# astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-# print(astralData.calc_planet_positions())
+astralData = GetAstralData(datetime(1988, 6, 15, 17, 45), 'Смоленск')
+print(astralData.calc_planet_position(swe.MERCURY))
+print(astralData.calc_planet_positions())
 # print(astralData.find_zodiac_sign())
 # print(astralData.calc_houses_positions())
