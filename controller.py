@@ -25,7 +25,7 @@ import os
 import time
 from datetime import datetime
 from flask import render_template, Response, redirect, url_for, request, flash, jsonify
-from flask_login import login_required, logout_user, current_user
+from flask_login import login_required, logout_user, current_user, login_user
 from werkzeug.utils import secure_filename
 
 from models import DataAccess, UserNatalChart
@@ -118,8 +118,10 @@ def authorization() -> Response | str:
         return render_template("register_authorization.html")
     login = request.form.get("login")
     password = request.form.get("password")
+    remember = 'remember_me' in request.form
     # Получение пользователя из БД
-    if dataAccess.get_user(login, password):
+    user = dataAccess.get_user(login, password, remember)
+    if user:
         # Перенаправление в админ-панель, если пользователь - админ
         if login == "Admin":
             return redirect(url_for("admin.index"))
@@ -333,7 +335,7 @@ def natal_chart() -> Response | str:
              (успешно создана или уже существующая карта).
     """
     if request.method == "GET":
-        if not (current_user.birthday or current_user.birth_time):
+        if not (current_user.birthday or current_user.birth_time or current_user.city):
             flash(
                 {
                     "title": "Заполните данные",

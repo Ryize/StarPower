@@ -325,7 +325,7 @@ class DataAccess:
         forms["password"] = generate_password_hash(forms["password"])
         User.create(**forms)
 
-    def get_user(self, login: str, password: str) -> bool | None:
+    def get_user(self, login: str, password: str, remeber) -> bool | None:
         """
         Аутентифицирует пользователя на основе предоставленного логина и пароля.
 
@@ -340,7 +340,7 @@ class DataAccess:
         user = User.query.filter_by(login=login).first()
 
         if user and check_password_hash(user.password, password):
-            login_user(user)
+            login_user(user, remember=remeber)
             return True
 
     def add_profile(self, user: User, forms: dict) -> None:
@@ -428,18 +428,50 @@ class DataAccess:
         db.session.add(new_horoscope)
         db.session.commit()
 
-    def get_natal_chart(self, user_id):
+    def get_natal_chart(self, user_id: int) -> UserNatalChart:
+        """
+        Извлекает натальную карту пользователя по его идентификатору.
+
+        Параметры:
+            user_id (int): Идентификатор пользователя, натальную карту которого необходимо получить.
+
+        Возвращает:
+            UserNatalChart: Экземпляр модели `UserNatalChart`, соответствующий заданному пользователю.
+                            Возвращает `None`, если натальная карта для пользователя не найдена.
+
+        """
         natal_chart = UserNatalChart.query.filter_by(user_id=user_id).first()
         return natal_chart
 
-    def add_new_natal_cart(self, user_id, text):
+    def add_new_natal_cart(self, user_id: int, text: str) -> None:
+        """
+        Создаёт новую натальную карту для указанного пользователя и сохраняет её в базе данных.
+
+        Параметры:
+            user_id (int): Идентификатор пользователя, для которого создаётся натальная карта.
+            text (str): Текст натальной карты, содержащий астрологические данные и интерпретации.
+
+        Возвращает:
+            None. Метод не возвращает значение, но вносит изменения в базу данных, добавляя новую запись.
+
+        """
         new_natal_cart = UserNatalChart(user_id=user_id, natal_chart=text)
         db.session.add(new_natal_cart)
         db.session.commit()
 
 
 @manager.user_loader
-def load_user(user_id):
+def load_user(user_id: int) -> User:
+    """
+    Callback функция для Flask-Login, которая используется для загрузки объекта пользователя.
+
+    Параметры:
+        user_id (str): Строковый идентификатор пользователя, используемый для поиска в базе данных.
+
+    Возвращает:
+        User: Объект пользователя, соответствующий идентификатору. Возвращает None, если
+              пользователь не найден.
+    """
     return User.query.get(user_id)
 
 
