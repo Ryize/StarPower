@@ -289,8 +289,8 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # getspec = GetSpecialHoroscope(datetime(2024, 4, 1), 'Водолей')
 # print(getspec.get_response())
 
-astralData = GetAstralData(datetime(1988, 6, 15, 17, 45), 'Смоленск')
-print(astralData.calc_planet_position(swe.MERCURY))
-print(astralData.calc_planet_positions())
+# astralData = GetAstralData(datetime(1988, 6, 15, 17, 45), 'Смоленск')
+# print(astralData.calc_planet_position(swe.MERCURY))
+# print(astralData.calc_planet_positions())
 # print(astralData.find_zodiac_sign())
 # print(astralData.calc_houses_positions())
