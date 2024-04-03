@@ -22,7 +22,6 @@
 """
 
 import os
-import time
 from datetime import datetime
 from flask import render_template, Response, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, logout_user, current_user, login_user
@@ -31,7 +30,7 @@ from werkzeug.utils import secure_filename
 from models import DataAccess, UserNatalChart
 from app import app, db
 from business_logic import allowed_file, date_horoscope, delete_file
-from horoscope_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
+from horoscope_logic import GetHoroscope, GetSpecialHoroscope
 from admin_panel import admin
 from natal_chart_logic import GetNatalChart2
 
@@ -120,8 +119,7 @@ def authorization() -> Response | str:
     password = request.form.get("password")
     remember = 'remember_me' in request.form
     # Получение пользователя из БД
-    user = dataAccess.get_user(login, password, remember)
-    if user:
+    if dataAccess.get_user(login, password, remember):
         # Перенаправление в админ-панель, если пользователь - админ
         if login == "Admin":
             return redirect(url_for("admin.index"))
