@@ -127,6 +127,7 @@ class TranzitMonth(BaseHoroscope):
         ' подряд обьедени их в один период как один аспект.'
         'С учетом полученной информации сделай подробное описание месяца.'
         'Проверь текст, он должен быть только на русском языке. '
+        'После каждого пункта для разделения пропускай строку'
         )
 
     def __init__(self, birth_date, birth_place) -> None:
@@ -313,6 +314,6 @@ class TranzitYear(BaseHoroscope):
 # print(get.natal_chart())
 
 
-get = TranzitYear(datetime(2001, 1, 29, 17, 45), 'Смоленск')
+# get = TranzitYear(datetime(2001, 1, 29, 17, 45), 'Смоленск')
 
-print(get.tranzit())
+# print(get.tranzit())

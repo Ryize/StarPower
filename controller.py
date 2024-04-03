@@ -14,7 +14,7 @@ from business_logic import allowed_file, date_horoscope, delete_file
 from horoscope_logic import GetHoroscope, GetNatalChart, GetSpecialHoroscope
 
 from admin_panel import admin
-from natal_chart_logic import GetNatalChart2
+from natal_chart_logic import GetNatalChart2, TranzitMonth
 
 
 # экземпляр класса для работы с БД
@@ -178,6 +178,28 @@ def horoscope(period) -> Response | str:
         dataAccess.add_new_horoscope(period, zodiac_sign, text, date)
         return render_template('horoscope_chat.html', text=text)
     return render_template('horoscope_chat.html', text=horoscope.horoscope)
+
+
+@app.route('/tranzit/')
+@login_required
+def tranzit() -> Response | str:
+    """
+        Views для отображения транзита
+    """
+    # сделать проверку данных и перекинуть для заполнения на profile
+    if not (current_user.birthday or current_user.birth_time):
+        flash(
+            {
+                'title': 'Заполните данные',
+                'message': 'Для создания гороскопа заполните данные',
+            },
+            category='error',
+        )
+        return redirect(url_for('profile'))
+
+    date = datetime.combine(current_user.birthday, current_user.birth_time)
+    text = TranzitMonth(date, current_user.city).get_response()
+    return render_template('horoscope_chat.html', text=text)
 
 
 @app.route('/specialhoroscope/', methods=['POST'])
