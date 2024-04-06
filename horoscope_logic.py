@@ -36,12 +36,14 @@ class GetHoroscope(BaseHoroscope):
     add_inf_year = ('Пожалуйста, включи описание общих тенденций, '
                     'возможностей и предостережений.'
                     'Добавь неожиданных поворотов и интригующих подробностей. '
-                    'Сейчас', datetime.now().strftime('%Y'), 'год.'
+                    'Сейчас', datetime.now().strftime('%Y'), 'год. '
+                    'Убедись что в твоем ответе указан только этот год.'
                     )
 
     add_inf_month = ('Опиши начало месяца, потом что будет в середине'
                      'и далее чем месяц закончится.'
-                     'Сейчас', datetime.now().strftime('%B'), 'месяц.'
+                     'Сейчас', datetime.now().strftime('%B'), 'месяц. '
+                     'Убедись что в твоем ответе указан только этот месяц'
                      )
     add_inf_week = ('Опиши начало недели, потом что будет в середине'
                     'и далее чем неделя закончится.')
@@ -158,6 +160,11 @@ class GetAstralData(GetJulianDate):
                 self.jd, planet[1])[0][0] for planet in self.planets}
         return planet_positions
 
+    def calc_planet_position(self, planet):
+        # Расчет положения планеты
+        planet_position = swe.calc_ut(self.jd, planet)[0][0]
+        return planet_position
+
     def calc_houses_positions(self):
         # Расчет домов
         houses_positions = swe.houses(self.jd, self.birth_place['latitude'],
@@ -250,27 +257,26 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         return lunar_day
 
     def description(self):
-        des = (f"В начале укажи что гороскоп расчитан на {self.date}"
-               " в формате: число.месяц.год Продолжи текст с новой строки."
-               "Первое предложение после даты начни со слов: в этот день."
-               "Вместо астрологический дом пиши дом. "
-               "Знак зодиака, в котором находится луна, указывает на "
-               "положительные аспекты, а знак зодиака противоположный лунному."
-               " указывает на отрицательные аспекты."
-               "Предсказание должно быть не менее 800 символов."
-               "В конце добавь влияние лунного дня.")
+        des = ('Ты профессиональный астролог, сейчас ты мне делаешь '
+               'предсказание, начни повествование с фразы "в этот день" '
+               'Знак зодиака, в котором находится луна, указывает на '
+               'положительные аспекты, а знак зодиака противоположный лунному.'
+               ' указывает на отрицательные аспекты.'
+               'Предсказание должно быть не менее 800 символов.'
+               'В конце добавь влияние лунного дня.')
         return des
 
     def user_request(self):
-        res = ("Составь гороскоп с особенностями характерными знаку"
-               f" зодиака {self.zodiac_sign} с учетом того что сейчас"
-               f" луна находится в знаке зодиака {self.moon_in_sign()[0]}"
-               f" астрологический дом: {self.moon_in_sign()[1]} Дополни "
-               "информацию с учетом того что знак зодиака противоположный "
-               f"лунному: {self.opposite_zodiac_sign()[0]}, астрологический "
-               f"дом: {self.opposite_zodiac_sign()[1]}. Лунный день "
-               f"сейчас {self.get_lunar_day()}. "
-               "Начти без вступления и не разбивай на пункты."
+        res = ('Составь гороскоп с особенностями характерными знаку'
+               f' зодиака {self.zodiac_sign}. '
+               f'Луна находится в знаке зодиака {self.moon_in_sign()[0]} '
+               f'астрологический дом: {self.moon_in_sign()[1]}. Дополни '
+               'информацию с учетом того что знак зодиака противоположный '
+               f'лунному: {self.opposite_zodiac_sign()[0]}, астрологический '
+               f'дом: {self.opposite_zodiac_sign()[1]} находится напротив и '
+               'будет влиять негативно. Лунный день сейчас'
+               f'{self.get_lunar_day()}. '
+               'Начти без вступления и не разбивай на пункты.'
                )
         return res
 
@@ -282,10 +288,11 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
 # natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
 # print(natalChart.get_response())
 
-# getspec = GetSpecialHoroscope(datetime(2024, 3, 19), 'Рак')
+# getspec = GetSpecialHoroscope(datetime(2024, 4, 1), 'Водолей')
 # print(getspec.get_response())
 
-# astralData = GetAstralData(datetime(1988, 1, 29, 17, 45), 'Смоленск')
+# astralData = GetAstralData(datetime(1988, 6, 15, 17, 45), 'Смоленск')
+# print(astralData.calc_planet_position(swe.MERCURY))
 # print(astralData.calc_planet_positions())
 # print(astralData.find_zodiac_sign())
 # print(astralData.calc_houses_positions())

@@ -195,6 +195,14 @@ class Horoscope(db.Model, BaseModel):
     date = db.Column(db.Date)
 
 
+class UserTranzit(db.Model, BaseModel):
+    __tablename__ = 'user_tranzit_SP'
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user_SP.id'))
+    period = db.Column(db.String(15), nullable=True)
+    tranzit = db.Column(db.Text(), nullable=False)
+
+
 class DataAccess:
     """
     Класс для управления доступом к данными в приложении прогнозирования гороскопов.
