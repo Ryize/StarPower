@@ -400,7 +400,8 @@ class GetAstralData(GetJulianDate):
         Рассчитывает положения астрологических домов на момент рождения.
 
         Возвращает:
-            Список положений начал астрологических домов в градусах зодиакального круга.
+            Список положений начал астрологических домов в градусах
+            зодиакального круга.
         """
         houses_positions = swe.houses(self.jd, self.birth_place['latitude'],
                                       self.birth_place['longitude'], b'P')[0]
@@ -537,7 +538,8 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         Инициализация класса для получения специального гороскопа.
 
         Параметры:
-            date (datetime.datetime): Дата для расчета положения Луны и лунных дней.
+            date (datetime.datetime): Дата для расчета положения Луны и
+            лунных дней.
             zodiac_sign (str): Знак зодиака для гороскопа.
         """
         BaseHoroscope.__init__(self)
