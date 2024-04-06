@@ -1,8 +1,10 @@
-from horoscope_logic import BaseHoroscope, GetAstralData
-from datetime import datetime, timedelta
-from copy import copy
 import calendar
+from copy import copy
+from datetime import datetime, timedelta
+
 import swisseph as swe
+
+from horoscope_logic import BaseHoroscope, GetAstralData
 
 
 class GetNatalChart2(BaseHoroscope):

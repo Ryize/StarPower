@@ -24,15 +24,14 @@
     toastr (Toastr): Система уведомлений для фронтенда.
 """
 
-import uuid
 import os
+import uuid
 
 from flask import Flask
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_toastr import Toastr
-
 
 # Инициализация объекта приложения Flask
 app = Flask(__name__)

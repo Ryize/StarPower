@@ -1,14 +1,15 @@
-from openai import OpenAI
 import os
-from dotenv import load_dotenv
-from datetime import datetime
-import swisseph as swe
-import pytz
-from geopy.geocoders import Nominatim
-import geopy
 import random
 import string
+from datetime import datetime
+
 import ephem
+import geopy
+import pytz
+import swisseph as swe
+from dotenv import load_dotenv
+from geopy.geocoders import Nominatim
+from openai import OpenAI
 
 
 class BaseHoroscope:

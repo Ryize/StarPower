@@ -23,17 +23,18 @@
 
 import os
 from datetime import datetime
-from flask import render_template, Response, redirect, url_for, request, flash, jsonify
-from flask_login import login_required, logout_user, current_user, login_user
+
+from flask import (Response, flash, jsonify, redirect, render_template,
+                   request, url_for)
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.utils import secure_filename
 
-from models import DataAccess, UserNatalChart
+from admin_panel import admin
 from app import app, db
 from business_logic import allowed_file, date_horoscope, delete_file
 from horoscope_logic import GetHoroscope, GetSpecialHoroscope
-from admin_panel import admin
 from horoscope_logic_pro import GetNatalChart2, TranzitMonth
-
+from models import DataAccess, UserNatalChart
 
 # экземпляр класса для работы с БД
 dataAccess = DataAccess()

@@ -33,13 +33,13 @@
 
 import re
 from datetime import datetime, timezone
-from werkzeug.security import generate_password_hash, check_password_hash
-from zodiac_sign import get_zodiac_sign
-from flask import flash
-from flask_login import login_user
-from flask_login import UserMixin
 
-from app import db, app, manager
+from flask import flash
+from flask_login import UserMixin, login_user
+from werkzeug.security import check_password_hash, generate_password_hash
+from zodiac_sign import get_zodiac_sign
+
+from app import app, db, manager
 
 
 class BaseModel:
