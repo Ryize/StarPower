@@ -182,7 +182,7 @@ class GetNatalChart2(BaseHoroscope):
         return result
 
 
-class TranzitMonth(BaseHoroscope, GetNatalChart2):
+class TranzitMonth(GetNatalChart2):
     """
     Прогнозы создаются путем анализа влияния транзитных планет на натальную
     карту человека. Класс учитывает временные рамки действия каждого

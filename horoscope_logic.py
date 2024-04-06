@@ -233,7 +233,7 @@ class GetJulianDate:
         self.date = date
         self.jd = self.calculation_Julian_date()
 
-    def convertion_utc(self) -> datetime.datetime:
+    def convertion_utc(self) -> datetime:
         """
         Конвертирует сохраненную григорианскую дату в UTC.
 
@@ -533,7 +533,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
             "Стрелец", "Козерог", "Водолей", "Рыбы"
         ]
 
-    def __init__(self, date: datetime.datetime, zodiac_sign: str) -> None:
+    def __init__(self, date: datetime, zodiac_sign: str) -> None:
         """
         Инициализация класса для получения специального гороскопа.
 
