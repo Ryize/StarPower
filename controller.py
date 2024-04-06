@@ -32,7 +32,7 @@ from app import app, db
 from business_logic import allowed_file, date_horoscope, delete_file
 from horoscope_logic import GetHoroscope, GetSpecialHoroscope
 from admin_panel import admin
-from natal_chart_logic import GetNatalChart2, TranzitMonth
+from horoscope_logic_pro import GetNatalChart2, TranzitMonth
 
 
 # экземпляр класса для работы с БД
