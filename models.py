@@ -235,6 +235,9 @@ class DataAccess:
 
         add_new_natal_cart(self, user_id, text):
             Создает новую натальную карту для пользователя.
+
+        del_natal_chart(self, user_id):
+        Удаляет натальную карту пользователя по его идентификатору.
     """
     def check_new_user(self, login: str, email: str, password: str) -> bool:
         """
@@ -467,6 +470,22 @@ class DataAccess:
         db.session.add(new_natal_cart)
         db.session.commit()
 
+    def del_natal_chart(self, user_id: int) -> None:
+        """
+        Создаёт новую натальную карту для указанного пользователя и сохраняет
+        её в базе данных.
+
+        Параметры:
+            user_id (int): Идентификатор пользователя.
+
+        Возвращает:
+            None. Метод не возвращает значение, но вносит изменения
+            в базу данных, удаляя неактуальную натальную карту.
+        """
+        natal_chart = UserNatalChart.query.filter_by(user_id=user_id).first()
+        if natal_chart:
+            db.session.delete(natal_chart)
+            db.session.commit()
 
 @manager.user_loader
 def load_user(user_id: int) -> User:

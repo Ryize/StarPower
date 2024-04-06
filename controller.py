@@ -167,10 +167,8 @@ def profile() -> Response | str:
     user = current_user
     forms = request.form
     if user.birth_time != forms["birth_time"] or user.birthday != forms["birthday"]:
-        natal_chart = UserNatalChart.query.filter_by(user_id=user.id).first()
-        if natal_chart:
-            db.session.delete(natal_chart)
-            db.session.commit()
+        # Удаление не актуальной натальной карты
+        dataAccess.del_natal_chart(user.id)
     # Добавление данных в профиль текущего пользователя
     dataAccess.add_profile(user, forms)
     flash(
