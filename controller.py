@@ -18,7 +18,8 @@
 - logout(): Выполняет выход пользователя из системы.
 - redirect_to_sign(): Перенаправляет неавторизованных пользователей на страницу входа.
 
-Все представления, за исключением logout() и redirect_to_sign(), используют декоратор @login_required для ограничения доступа только для авторизованных пользователей.
+Все представления, за исключением logout() и redirect_to_sign(), используют декоратор
+@login_required для ограничения доступа только для авторизованных пользователей.
 """
 
 import os
@@ -46,7 +47,8 @@ def index() -> Response | str:
     """
     Views для главной страницы.
     """
-    return render_template("index.html")
+    title = 'Star Power'
+    return render_template("index.html", title=title)
 
 
 @app.route("/register_authorization", methods=["GET", "POST"])
@@ -54,7 +56,8 @@ def register_authorization() -> Response | str:
     """
     Views для страницы регистрации и авторизации
     """
-    return render_template("register_authorization.html")
+    title = 'Регистрация, авторизация'
+    return render_template("register_authorization.html", title=title)
 
 
 @app.route("/register", methods=["GET", "POST"])
