@@ -53,7 +53,8 @@ admin = Admin(app, name='Административная панель', templat
               index_view=MyAdminIndexView())
 
 admin.add_view(MyModelView(User, db.session, name='Пользователи'))
-admin.add_view(MyModelView(UserNatalChart, db.session, name='Натальные карты пользователей'))
+admin.add_view(MyModelView(UserNatalChart, db.session,
+                           name='Натальные карты пользователей'))
 admin.add_view(MyModelView(Horoscope, db.session, name='Гороскопы'))
 
 
