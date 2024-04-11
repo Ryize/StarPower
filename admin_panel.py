@@ -1,10 +1,10 @@
 from flask import redirect, url_for
-from flask_login import current_user, login_required
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+from flask_login import current_user, login_required
 
 from app import app, db
-from models import User, UserNatalChart, Horoscope
+from models import Horoscope, User, UserNatalChart
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -53,7 +53,8 @@ admin = Admin(app, name='Административная панель', templat
               index_view=MyAdminIndexView())
 
 admin.add_view(MyModelView(User, db.session, name='Пользователи'))
-admin.add_view(MyModelView(UserNatalChart, db.session, name='Натальные карты пользователей'))
+admin.add_view(MyModelView(UserNatalChart, db.session,
+                           name='Натальные карты пользователей'))
 admin.add_view(MyModelView(Horoscope, db.session, name='Гороскопы'))
 
 
