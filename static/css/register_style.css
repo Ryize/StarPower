@@ -1,30 +1,35 @@
-
-main{
+main {
   position: relative;
   min-height: 100vh;
 }
+
 @media (max-width: 375px) {
   main {
-    min-height:100vh;
+    min-height: 100vh;
   }
 }
+
 .frame {
-  position: absolute; /* Абсолютное позиционирование относительно main */
-  top: 50%; /* Расстояние от верхней границы main */
-  width: 90%; /* или другая ширина в зависимости от вашего дизайна */
-  max-width: 430px; /* Максимальная ширина для крупных экранов */
-  left: 50%; /* Центрирование .frame по горизонтали */
+  position: absolute;
+  /* Абсолютное позиционирование относительно main */
+  top: 50%;
+  /* Расстояние от верхней границы main */
+  width: 90%;
+  /* или другая ширина в зависимости от вашего дизайна */
+  max-width: 430px;
+  /* Максимальная ширина для крупных экранов */
+  left: 50%;
+  /* Центрирование .frame по горизонтали */
   transform: translate(-50%, -50%);
   height: 575px;
   background:
-    linear-gradient(
-    rgba(0, 9, 60, 0.75),
-    rgba(0, 9, 60, 0.95)),
+    linear-gradient(rgba(0, 9, 60, 0.75),
+      rgba(0, 9, 60, 0.95)),
     url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg) no-repeat center center;
   background-size: cover;
-  border-top: solid 1px rgba(255,255,255,.5);
+  border-top: solid 1px rgba(255, 255, 255, .5);
   border-radius: 5px;
-  box-shadow: 0px 2px 7px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
@@ -36,8 +41,8 @@ main{
 
 .frame-short {
   height: 400px;
-  margin-top: 50px;
-  box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
+  margin-top: auto;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
 }
 
 .nav-register {
@@ -51,7 +56,7 @@ main{
 
 .nav-up {
   -webkit-transform: translateY(-100px);
-          transform: translateY(-100px);
+  transform: translateY(-100px);
   opacity: 0;
 }
 
@@ -76,10 +81,9 @@ main{
 }
 
 .signin-inactive a {
-  padding-bottom: 0;
-  color: rgba(255,255,255,.3);
+  padding-bottom: 5px;
+  color: rgba(255, 255, 255, .3);
   text-decoration: none;
-  border-bottom: none;
   cursor: pointer;
 }
 
@@ -93,7 +97,7 @@ main{
 
 .signup-inactive a {
   cursor: pointer;
-  color: rgba(255,255,255,.3);
+  color: rgba(255, 255, 255, .3);
   text-decoration: none;
   -webkit-transition: all .25s ease;
   transition: all .25s ease;
@@ -102,12 +106,14 @@ main{
 .form-signin {
   width: 90%;
   height: 375px;
-	font-size: 16px;
-	font-weight: 300;
+  font-size: 16px;
+  font-weight: 300;
   padding-left: 5%;
   padding-right: 5%;
-  margin-left: auto; /* Центрирование элемента по горизонтали */
-  margin-right: auto; /* Центрирование элемента по горизонтали */
+  margin-left: auto;
+  /* Центрирование элемента по горизонтали */
+  margin-right: auto;
+  /* Центрирование элемента по горизонтали */
   padding-top: 55px;
   -webkit-transition: opacity .5s ease, -webkit-transform .5s ease;
   transition: opacity .5s ease, -webkit-transform .5s ease;
@@ -117,19 +123,21 @@ main{
 
 .form-signin-left {
   -webkit-transform: translateX(-400px);
-          transform: translateX(-400px);
+  transform: translateX(-400px);
   opacity: .0;
 }
 
 .form-signup {
   width: 90%;
   height: 375px;
-	font-size: 16px;
-	font-weight: 300;
+  font-size: 16px;
+  font-weight: 300;
   padding-left: 5%;
   padding-right: 5%;
-  margin-left: auto; /* Центрирование элемента по горизонтали */
-  margin-right: auto; /* Центрирование элемента по горизонтали */
+  margin-left: auto;
+  /* Центрирование элемента по горизонтали */
+  margin-right: auto;
+  /* Центрирование элемента по горизонтали */
   padding-top: 55px;
   position: relative;
   top: -375px;
@@ -141,7 +149,7 @@ main{
 
 .form-signup-left {
   -webkit-transform: translateX(-399px);
-          transform: translateX(-399px);
+  transform: translateX(-399px);
   opacity: 1;
 }
 
@@ -164,37 +172,38 @@ main{
 
 .success-left {
   -webkit-transform: translateX(-406px);
-          transform: translateX(-406px);
+  transform: translateX(-406px);
   opacity: 1;
 }
 
 .successtext {
   color: #ffffff;
-	font-size: 16px;
-	font-weight: 300;
+  font-size: 16px;
+  font-weight: 300;
   margin-top: -35px;
   padding-left: 37px;
   padding-right: 37px;
 }
 
 #check path {
-    stroke: #ffffff;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    stroke-width: .85px;
-    stroke-dasharray: 60px 300px;
-    stroke-dashoffset: -166px;
-    fill: rgba(255,255,255,.0);
-    -webkit-transition: stroke-dashoffset 2s ease .5s, fill 1.5s ease 1.0s;
-    transition: stroke-dashoffset 2s ease .5s, fill 1.5s ease 1.0s;
+  stroke: #ffffff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: .85px;
+  stroke-dasharray: 60px 300px;
+  stroke-dashoffset: -166px;
+  fill: rgba(255, 255, 255, .0);
+  -webkit-transition: stroke-dashoffset 2s ease .5s, fill 1.5s ease 1.0s;
+  transition: stroke-dashoffset 2s ease .5s, fill 1.5s ease 1.0s;
 }
 
 #check.checked path {
-    stroke-dashoffset: 33px;
-    fill: rgba(255,255,255,.03);
+  stroke-dashoffset: 33px;
+  fill: rgba(255, 255, 255, .03);
 }
 
-.form-signin input, .form-signup input {
+.form-signin input,
+.form-signup input {
   color: #ffffff;
   font-size: 13px;
 }
@@ -202,11 +211,11 @@ main{
 .form-styling {
   width: 100%;
   height: 35px;
-	padding-left: 15px;
-	border: none;
-	border-radius: 20px;
+  padding-left: 15px;
+  border: none;
+  border-radius: 20px;
   margin-bottom: 20px;
-  background: rgba(255,255,255,.2);
+  background: rgba(255, 255, 255, .2);
 }
 
 label {
@@ -215,20 +224,24 @@ label {
   font-size: 13px;
   padding-left: 15px;
   padding-bottom: 10px;
-  color: rgba(255,255,255,.7);
+  color: rgba(255, 255, 255, .7);
   display: block;
 }
 
-:focus {outline: none;
+:focus {
+  outline: none;
 }
 
-.form-signin input:focus, textarea:focus, .form-signup input:focus, textarea:focus {
-    background: rgba(255,255,255,.3);
-    border: none;
-    padding-right: 40px;
-    -webkit-transition: background .5s ease;
-    transition: background .5s ease;
- }
+.form-signin input:focus,
+textarea:focus,
+.form-signup input:focus,
+textarea:focus {
+  background: rgba(255, 255, 255, .3);
+  border: none;
+  padding-right: 40px;
+  -webkit-transition: background .5s ease;
+  transition: background .5s ease;
+}
 
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
@@ -236,8 +249,8 @@ label {
   display: none;
 }
 
-[type="checkbox"]:not(:checked) + label,
-[type="checkbox"]:checked + label {
+[type="checkbox"]:not(:checked)+label,
+[type="checkbox"]:checked+label {
   position: relative;
   padding-left: 85px;
   padding-top: 2px;
@@ -245,19 +258,19 @@ label {
   margin-top: 8px;
 }
 
-[type="checkbox"]:not(:checked) + label:before,
-[type="checkbox"]:checked + label:before,
-[type="checkbox"]:not(:checked) + label:after,
-[type="checkbox"]:checked + label:after {
+[type="checkbox"]:not(:checked)+label:before,
+[type="checkbox"]:checked+label:before,
+[type="checkbox"]:not(:checked)+label:after,
+[type="checkbox"]:checked+label:after {
   content: '';
   position: absolute;
 }
 
-[type="checkbox"]:not(:checked) + label:before,
-[type="checkbox"]:checked + label:before {
+[type="checkbox"]:not(:checked)+label:before,
+[type="checkbox"]:checked+label:before {
   width: 65px;
   height: 30px;
-  background: rgba(255,255,255,.2);
+  background: rgba(255, 255, 255, .2);
   border-radius: 15px;
   left: 0;
   top: -3px;
@@ -265,11 +278,11 @@ label {
   transition: all .2s ease;
 }
 
-[type="checkbox"]:not(:checked) + label:after,
-[type="checkbox"]:checked + label:after {
+[type="checkbox"]:not(:checked)+label:after,
+[type="checkbox"]:checked+label:after {
   width: 10px;
   height: 10px;
-  background: rgba(255,255,255,.7);
+  background: rgba(255, 255, 255, .7);
   border-radius: 50%;
   top: 7px;
   left: 10px;
@@ -278,19 +291,19 @@ label {
 }
 
 /* on checked */
-[type="checkbox"]:checked + label:before {
+[type="checkbox"]:checked+label:before {
   background: #0F4FE6;
 }
 
-[type="checkbox"]:checked + label:after {
+[type="checkbox"]:checked+label:after {
   background: #ffffff;
   top: 7px;
   left: 45px;
 }
 
-[type="checkbox"]:checked + label .ui,
-[type="checkbox"]:not(:checked) + label .ui:before,
-[type="checkbox"]:checked + label .ui:after {
+[type="checkbox"]:checked+label .ui,
+[type="checkbox"]:not(:checked)+label .ui:before,
+[type="checkbox"]:checked+label .ui:after {
   position: absolute;
   left: 6px;
   width: 65px;
@@ -302,18 +315,18 @@ label {
   transition: all .2s ease;
 }
 
-[type="checkbox"]:not(:checked) + label .ui:before {
+[type="checkbox"]:not(:checked)+label .ui:before {
   content: "no";
   left: 32px;
-  color: rgba(255,255,255,.7);
+  color: rgba(255, 255, 255, .7);
 }
 
-[type="checkbox"]:checked + label .ui:after {
+[type="checkbox"]:checked+label .ui:after {
   content: "yes";
   color: #ffffff;
 }
 
-[type="checkbox"]:focus + label:before {
+[type="checkbox"]:focus+label:before {
   box-sizing: border-box;
   margin-top: -1px;
 }
@@ -328,8 +341,8 @@ label {
   padding-top: 8px;
   width: 100%;
   height: 35px;
-	border: none;
-	border-radius: 20px;
+  border: none;
+  border-radius: 20px;
   margin-top: 23px;
   background-color: #1059FF;
 }
@@ -339,8 +352,8 @@ label {
   padding-top: 8px;
   width: 100%;
   height: 35px;
-	border: none;
-	border-radius: 20px;
+  border: none;
+  border-radius: 20px;
   margin-top: -8px;
   color: #ffffff;
 }
@@ -351,14 +364,14 @@ label {
   text-transform: uppercase;
   font-size: 13px;
   text-align: center;
-  color: rgba(255,255,255, 1);
+  color: rgba(255, 255, 255, 1);
   padding-top: 8px;
   width: 100%;
   height: 35px;
-	border: none;
-	border-radius: 20px;
+  border: none;
+  border-radius: 20px;
   margin-top: 23px;
-  background-color: rgba(16,89,255, 1);
+  background-color: rgba(16, 89, 255, 1);
   left: 0px;
   top: 0px;
   -webkit-transition: all .5s ease, top .5s ease .5s, height .5s ease .5s, background-color .5s ease .75s;
@@ -371,15 +384,16 @@ label {
   position: relative;
   left: -55px;
   top: -420px;
-  color: rgba(255,255,255,0);
-  background-color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 1);
 }
 
-a.btn-signup:hover, a.btn-signin:hover {
-    cursor: pointer;
-    background-color: #0F4FE6;
-    -webkit-transition: background-color .5s;
-    transition: background-color .5s;
+a.btn-signup:hover,
+a.btn-signin:hover {
+  cursor: pointer;
+  background-color: #0F4FE6;
+  -webkit-transition: background-color .5s;
+  transition: background-color .5s;
 }
 
 .forgot {
@@ -390,14 +404,14 @@ a.btn-signup:hover, a.btn-signin:hover {
   text-align: center;
   padding-top: 24px;
   margin-top: -535px;
-  border-top: solid 1px rgba(255,255,255,.3);
+  border-top: solid 1px rgba(255, 255, 255, .3);
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
 
 .forgot-left {
   -webkit-transform: translateX(-400px);
-          transform: translateX(-400px);
+  transform: translateX(-400px);
   opacity: 0;
 }
 
@@ -406,7 +420,7 @@ a.btn-signup:hover, a.btn-signin:hover {
 }
 
 .forgot a {
-  color: rgba(255,255,255,.3);
+  color: rgba(255, 255, 255, .3);
   font-weight: 400;
   font-size: 13px;
   text-decoration: none;
@@ -416,7 +430,7 @@ a.btn-signup:hover, a.btn-signin:hover {
   width: 100%;
   height: 50px;
   position: relative;
-  color: rgba(35,43,85,0.75);
+  color: rgba(35, 43, 85, 0.75);
   opacity: 0;
   -webkit-transition: opacity .1s ease 1s, -webkit-transform 1.5s ease .25s;
   transition: opacity .1s ease 1s, -webkit-transform 1.5s ease .25s;
@@ -426,23 +440,22 @@ a.btn-signup:hover, a.btn-signin:hover {
 
 .welcome-left {
   -webkit-transform: translateY(-780px);
-          transform: translateY(-780px);
+  transform: translateY(-780px);
   opacity: 1;
 }
 
 .cover-photo {
   height: 150px;
   position: relative;
-  left: 0px;  top: -900px;
+  left: 0px;
+  top: -900px;
   background:
-    -webkit-linear-gradient(
-    rgba(35,43,85,0.75),
-    rgba(35,43,85,0.95)),
+    -webkit-linear-gradient(rgba(35, 43, 85, 0.75),
+      rgba(35, 43, 85, 0.95)),
     url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/landscape-nature-man-person.jpeg);
   background:
-    linear-gradient(
-    rgba(35,43,85,0.75),
-    rgba(35,43,85,0.95)),
+    linear-gradient(rgba(35, 43, 85, 0.75),
+      rgba(35, 43, 85, 0.95)),
     url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/landscape-nature-man-person.jpeg);
   background-size: cover;
   opacity: 0;
@@ -479,7 +492,7 @@ a.btn-signup:hover, a.btn-signin:hover {
 h1 {
   color: #ffffff;
   font-size: 35px;
-	font-weight: 300;
+  font-weight: 300;
   text-align: center;
 }
 
@@ -493,7 +506,7 @@ h1 {
   margin-left: 37px;
   margin-right: 37px;
   height: 35px;
-	border-radius: 20px;
+  border-radius: 20px;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 13px;
@@ -512,41 +525,40 @@ h1 {
 }
 
 a.btn-goback:hover {
-    cursor: pointer;
-    background-color: #0F4FE6;
-    -webkit-transition: all .5s;
-    transition: all .5s;
-    color: #ffffff;
+  cursor: pointer;
+  background-color: #0F4FE6;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  color: #ffffff;
 }
 
 /* refresh button styling */
 
 #refresh {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #ffffff;
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
-    padding: 13px 0 0 13px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+  padding: 13px 0 0 13px;
 }
 
 .refreshicon {
-    fill: #d3d3d3;
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transition: fill .25s ease, -webkit-transform .25s ease;
-    transition: fill .25s ease, -webkit-transform .25s ease;
-    transition: fill .25s ease, transform .25s ease;
-    transition: fill .25s ease, transform .25s ease, -webkit-transform .25s ease;
+  fill: #d3d3d3;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: fill .25s ease, -webkit-transform .25s ease;
+  transition: fill .25s ease, -webkit-transform .25s ease;
+  transition: fill .25s ease, transform .25s ease;
+  transition: fill .25s ease, transform .25s ease, -webkit-transform .25s ease;
 }
 
 .refreshicon:hover {
   cursor: pointer;
   fill: #1059FF;
   -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
+  transform: rotate(180deg);
 }
-
