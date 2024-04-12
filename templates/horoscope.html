@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat.css') }}">
+{% endblock %}
+<title>{% block title %}Чат{% endblock %}</title>
+
+{% block content %}
+    <main class="main-content">
+        <div class="container flex-column mt-5">
+            <div class="speech" id='horoscope'>
+
+            </div>
+            <div class="character-and-speech mt-5">
+                <img src="{{ url_for('static', filename='img/person-bable3.png') }}" alt="Персонаж" class="character-image">
+            </div>
+        </div>
+    <div class="loading-container">
+        <div class="loading"></div>
+    </div>
+    </main>
+{% endblock %}
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    function horoscope() {
+        $.ajax({
+            method: "POST",
+            url: "{{ url_for('horoscope', period=period) }}",
+            dataType: 'json',
+            data: {
+                period: "{{period}}",
+            },
+            success: function (data) {
+                if (data['success'] === true) {
+                    document.getElementById('horoscope').innerHTML = data['text'];
+                    document.querySelector(".loading-container").classList.add("loaded");
+                } else {
+                    console.error('Error: Success false received.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching special horoscope:', error);
+                document.getElementById('horoscope').innerHTML = '<p>Error loading content.</p>';
+                document.querySelector(".loading-container").classList.add("loaded");
+            }
+        })
+    }
+    horoscope()
+</script>
+
+{% endblock %}

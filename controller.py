@@ -223,7 +223,7 @@ def upload():
     return redirect(url_for("profile"))
 
 
-@app.route("/horoscope/<period>")
+@app.route("/horoscope/<period>", methods=["GET", "POST"])
 @login_required
 def horoscope(period) -> Response | str:
     """
@@ -243,15 +243,17 @@ def horoscope(period) -> Response | str:
              или перенаправление на страницу профиля при необходимости заполнения данных.
     """
     # сделать проверку данных и перекинуть для заполнения на profile
-    if not (current_user.birthday or current_user.birth_time):
-        flash(
-            {
-                "title": "Заполните данные",
-                "message": "Для создания гороскопа заполните данные",
-            },
-            category="error",
-        )
-        return redirect(url_for("profile"))
+    if request.method == 'GET':
+        if not (current_user.birthday or current_user.birth_time):
+            flash(
+                {
+                    "title": "Заполните данные",
+                    "message": "Для создания гороскопа заполните данные",
+                },
+                category="error",
+            )
+            return redirect(url_for("profile"))
+        return render_template('horoscope.html', period=period)
 
     date = date_horoscope(period)
 
@@ -263,8 +265,18 @@ def horoscope(period) -> Response | str:
         text = get_horoscope.get_response()
         # Добавление нового гороскопа в БД
         dataAccess.add_new_horoscope(period, zodiac_sign, text, date)
-        return render_template("horoscope_chat.html", text=text)
-    return render_template("horoscope_chat.html", text=horoscope.horoscope)
+        return jsonify(
+            {
+                "success": True,
+                "text": text,
+            }
+        )
+    return jsonify(
+            {
+                "success": True,
+                "text": horoscope.horoscope,
+            }
+        )
 
 
 
@@ -290,7 +302,7 @@ def tranzit() -> Response | str:
     return render_template('horoscope_chat.html', text=text)
 
 
-@app.route('/specialhoroscope/', methods=['POST'])
+@app.route('/special_horoscope', methods=['GET', 'POST'])
 @login_required
 def special_horoscope() -> Response | str:
     """
@@ -309,16 +321,18 @@ def special_horoscope() -> Response | str:
              или перенаправление на страницу профиля, если требуется заполнение данных пользователя.
     """
     # сделать проверку данных и перекинуть для заполнения на profile
-    if not (current_user.birthday or current_user.birth_time):
-        flash(
-            {
-                "title": "Заполните данные",
-                "message": "Для создания гороскопа заполните данные",
-            },
-            category="error",
-        )
-        return redirect(url_for("profile"))
-
+    if request.method == 'GET':
+        if not (current_user.birthday or current_user.birth_time):
+            flash(
+                {
+                    "title": "Заполните данные",
+                    "message": "Для создания гороскопа заполните данные",
+                },
+                category="error",
+            )
+            return redirect(url_for("profile"))
+        sp_date = request.args.get('sp_date')
+        return render_template("special_horoscope.html", sp_date=sp_date)
     form = request.form
 
     sp_date = form.get("sp_date")
@@ -332,8 +346,18 @@ def special_horoscope() -> Response | str:
         text = get_horoscope.get_response()
         # Добавление нового гороскопа в БД
         dataAccess.add_new_horoscope(period, zodiac_sign, text, sp_date)
-        return render_template("horoscope_chat.html", text=text)
-    return render_template("horoscope_chat.html", text=horoscope.horoscope)
+        return jsonify(
+            {
+                "success": True,
+                "text": text,
+            }
+        )
+    return jsonify(
+        {
+            "success": True,
+            "text": horoscope.horoscope,
+        }
+    )
 
 
 @app.route("/natal_chart", methods=["GET", "POST"])
