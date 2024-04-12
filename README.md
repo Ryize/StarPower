@@ -43,7 +43,7 @@ python main.py
 для получения дополнительной информации.
 
 ## Над проектом работали
- [Владимир](https://github.com/Vivat67),
-[Roman Yakovlev ](https://github.com/Rodan3D),
+ [Владимир Ездаков](https://github.com/Vivat67),
+[Роман Яковлев ](https://github.com/Rodan3D),
 [Дмитрий Шевченко](https://github.com/DmitriyShev19) 
-под руководством [Чекашова Матвея](https://github.com/Ryize)
+под руководством [Матвея Чекашова](https://github.com/Ryize)
