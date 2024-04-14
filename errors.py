@@ -11,7 +11,7 @@ def error404(status) -> str:
     :param status: int(Код ошибки)
     :return: 404.html (Шаблон страницы ошибки)
     """
-    return render_template("errors/404.html")
+    return render_template("errors/404.html"), 404
 
 
 @app.errorhandler(500)
@@ -21,4 +21,4 @@ def error500(status) -> str:
     :param status: int(Код ошибки)
     :return: 500.html (Шаблон страницы ошибки)
     """
-    return render_template("errors/500.html")
+    return render_template("errors/500.html"), 500
