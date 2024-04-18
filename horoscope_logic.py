@@ -66,7 +66,7 @@ class BaseHoroscope:
     и генерацию текстовых ответов на основе предопределённых описаний и
     запросов пользователя.
 
-    Атрибуты:
+    Args:
         client (OpenAI): Клиент для обращения к OpenAI API.
 
     Методы:
@@ -91,7 +91,7 @@ class BaseHoroscope:
         Создаёт и отправляет запрос в OpenAI API для генерации гороскопа,
         используя предопределённые описание и запрос пользователя.
 
-        Возвращает:
+        Returns:
             Строка с текстом гороскопа, сгенерированного моделью OpenAI.
         """
         completion = self.client.chat.completions.create(
@@ -110,7 +110,7 @@ class GetHoroscope(BaseHoroscope):
     специализированные методы для генерации гороскопов на основе знака зодиака
     пользователя и заданного временного периода (год, месяц, неделя, день).
 
-    Атрибуты
+    Args:
     add_inf_year: Дополнительная информация для годового гороскопа.
     add_inf_month: Дополнительная информация для месячного гороскопа.
     add_inf_week: Дополнительная информация для недельного гороскопа.
@@ -168,12 +168,12 @@ class GetHoroscope(BaseHoroscope):
         """
         Инициализирует объект класса GetHoroscope.
 
-        Параметры:
+        Args:
             zodiac_sign (str): Знак зодиака пользователя.
             period (str): Период времени, для которого требуется гороскоп.
             Допустимые значения: "year", "month", "week", "today".
 
-        Возвращает:
+        Returns:
             None.
         """
         super().__init__()
@@ -188,7 +188,7 @@ class GetHoroscope(BaseHoroscope):
     инициализации объекта, с учетом дополнительной информации, специфичной для
     каждого временного периода.
 
-    Возвращает:
+    Returns:
         res (str): Строка запроса, которая будет отправлена в модель OpenAI
         для генерации гороскопа. Содержит инструкции и ограничения по
         количеству символов, соответствующие выбранному периоду.
@@ -205,7 +205,7 @@ class GetJulianDate:
     """
     Класс предназначен для расчета юлианской даты,.
 
-    Атрибуты
+    Args:
     date: Дата в григорианском календаре, для которой будет рассчитана
     юлианская дата.
     jd: Рассчитанная юлианская дата.
@@ -224,9 +224,7 @@ class GetJulianDate:
         """
         Инициализация экземпляра класса GetJulianDate.
 
-        Параметры:
-            date (datetime.datetime): григорианская дата.
-        Атрибуты:
+        Args:
             self.date (datetime.datetime): григорианская дата.
             self.jd (float): Рассчитанная юлианская дата.
     """
@@ -237,7 +235,7 @@ class GetJulianDate:
         """
         Конвертирует сохраненную григорианскую дату в UTC.
 
-        Возвращает:
+        Returns:
             utc_time (datetime.datetime): Дата и время в формате UTC.
         """
         tz = pytz.timezone('Europe/Moscow')  # Часовой пояс
@@ -249,7 +247,7 @@ class GetJulianDate:
         Рассчитывает юлианскую дату на основе конвертированной в UTC
         григорианской даты.
 
-        Возвращает:
+        Returns:
             jd (tuple): Юлианская дата, соответствующая заданной
             григорианской дате.
         """
@@ -265,7 +263,7 @@ class GetAstralData(GetJulianDate):
     Добавляет функционал для расчета астрологических данных, таких как
     положения планет и астрологических домов, на основе даты и места рождения.
 
-    Атрибуты
+    Args:
     planets: Список планет и их идентификаторов в библиотеке Swiss Ephemeris.
     zodiac_range: Словарь, определяющий диапазоны градусов для каждого знака
     зодиака.
@@ -328,7 +326,7 @@ class GetAstralData(GetJulianDate):
         """
         Генерирует случайную строку длиной 3 символа, состоящую из букв и цифр.
 
-        Возвращает:
+        Returns:
             Строка, используемая в качестве user-agent.
         """
         return ''.join(random.choices(
@@ -339,12 +337,12 @@ class GetAstralData(GetJulianDate):
         """
         Ищет географические координаты города.
 
-        Параметры:
+        Args:
             city (str): Название города.
             user_agent (str): Идентификатор user-agent для запросов к
             геолокационному API.
 
-        Возвращает:
+        Returns:
             Словарь с ключами "latitude" и "longitude", содержащий
             географические координаты города.
         """
@@ -361,7 +359,7 @@ class GetAstralData(GetJulianDate):
         """
         Инициализирует экземпляр класса для расчета астрологических данных.
 
-        Параметры:
+        Args:
             date (datetime): Дата и время рождения.
             birth_place (str): Место рождения.
         """
@@ -373,7 +371,7 @@ class GetAstralData(GetJulianDate):
         Рассчитывает положения всех зарегистрированных планет на момент
         рождения.
 
-        Возвращает:
+        Returns:
             Словарь с названиями планет в качестве ключей и их положениями в
             градусах зодиакального круга в качестве значений.
         """
@@ -386,10 +384,10 @@ class GetAstralData(GetJulianDate):
         """
         Рассчитывает положение указанной планеты на момент рождения.
 
-        Параметры:
+        Args:
             planet (int): Идентификатор планеты в системе Swiss Ephemeris.
 
-        Возвращает:
+        Returns:
             Положение планеты в градусах зодиакального круга.
         """
         planet_position = swe.calc_ut(self.jd, planet)[0][0]
@@ -399,7 +397,7 @@ class GetAstralData(GetJulianDate):
         """
         Рассчитывает положения астрологических домов на момент рождения.
 
-        Возвращает:
+        Returns:
             Список положений начал астрологических домов в градусах
             зодиакального круга.
         """
@@ -412,7 +410,7 @@ class GetAstralData(GetJulianDate):
         Определяет знаки зодиака для всех зарегистрированных планет на момент
         рождения.
 
-        Возвращает:
+        Returns:
             Словарь с названиями планет в качестве ключей и знаками зодиака в
             качестве значений.
         """
@@ -431,7 +429,7 @@ class GetNatalChart(BaseHoroscope):
     """
     Класс предназначен для генерации текста натальной карты.
 
-    Атрибуты
+    Args:
     description: Статическое описание задачи для OpenAI, подчеркивающее
     ключевые аспекты и цели анализа натальной карты.
     birth_date: Дата и время рождения.
@@ -470,7 +468,7 @@ class GetNatalChart(BaseHoroscope):
         Использует дату и место рождения для создания натальной карты с
         помощью расчетов астрологических данных.
 
-        Параметры:
+        Args:
             birth_date (datetime): Дата и время рождения.
             birth_place (str): Место рождения в текстовом формате.
         """
@@ -489,7 +487,7 @@ class GetNatalChart(BaseHoroscope):
         содержащий основную информацию для создания детального и
         персонализированного анализа натальной карты.
 
-        Возвращает:
+        Returns:
             Строка запроса, которая включает дату рождения, место рождения,
             положения планет и астрологические дома,
             предоставляя все необходимые данные для генерации текста натальной
@@ -510,7 +508,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
     GetJulianDate, предоставляя специализированные инструменты для создания
     гороскопов с учетом положения Луны, лунного дня и оппозиции знаков зодиака.
 
-    Атрибуты
+    Args:
     zodiac_signs: Список названий знаков зодиака.
     zodiac_sign: Знак зодиака, для которого создается гороскоп.
     position_moon: Текущее положение Луны в зодиакальном круге.
@@ -537,7 +535,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         """
         Инициализация класса для получения специального гороскопа.
 
-        Параметры:
+        Args:
             date (datetime.datetime): Дата для расчета положения Луны и
             лунных дней.
             zodiac_sign (str): Знак зодиака для гороскопа.
@@ -552,7 +550,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         """
         Расчет текущего положения Луны в зодиакальном круге.
 
-        Возвращает:
+        Returns:
             Положение Луны в градусах зодиакального круга.
         """
         position_moon = swe.calc_ut(self.jd, swe.MOON)[0][0]
@@ -563,19 +561,19 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         Определяет знак зодиака и астрологический дом для текущего положения
         Луны.
 
-        Возвращает:
+        Returns:
             Кортеж, содержащий знак зодиака и номер астрологического дома Луны.
         """
         houses = list(range(1, 13))
         index = int(self.position_moon // 30)
-        return (self.zodiac_signs[index], houses[index])
+        return self.zodiac_signs[index], houses[index]
 
     def opposite_zodiac_sign(self) -> tuple:
         """
         Определяет противоположный знак зодиака и астрологический дом
         относительно текущего положения Луны.
 
-        Возвращает:
+        Returns:
             Кортеж, содержащий противоположный знак зодиака и номер
             астрологического дома.
         """
@@ -584,13 +582,13 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
             index = int((self.position_moon - 180) // 30)
         else:
             index = int((self.position_moon + 180) // 30)
-        return (self.zodiac_signs[index], houses[index])
+        return self.zodiac_signs[index], houses[index]
 
     def get_lunar_day(self) -> int:
         """
         Расчет текущего лунного дня на основе даты.
 
-        Возвращает:
+        Returns:
             Номер лунного дня.
         """
         # Получаем следующее и предыдущее новолуние относительно указанной даты
@@ -605,7 +603,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         """
         Описание задачи для генерации специального гороскопа моделью OpenAI.
 
-        Возвращает:
+        Returns:
             Строка с описанием задачи.
         """
         des = ('Ты профессиональный астролог, сейчас ты мне делаешь '
@@ -618,7 +616,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         """
         Создает специфический запрос пользователя для генерации гороскопа.
 
-        Возвращает:
+        Returns:
             Строка запроса пользователя.
         """
         res = ('Составь гороскоп с особенностями характерными знаку'
@@ -632,20 +630,3 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
                'Начти без вступления и не разбивай на пункты.'
                )
         return res
-
-
-# horoscope = GetHoroscope('Рак', 'today')
-# print(horoscope.get_response())
-
-
-# natalChart = GetNatalChart(datetime(1988, 1, 29, 17, 45), 'Смоленск')
-# print(natalChart.get_response())
-
-# getspec = GetSpecialHoroscope(datetime(2024, 4, 1), 'Водолей')
-# print(getspec.get_response())
-
-# astralData = GetAstralData(datetime(1988, 6, 15, 17, 45), 'Смоленск')
-# print(astralData.calc_planet_position(swe.MERCURY))
-# print(astralData.calc_planet_positions())
-# print(astralData.find_zodiac_sign())
-# print(astralData.calc_houses_positions())
