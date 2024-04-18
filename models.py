@@ -266,6 +266,16 @@ class DataAccess:
         del_natal_chart(self, user_id):
         Удаляет натальную карту пользователя по его идентификатору.
     """
+    _instance = None
+
+    def __new__(cls, *args: tuple, **kwargs: dict):
+        """
+        Контролирует что бы был только один обьект класса.
+        """
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def check_new_user(self, login: str, email: str, password: str) -> bool:
         """
         Проверяет нового пользователя на уникальность логина и электронной
