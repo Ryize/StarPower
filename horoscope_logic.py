@@ -568,7 +568,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
         """
         houses = list(range(1, 13))
         index = int(self.position_moon // 30)
-        return (self.zodiac_signs[index], houses[index])
+        return self.zodiac_signs[index], houses[index]
 
     def opposite_zodiac_sign(self) -> tuple:
         """
@@ -584,7 +584,7 @@ class GetSpecialHoroscope(BaseHoroscope, GetJulianDate):
             index = int((self.position_moon - 180) // 30)
         else:
             index = int((self.position_moon + 180) // 30)
-        return (self.zodiac_signs[index], houses[index])
+        return self.zodiac_signs[index], houses[index]
 
     def get_lunar_day(self) -> int:
         """
