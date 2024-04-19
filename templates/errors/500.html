@@ -24,13 +24,13 @@
             </div>
             <div class="row">
                 <p>
-                    <a href="#" class="btn btn-castom" role="button" data-bs-toggle="button">На
+                    <a href="{{url_for("index") }}" class="btn btn-castom">На
                         главную</a>
                 </p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-6">
-                    <img class="img-fluid" src="img/Звезды ремонтируют сервер.png" alt="Черная дыра" width="75%">
+                    <img class="img-fluid" src="{{ url_for('static', filename='img/Звезды ремонтируют сервер.png') }}" alt="Черная дыра" width="75%">
                 </div>
             </div>
         </div>

@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% block style %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-404_500.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@1,600&family=Source+Serif+4:opsz,wght@8..60,700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-404_500.css') }}">
 {% endblock %}
     <title>404</title>
 {% block content %}
     <main>
-        <div class="container text-center text-white ">
+        <div class="container text-center">
             <div class="row pt-5 pb-3">
                 <div class="col-12">
                     <h1 class="source-serif">Страница не найдена :(</h1>
@@ -24,13 +25,13 @@
             </div>
             <div class="row">
                 <p>
-                    <a href="#" class="btn btn-castom" role="button" data-bs-toggle="button">На
+                    <a href="{{url_for("index") }}" class="btn btn-castom" role="button">На
                         главную</a>
                 </p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-6">
-                    <img class="img-fluid w-75" src="img/404-2-3.png" alt="Черная дыра">
+                    <img class="img-fluid w-75" src="{{ url_for('static', filename='img/404-2-3.png')}}" alt="Черная дыра">
                 </div>
             </div>
         </div>
